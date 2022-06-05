@@ -1,0 +1,55 @@
+name: LuhnDotNet NuGet
+
+on:
+  push:
+    tags:
+    - 'v*'
+    paths-ignore:
+    - '**.md'
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: Setup .NET Core 3.1
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 3.1.415
+
+    - name: Setup .NET 6
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 6.0.100
+
+    - name: .NET Core SxS
+      run: |
+        rsync -a ${DOTNET_ROOT/6.0.100/3.1.415}/* $DOTNET_ROOT/
+
+    - name: Decrypt large secret
+      run: ./.github/secrets/decrypt_publisher_snk.sh
+      env:
+        PUBLISHER_SNK: ${{ secrets.PUBLISHER_SNK }}
+        PUBLISHER_PUB_KEY: ${{ secrets.PUBLISHER_PUB_KEY }}
+
+    - name: Restore
+      run: dotnet restore LuhnDotNet.sln
+
+    - name: Build
+      run: dotnet build --configuration Release LuhnDotNet.sln
+
+    - name: Test
+      run: dotnet test --configuration Release LuhnDotNet.sln
+
+    - name: Remove obsolete NuGet packages
+      run: rm -f src/bin/Release/LuhnDotNet*.nupk
+
+    - name: Create package
+      run: dotnet pack --configuration Release LuhnDotNet.sln
+
+    - name: Publish package
+      run: dotnet nuget push $(find src/bin/Release -type f  -name 'LuhnDotNet*.nupkg' -print 2> /dev/null) -k  ${{ secrets.NUGET_API_KEY }}  -s https://api.nuget.org/v3/index.json
