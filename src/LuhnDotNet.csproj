@@ -15,7 +15,7 @@
         <PackageProjectUrl>https://github.com/shinji-san/LuhnDotNet</PackageProjectUrl>
         <RepositoryUrl>https://github.com/shinji-san/LuhnDotNet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <Version>0.0.0</Version>
+        <Version>0.1.0</Version>
         <Authors>Sebastian Walther</Authors>
         <Company>Private Person</Company>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
