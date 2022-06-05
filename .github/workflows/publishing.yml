@@ -1,4 +1,4 @@
-name: SecretSharingDotNet NuGet
+name: LuhnDotNet NuGet
 
 on:
   push:
