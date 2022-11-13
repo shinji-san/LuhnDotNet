@@ -1,22 +1,19 @@
-
-
-
 namespace LuhnDotNetTest
 {
     using System;
     using System.Collections.Generic;
     using Xunit;
     using static LuhnDotNet.Luhn;
-    
+
     /// <summary>
-    /// 
+    /// Unit tests for the C# implementation of the Luhn algorithm.
     /// </summary>
     public class LuhnTest
     {
         /// <summary>
-        /// 
+        /// Test numbers without check digit.
         /// </summary>
-        public static IEnumerable<object[]> RawNumber =>
+        public static IEnumerable<object[]> RawNumbers =>
             new List<object[]>
             {
                 new object[] { 3, "7992739871" },
@@ -27,9 +24,9 @@ namespace LuhnDotNetTest
             };
 
         /// <summary>
-        /// 
+        /// Test numbers with check digit.
         /// </summary>
-        public static IEnumerable<object[]> LuhnNumber =>
+        public static IEnumerable<object[]> LuhnNumbers =>
             new List<object[]>
             {
                 new object[] { true, "79927398713" },
@@ -45,43 +42,55 @@ namespace LuhnDotNetTest
             };
 
         /// <summary>
+        /// Invalid numbers.
+        /// </summary>
+        public static IEnumerable<object[]> InvalidNumbers =>
+            new List<object[]>
+            {
+                new object[] { null },
+                new object[] { string.Empty },
+                new object[] { "ABC" },
+                new object[] { "?11243345" },
+            };
+
+        /// <summary>
         /// 
         /// </summary>
-        /// <param name="expectedCheckDigit"></param>
-        /// <param name="rawNumber"></param>
-        [Theory]
-        [MemberData(nameof(RawNumber), MemberType = typeof(LuhnTest))]
-        public void LuhnComputeTest(uint expectedCheckDigit, string rawNumber) =>
+        /// <param name="expectedCheckDigit">Expected check digit</param>
+        /// <param name="rawNumber">Test number exclusive check digit</param>
+        [Theory(DisplayName = "Calculate the check digit for a valid number")]
+        [MemberData(nameof(RawNumbers), MemberType = typeof(LuhnTest))]
+        public void LuhnComputeTest(byte expectedCheckDigit, string rawNumber) =>
             Assert.Equal(expectedCheckDigit, Compute(rawNumber));
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="expectedResult"></param>
-        /// <param name="luhnNumber"></param>
-        [Theory]
-        [MemberData(nameof(LuhnNumber), MemberType = typeof(LuhnTest))]
+        /// <param name="expectedResult">Expected validation result</param>
+        /// <param name="luhnNumber">Test number inclusive check digit</param>
+        [Theory(DisplayName = "Validate a number containing a check digit")]
+        [MemberData(nameof(LuhnNumbers), MemberType = typeof(LuhnTest))]
         public void LuhnValidationTest(bool expectedResult, string luhnNumber) =>
             Assert.Equal(expectedResult, IsValid(luhnNumber));
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void ComputeExceptionTest()
+        [Theory(DisplayName = "Calculate the check digit for an invalid number to throw an exception")]
+        [MemberData(nameof(InvalidNumbers), MemberType = typeof(LuhnTest))]
+        public void ComputeExceptionTest(string invalidNumber)
         {
-            Assert.Throws<ArgumentException>(() => Compute(null));
-            Assert.Throws<ArgumentException>(() => Compute(string.Empty));
+            Assert.Throws<ArgumentException>(() => Compute(invalidNumber));
         }
 
         /// <summary>
         /// 
         /// </summary>
-        [Fact]
-        public void ValidationExceptionTest()
+        [Theory(DisplayName = "Validate an invalid number to throw an exception")]
+        [MemberData(nameof(InvalidNumbers), MemberType = typeof(LuhnTest))]
+        public void ValidationExceptionTest(string invalidNumber)
         {
-            Assert.Throws<ArgumentException>(() => IsValid(null));
-            Assert.Throws<ArgumentException>(() => IsValid(string.Empty));
+            Assert.Throws<ArgumentException>(() => IsValid(invalidNumber));
         }
     }
 }
