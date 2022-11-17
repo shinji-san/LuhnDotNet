@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added .NET 7 support
 
+### Changed
+- Updated Microsoft.NETFramework.ReferenceAssemblies to v1.0.3
+
 ### Removed
 - Removed LINQ dependency
 
