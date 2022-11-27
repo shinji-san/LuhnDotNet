@@ -117,12 +117,13 @@ namespace LuhnDotNet
         /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
         private static string IsNumber(this string number)
         {
-            if (string.IsNullOrWhiteSpace(number) || !Regex.IsMatch(number, @"^\d+$"))
+            string trimmedNumber = number?.Trim();
+            if (string.IsNullOrWhiteSpace(trimmedNumber) || !Regex.IsMatch(trimmedNumber, @"^\d+$"))
             {
                 throw new ArgumentException($"The string '{number}' is not a number!", nameof(number));
             }
 
-            return number;
+            return trimmedNumber;
         }
 
         /// <summary>
