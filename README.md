@@ -130,7 +130,7 @@ An C# implementation of the Luhn algorithm.
    You can open the `.csproj` file to check the deleted package reference.
 
 # Usage
-## Compute the check digit
+## Compute the Luhn check digit
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -142,7 +142,7 @@ namespace Example1
   {
     public static void Main(string[] args)
     {
-      var checkDigit = Luhn.Compute("37828224631000");
+      var checkDigit = Luhn.ComputeLuhnCheckDigit("37828224631000");
       //// Must be 5
       Console.WriteLine(checkDigit);
     }
@@ -150,7 +150,7 @@ namespace Example1
 }
 ```
 
-## Validate number
+## Compute the Luhn number
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -162,7 +162,47 @@ namespace Example2
   {
     public static void Main(string[] args)
     {
+      var luhnNumber = Luhn.ComputeLuhnNumber("37828224631000");
+      //// Must be 378282246310005
+      Console.WriteLine(luhnNumber);
+    }
+  }
+}
+```
+
+## Validate Luhn number
+```csharp
+using System;
+using System.Collections.Generic;
+using LuhnDotNet;
+
+namespace Example3
+{
+  public class Program
+  {
+    public static void Main(string[] args)
+    {
       var isValid = Luhn.IsValid("378282246310005");
+      //// Must be 'true'
+      Console.WriteLine(isValid);
+    }
+  }
+}
+```
+
+## Validate number and corresponding Luhn check digit
+```csharp
+using System;
+using System.Collections.Generic;
+using LuhnDotNet;
+
+namespace Example4
+{
+  public class Program
+  {
+    public static void Main(string[] args)
+    {
+      var isValid = Luhn.IsValid("37828224631000", 5);
       //// Must be 'true'
       Console.WriteLine(isValid);
     }
