@@ -7,10 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Added .NET 7 support
-- Added feature to remove all leading and trailing white-space characters from the String object representing the number w/ and w/o check digit.
+- Added feature to remove all leading and trailing white-space characters from the String object representing a number w/ and w/o Luhn check digit.
+- Added an overload of the `Luhn.IsValid` method to accept a String object representing a number w/o Luhn check digit. The check digit is separated from the number as single byte parameter.
+- Added `Luhn.ComputeCheckDigit` method to compute the Luhn check digit.
+- Added `Luhn.ComputeLuhnNumber` method to compute the Luhn number.
 
 ### Changed
 - Updated Microsoft.NETFramework.ReferenceAssemblies to v1.0.3
+
+### Deprecated
+- `Luhn.Compute()` method is deprecated. Use `Luhn.ComputeCheckDigit()` or `Luhn.ComputeLuhanNumber() instead`.
 
 ### Removed
 - Removed LINQ dependency
