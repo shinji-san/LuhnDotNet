@@ -36,6 +36,7 @@ namespace LuhnDotNet
     using System;
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Text.RegularExpressions;
 
     /// <summary>
@@ -49,36 +50,98 @@ namespace LuhnDotNet
         private const int Modulus = 10;
 
         /// <summary>
-        /// Computes the check digit
+        /// Computes the Luhn check digit
         /// </summary>
-        /// <param name="number">identification number w/o check digit</param>
-        /// <returns>The Luhn check digit</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
+        /// <param name="number">An identification number w/o check digit.</param>
+        /// <returns>The calculated Luhn check digit.</returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
+        [Obsolete("Use Luhn.CalculateCheckDigit instead", false)]
+        public static byte Compute(string number) => ComputeLuhnCheckDigit(number);
+
+        /// <summary>
+        /// Computes the Luhn check digit
+        /// </summary>
+        /// <param name="number">An identification number w/o check digit.</param>
+        /// <returns>The calculated Luhn check digit.</returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-        public static byte Compute(string number) =>
+        public static byte ComputeLuhnCheckDigit(string number) =>
             (byte)(Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits());
 
         /// <summary>
-        /// Checks whether or not the number is valid
+        /// Computes the Luhn number which is a combination of the given number and the calculated check digit.
         /// </summary>
-        /// <param name="number">identification number w/ check digit</param>
-        /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
-        /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
-        /// <remarks>The check digit must be at the end of the <paramref name="number"/> (on the right side)</remarks>
+        /// <param name="number">An identification number w/o check digit.</param>
+        /// <returns>The calculated Luhn number.</returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-        public static bool IsValid(string number) =>
-            number.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
+        public static string ComputeLuhnNumber(string number)
+        {
+            byte checkDigit = (byte)(Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits());
+            return string.Format(
+                CultureInfo.InvariantCulture,
+                "{0}{1}",
+                number.Trim(),
+                checkDigit.ToString(CultureInfo.InvariantCulture));
+        }
 
+        /// <summary>
+        /// Checks whether or not the Luhn Number is valid
+        /// </summary>
+        /// <param name="luhnNumber">An identification number w/ check digit (Luhn Number).</param>
+        /// <returns><see langword="true" /> if the <paramref name="luhnNumber"/> is valid;
+        /// otherwise <see langword="false" /></returns>
+        /// <exception cref="ArgumentException"><paramref name="luhnNumber"/> is not a valid number.
+        /// The <paramref name="luhnNumber"/> contains none-numeric characters.</exception>
+        /// <remarks>The check digit must be at the end of the <paramref name="luhnNumber"/>
+        /// (on the right side).</remarks>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+        public static bool IsValid(string luhnNumber) =>
+            luhnNumber.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
+
+        /// <summary>
+        /// Checks whether or not the concatenation of number and corresponding Luhn check digit is valid
+        /// </summary>
+        /// <param name="number">Identification number w/o check digit</param>
+        /// <param name="checkDigit">The Luhn check digit</param>
+        /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
+        /// otherwise <see langword="false" /></returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid.
+        /// The <paramref name="number"/> contains none-numeric characters.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
+        /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+        public static bool IsValid(string number, byte checkDigit)
+        {
+            if (checkDigit > 9)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(checkDigit),
+                    checkDigit,
+                    "The check digit must be between 0 and 9");
+            }
+
+            return string.Format(
+                    CultureInfo.InvariantCulture,
+                    "{0}{1}",
+                    number.Trim(),
+                    checkDigit.ToString(CultureInfo.InvariantCulture))
+                .IsNumber()
+                .GetDigits()
+                .DoubleEverySecondDigit(true)
+                .SumDigits() == 0;
+        }
 
         /// <summary>
         /// Doubling of every second digit.
         /// </summary>
         /// <param name="digits">The digits represent a number w/ or w/o check digit.</param>
         /// <param name="forValidation"><see langword="true"/> if the <paramref name="digits"/> represent
-        /// a number including check digit; otherwise <see langword="false"/></param>
+        /// a luhnNumber including check digit; otherwise <see langword="false"/></param>
         /// <returns></returns>
         private static IEnumerable<uint> DoubleEverySecondDigit(this IEnumerable<uint> digits, bool forValidation)
         {
@@ -110,11 +173,11 @@ namespace LuhnDotNet
         private static bool IsEven(this int value) => value % 2 == 0;
 
         /// <summary>
-        /// Checks whether or not the number is valid
+        /// Checks whether or not the the number is valid
         /// </summary>
-        /// <param name="number">identification number</param>
-        /// <returns>The identification number if valid</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
+        /// <param name="number">An identification number</param>
+        /// <returns>The trimmed identification number if valid</returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
         private static string IsNumber(this string number)
         {
             string trimmedNumber = number?.Trim();
@@ -129,7 +192,7 @@ namespace LuhnDotNet
         /// <summary>
         /// Get all digits of the <paramref name="number"/> in reverse order
         /// </summary>
-        /// <param name="number">A identification number</param>
+        /// <param name="number">An identification number</param>
         /// <returns>Enumeration of digits</returns>
         private static IEnumerable<uint> GetDigits(this string number)
         {
