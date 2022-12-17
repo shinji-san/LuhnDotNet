@@ -58,9 +58,9 @@ An C# implementation of the Luhn algorithm.
   </thead>
   <tbody>
       <tr>
-          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v0.1.0" alt="LuhnDotNet NuGet"/></a></td>
-          <td rowspan=9><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 0.1.0"/></a></td>
-          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/tree/v0.1.0" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-0.1.0-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
+          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v0.2.0" alt="LuhnDotNet NuGet"/></a></td>
+          <td rowspan=9><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 0.2.0"/></a></td>
+          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/tree/v0.2.0" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-0.2.0-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
           <td>.NET 6</td>
       </tr>
       <tr>
@@ -94,10 +94,10 @@ An C# implementation of the Luhn algorithm.
 
 1. Open a console and switch to the directory, containing your project file.
 
-2. Use the following command to install version 0.1.0 of the LuhnDotNet package:
+2. Use the following command to install version 0.2.0 of the LuhnDotNet package:
 
     ```dotnetcli
-    dotnet add package LuhnDotNet -v 0.1.0 -f <FRAMEWORK>
+    dotnet add package LuhnDotNet -v 0.2.0 -f <FRAMEWORK>
     ```
 
 3. After the completition of the command, look at the project file to make sure that the package is successfuly installed.
@@ -106,7 +106,7 @@ An C# implementation of the Luhn algorithm.
 
     ```xml
     <ItemGroup>
-      <PackageReference Include="LuhnDotNet" Version="0.1.0" />
+      <PackageReference Include="LuhnDotNet" Version="0.2.0" />
     </ItemGroup>
     ```
 ## Remove LuhnDotNet package
