@@ -15,7 +15,7 @@ An C# implementation of the Luhn algorithm.
       <tr>
           <td rowspan=9><a href ="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+%28All+supported+TFM%29%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20(All%20supported%20TFM)/badge.svg" alt="Build status"/></a></td>
           <td rowspan=9><code>LuhnDotNet.sln</code></td>
-          <td rowspan=9>Core</td>
+          <td rowspan=9>SDK</td>
           <td>Standard 2.0</td>
       </tr>
       <tr>
