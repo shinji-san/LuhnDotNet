@@ -11,15 +11,20 @@
         <PackageId>LuhnDotNet</PackageId>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageDescription>An C# implementation of the Luhn algorithm</PackageDescription>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>luhn;luhn-algorithm</PackageTags>
         <PackageProjectUrl>https://github.com/shinji-san/LuhnDotNet</PackageProjectUrl>
         <RepositoryUrl>https://github.com/shinji-san/LuhnDotNet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <Version>0.1.0</Version>
+        <Version>0.2.0</Version>
         <Authors>Sebastian Walther</Authors>
         <Company>Private Person</Company>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="..\README.md" Pack="true" PackagePath="\"/>
+    </ItemGroup>
     
     <ItemGroup>
         <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies" Version="1.0.3">
