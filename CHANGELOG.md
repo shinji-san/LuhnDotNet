@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Changed parameter type of `Luhn.IsValid`, `Luhn.ComputeLuhnNumber` and `Luhn.ComputeCheckDigit` methods from `string` to `ReadOnlySpan<char>`.
 
+### Deprecated
+- `Luhn.Compute()` method is EOL and will be deleted in the next version. Use `Luhn.ComputeCheckDigit()` or `Luhn.ComputeLuhanNumber() instead`.
+
 ## [0.2.0] - 2022-12-18
 ### Added
 - Added .NET 7 support
