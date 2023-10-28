@@ -37,7 +37,9 @@ namespace LuhnDotNet
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
+#if !NET6_0_OR_GREATER
     using System.Text.RegularExpressions;
+#endif
 
     /// <summary>
     /// C# implementation of the Luhn algorithm
@@ -66,7 +68,11 @@ namespace LuhnDotNet
         /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+#if NET6_0_OR_GREATER
+        public static byte ComputeLuhnCheckDigit(ReadOnlySpan<char> number) =>
+#else
         public static byte ComputeLuhnCheckDigit(string number) =>
+#endif
             (byte)(Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits());
 
         /// <summary>
@@ -77,14 +83,22 @@ namespace LuhnDotNet
         /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+#if NET6_0_OR_GREATER
+        public static string ComputeLuhnNumber(ReadOnlySpan<char> number)
+#else
         public static string ComputeLuhnNumber(string number)
+#endif
         {
             byte checkDigit = (byte)(Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits());
+#if NET6_0_OR_GREATER
+            return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
+#else
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}{1}",
                 number.Trim(),
                 checkDigit.ToString(CultureInfo.InvariantCulture));
+#endif
         }
 
         /// <summary>
@@ -99,7 +113,11 @@ namespace LuhnDotNet
         /// (on the right side).</remarks>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+#if NET6_0_OR_GREATER
+        public static bool IsValid(ReadOnlySpan<char> luhnNumber) =>
+#else
         public static bool IsValid(string luhnNumber) =>
+#endif
             luhnNumber.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
 
         /// <summary>
@@ -115,7 +133,11 @@ namespace LuhnDotNet
         /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+#if NET6_0_OR_GREATER
+        public static bool IsValid(ReadOnlySpan<char> number, byte checkDigit)
+#else
         public static bool IsValid(string number, byte checkDigit)
+#endif
         {
             if (checkDigit > 9)
             {
@@ -125,11 +147,15 @@ namespace LuhnDotNet
                     "The check digit must be between 0 and 9");
             }
 
+#if NET6_0_OR_GREATER
+            return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture)).AsSpan()
+#else
             return string.Format(
                     CultureInfo.InvariantCulture,
                     "{0}{1}",
                     number.Trim(),
                     checkDigit.ToString(CultureInfo.InvariantCulture))
+#endif
                 .IsNumber()
                 .GetDigits()
                 .DoubleEverySecondDigit(true)
@@ -172,6 +198,7 @@ namespace LuhnDotNet
         /// <see langword="false"/></returns>
         private static bool IsEven(this int value) => value % 2 == 0;
 
+#if !NET6_0_OR_GREATER
         /// <summary>
         /// Checks whether or not the the number is valid
         /// </summary>
@@ -188,12 +215,63 @@ namespace LuhnDotNet
 
             return trimmedNumber;
         }
+#endif
+
+#if NET6_0_OR_GREATER
+        /// <summary>
+        /// Checks whether or not the the number is valid
+        /// </summary>
+        /// <param name="number">An identification number</param>
+        /// <returns>The trimmed identification number if valid</returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
+        private static ReadOnlySpan<char> IsNumber(this ReadOnlySpan<char> number)
+        {
+            var trimmedNumber = number.Trim();
+            if (trimmedNumber.Length == 0 || !trimmedNumber.IsDigits())
+            {
+                throw new ArgumentException($"The string '{number}' is not a number!", nameof(number));
+            }
+
+            return trimmedNumber;
+        }
+
+        /// <summary>
+        /// Checks whether or not the <paramref name="number"/> contains only digits
+        /// </summary>
+        /// <param name="number">An identification number</param>
+        /// <returns><see langword="true" /> if the <paramref name="number"/> contains only digits; otherwise
+        /// <see langword="false"/></returns>
+        private static bool IsDigits(this ReadOnlySpan<char> number)
+        {
+            for (int i = 0; i < number.Length; i++)
+            {
+                if (!char.IsDigit(number[i]))
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+#endif
 
         /// <summary>
         /// Get all digits of the <paramref name="number"/> in reverse order
         /// </summary>
         /// <param name="number">An identification number</param>
         /// <returns>Enumeration of digits</returns>
+#if NET6_0_OR_GREATER
+        private static IEnumerable<uint> GetDigits(this ReadOnlySpan<char> number)
+        {
+            uint[] digits = new uint[number.Length];
+            for (int i = 0; i < number.Length; i++)
+            {
+                digits[number.Length - i - 1] = (uint)number[i] - 48;
+            }
+
+            return digits;
+        }
+#else
         private static IEnumerable<uint> GetDigits(this string number)
         {
             for (int i = number.Length - 1; i >= 0; i--)
@@ -201,6 +279,7 @@ namespace LuhnDotNet
                 yield return (uint)number[i] - 48;
             }
         }
+#endif
 
         /// <summary>
         /// Computes the sum of all digits
