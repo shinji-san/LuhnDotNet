@@ -57,7 +57,7 @@ namespace LuhnDotNet
         /// <param name="number">An identification number w/o check digit.</param>
         /// <returns>The calculated Luhn check digit.</returns>
         /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
-        [Obsolete("Use Luhn.CalculateCheckDigit instead", false)]
+        [Obsolete("Use Luhn.CalculateCheckDigit instead", true)]
         public static byte Compute(string number) => ComputeLuhnCheckDigit(number);
 
         /// <summary>
