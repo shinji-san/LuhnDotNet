@@ -21,7 +21,7 @@ jobs:
     - name: Setup .NET 6
       uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: 6.0.100
+        dotnet-version: 6.0.416
 
     - name: Setup .NET 7
       uses: actions/setup-dotnet@v3
@@ -30,7 +30,7 @@ jobs:
 
     - name: .NET Core SxS
       run: |
-        rsync -a ${DOTNET_ROOT/7.0.403/6.0.100}/* $DOTNET_ROOT/
+        rsync -a ${DOTNET_ROOT/7.0.403/6.0.416}/* $DOTNET_ROOT/
 
     - name: Restore
       run: dotnet restore LuhnDotNet.sln
