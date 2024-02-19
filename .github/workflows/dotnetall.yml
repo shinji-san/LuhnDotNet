@@ -33,10 +33,6 @@ jobs:
       with:
         dotnet-version: 8.0.100
 
-    - name: .NET Core SxS
-      run: |
-        rsync -a ${DOTNET_ROOT/8.0.100/7.0.403/6.0.416}/* $DOTNET_ROOT/
-
     - name: Restore
       run: dotnet restore LuhnDotNet.sln
 
