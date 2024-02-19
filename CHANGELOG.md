@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Added .NET 8 support
+- Added support for SourceLink (GitHub)
+- Enable deterministic builds
 
 ### Changed
 - Changed parameter type of `Luhn.IsValid`, `Luhn.ComputeLuhnNumber` and `Luhn.ComputeCheckDigit` methods from `string` to `ReadOnlySpan<char>`.
