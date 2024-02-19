@@ -14,21 +14,22 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
 
     - name: Setup .NET 6
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 6.0.100
+        dotnet-version: 6.0.416
 
     - name: Setup .NET 7
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: 7.0.100
+        dotnet-version: 7.0.403
 
-    - name: .NET Core SxS
-      run: |
-        rsync -a ${DOTNET_ROOT/7.0.100/6.0.100}/* $DOTNET_ROOT/
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.0.100
 
     - name: Decrypt large secret
       run: ./.github/secrets/decrypt_publisher_snk.sh
@@ -40,10 +41,10 @@ jobs:
       run: dotnet restore LuhnDotNet.sln
 
     - name: Build
-      run: dotnet build --configuration Release LuhnDotNet.sln
+      run: dotnet build --no-restore --configuration Release LuhnDotNet.sln
 
     - name: Test
-      run: dotnet test --configuration Release LuhnDotNet.sln
+      run: dotnet test --no-restore --no-build --configuration Release LuhnDotNet.sln
 
     - name: Remove obsolete NuGet packages
       run: rm -f src/bin/Release/LuhnDotNet*.nupk
@@ -54,7 +55,7 @@ jobs:
         grep -n "# CLI building instructions" README.md | cut -d: -f 1| xargs -i head -n {} README.md | head -n -1 > TMP.md && mv -f TMP.md README.md
 
     - name: Create package
-      run: dotnet pack --configuration Release LuhnDotNet.sln
+      run: dotnet pack --no-restore --no-build --configuration Release LuhnDotNet.sln
 
     - name: Publish package
       run: dotnet nuget push $(find src/bin/Release -type f  -name 'LuhnDotNet*.nupkg' -print 2> /dev/null) -k  ${{ secrets.NUGET_API_KEY }}  -s https://api.nuget.org/v3/index.json --skip-duplicate

@@ -145,7 +145,6 @@ namespace LuhnDotNetTest
         [MemberData(nameof(LuhnCheckDigitComputeSet), MemberType = typeof(LuhnTest))]
         public void ComputeLuhnCheckDigitTest(byte expectedCheckDigit, string rawNumber)
         {
-            Assert.Equal(expectedCheckDigit, Compute(rawNumber));
             Assert.Equal(expectedCheckDigit, ComputeLuhnCheckDigit(rawNumber));
         }
 
@@ -188,7 +187,6 @@ namespace LuhnDotNetTest
         [MemberData(nameof(InvalidNumbers), MemberType = typeof(LuhnTest))]
         public void ComputeCheckDigitExceptionTest(string invalidNumber)
         {
-            Assert.Throws<ArgumentException>(() => Compute(invalidNumber));
             Assert.Throws<ArgumentException>(() => ComputeLuhnCheckDigit(invalidNumber));
         }
 
