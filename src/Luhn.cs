@@ -73,7 +73,7 @@ namespace LuhnDotNet
 #else
         public static byte ComputeLuhnCheckDigit(string number) =>
 #endif
-            (byte)(Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits());
+            (byte)((Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
 
         /// <summary>
         /// Computes the Luhn number which is a combination of the given number and the calculated check digit.
@@ -89,7 +89,7 @@ namespace LuhnDotNet
         public static string ComputeLuhnNumber(string number)
 #endif
         {
-            byte checkDigit = (byte)(Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits());
+            byte checkDigit = (byte)((Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
 #if NET6_0_OR_GREATER
             return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
 #else

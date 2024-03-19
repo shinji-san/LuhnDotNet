@@ -16,10 +16,13 @@ namespace LuhnDotNetTest
         public static IEnumerable<object[]> LuhnCheckDigitComputeSet =>
             new List<object[]>
             {
+                new object[] { 4, "1789372997" },
+                new object[] { 0, "353011133330000" },
                 new object[] { 3, "7992739871" },
                 new object[] { 3, "07992739871" },
                 new object[] { 3, "007992739871" },
                 new object[] { 2, "110494" },
+                new object[] { 7, "1893" },
                 new object[] { 5, "37828224631000" },
                 new object[] { 5, "637095000000000" },
                 new object[] { 5, " 637095000000000" },
@@ -35,10 +38,13 @@ namespace LuhnDotNetTest
         public static IEnumerable<object[]> LuhnNumberComputeSet =>
             new List<object[]>
             {
+                new object[] { "17893729974", "1789372997" },
+                new object[] { "3530111333300000", "353011133330000" },
                 new object[] { "79927398713", "7992739871" },
                 new object[] { "079927398713", "07992739871" },
                 new object[] { "0079927398713", "007992739871" },
                 new object[] { "1104942", "110494" },
+                new object[] { "18937", "1893" },
                 new object[] { "378282246310005", "37828224631000" },
                 new object[] { "6370950000000005", "637095000000000" },
                 new object[] { "6370950000000005", " 637095000000000" },
@@ -54,10 +60,13 @@ namespace LuhnDotNetTest
         public static IEnumerable<object[]> LuhnNumberValidationSet =>
             new List<object[]>
             {
+                new object[] { true, "17893729974" },
+                new object[] { true, "3530111333300000" },
                 new object[] { true, "79927398713" },
                 new object[] { true, "0079927398713" },
                 new object[] { true, "079927398713" },
                 new object[] { true, "1104942" },
+                new object[] { true, "18937" },
                 new object[] { true, "01104942" },
                 new object[] { true, "378282246310005" },
                 new object[] { true, "6370950000000005" },
@@ -79,11 +88,14 @@ namespace LuhnDotNetTest
         public static IEnumerable<object[]> LuhnCheckDigitValidationSet =>
             new List<object[]>
             {
+                new object[] { true, "1789372997", 4 },
+                new object[] { true, "353011133330000", 0 },
                 new object[] { true, "7992739871", 3 },
                 new object[] { true, "07992739871", 3 },
                 new object[] { true, "007992739871", 3 },
                 new object[] { true, "0007992739871", 3 },
                 new object[] { true, "110494", 2 },
+                new object[] { true, "1893", 7 },
                 new object[] { true, "37828224631000", 5 },
                 new object[] { true, "637095000000000", 5 },
                 new object[] { true, " 637095000000000", 5 },
