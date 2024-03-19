@@ -61,9 +61,9 @@ An C# implementation of the Luhn algorithm.
   </thead>
   <tbody>
       <tr>
-          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v1.0.0" alt="LuhnDotNet NuGet"/></a></td>
-          <td rowspan=10><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 1.0.0"/></a></td>
-          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/tree/v1.0.0" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-1.0.0-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
+          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v1.0.1" alt="LuhnDotNet NuGet"/></a></td>
+          <td rowspan=10><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 1.0.1"/></a></td>
+          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/tree/v1.0.1" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-1.0.1-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
           <td>.NET 6</td>
       </tr>
       <tr>
@@ -100,19 +100,19 @@ An C# implementation of the Luhn algorithm.
 
 1. Open a console and switch to the directory, containing your project file.
 
-2. Use the following command to install version 1.0.0 of the LuhnDotNet package:
+2. Use the following command to install version 1.0.1 of the LuhnDotNet package:
 
     ```dotnetcli
-    dotnet add package LuhnDotNet -v 1.0.0 -f <FRAMEWORK>
+    dotnet add package LuhnDotNet -v 1.0.1 -f <FRAMEWORK>
     ```
 
-3. After the completition of the command, look at the project file to make sure that the package is successfuly installed.
+3. After the completion of the command, look at the project file to make sure that the package is successfully installed.
 
    You can open the `.csproj` file to see the added package reference:
 
     ```xml
     <ItemGroup>
-      <PackageReference Include="LuhnDotNet" Version="1.0.0" />
+      <PackageReference Include="LuhnDotNet" Version="1.0.1" />
     </ItemGroup>
     ```
 ## Remove LuhnDotNet package
@@ -125,7 +125,7 @@ An C# implementation of the Luhn algorithm.
     dotnet remove package LuhnDotNet
     ```
 
-3. After the completition of the command, look at the project file to make sure that the package is successfuly removed.
+3. After the completion of the command, look at the project file to make sure that the package is successfuly removed.
 
    You can open the `.csproj` file to check the deleted package reference.
 
