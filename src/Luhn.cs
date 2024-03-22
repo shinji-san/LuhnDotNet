@@ -38,6 +38,7 @@ namespace LuhnDotNet
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
 #if !NET6_0_OR_GREATER
+    using System.Text;
     using System.Text.RegularExpressions;
 #endif
 
@@ -161,6 +162,68 @@ namespace LuhnDotNet
                 .DoubleEverySecondDigit(true)
                 .SumDigits() == 0;
         }
+
+        /// <summary>
+        /// Converts an alphanumeric string to a numeric string.
+        /// </summary>
+        /// <param name="alphaNumeric">The alphanumeric string to convert.</param>
+        /// <returns>A numeric string where each letter in the input string is replaced by its decimal ASCII value
+        /// minus 55.</returns>
+        /// <remarks>
+        /// This method iterates over each character in the input string. If the character is a letter, it is replaced
+        /// by its decimal ASCII value minus 55. If the character is a digit, it is left unchanged.
+        /// </remarks>
+        public static string ConvertAlphaNumericToNumeric(this string alphaNumeric)
+#if NET6_0_OR_GREATER
+        {
+            Span<char> result = stackalloc char[alphaNumeric.Length * 2];
+            int index = 0;
+
+            foreach (char c in alphaNumeric.ToUpper())
+            {
+                if (char.IsLetter(c))
+                {
+                    string numericValue = (c - 55).ToString();
+                    foreach (char numChar in numericValue)
+                    {
+                        result[index++] = numChar;
+                    }
+                }
+                else if (char.IsDigit(c))
+                {
+                    result[index++] = c;
+                }
+                else
+                {
+                    throw new ArgumentException($"The character '{c}' is not a letter or a digit!", nameof(alphaNumeric));
+                }
+            }
+
+            return result[..index].ToString();
+        }
+#else
+        {
+            var result = new StringBuilder();
+
+            foreach (char c in alphaNumeric.ToUpper())
+            {
+                if (char.IsLetter(c))
+                {
+                    result.Append(c - 55);
+                }
+                else if (char.IsDigit(c))
+                {
+                    result.Append(c);
+                }
+                else
+                {
+                    throw new ArgumentException($"The character '{c}' is not a letter or a digit!", nameof(alphaNumeric));
+                }
+            }
+
+            return result.ToString();
+        }
+#endif
 
         /// <summary>
         /// Doubling of every second digit.

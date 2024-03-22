@@ -6,6 +6,7 @@
         <SignAssembly>True</SignAssembly>
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <ImplicitUsings>disable</ImplicitUsings>
+        <LangVersion>latest</LangVersion>
         <Nullable>disable</Nullable>
         <Authors>Sebastian Walther</Authors>
         <PackageId>LuhnDotNet</PackageId>

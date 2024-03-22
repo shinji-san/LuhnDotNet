@@ -1,6 +1,8 @@
 # LuhnDotNet
 An C# implementation of the Luhn algorithm.
 
+The Luhn algorithm is a checksum formula used to validate identification numbers like credit card numbers. It works by doubling every second digit from the right, summing all the digits, and checking if the total is a multiple of 10. It's widely used and is specified in ISO/IEC 7812-1.
+
 # Build & Test Status Of Default Branch
 <table>
   <thead>
@@ -205,6 +207,57 @@ namespace Example4
       var isValid = Luhn.IsValid("37828224631000", 5);
       //// Must be 'true'
       Console.WriteLine(isValid);
+    }
+  }
+}
+```
+
+## Validate ISIN with LuhnDotNet and ConvertAlphaNumericToNumeric
+
+The `LuhnDotNet` library can be used in combination with the `ConvertAlphaNumericToNumeric` method to validate an International Securities Identification Number (ISIN). An ISIN uniquely identifies a security, such as stocks, bonds or derivatives. It is a 12-character alphanumeric code.
+
+The `ConvertAlphaNumericToNumeric` method is used to convert the alphanumeric ISIN to a numeric string, where each letter in the input string is replaced by its decimal ASCII value minus 55. This numeric string can then be validated using the `Luhn.IsValid` method.
+
+Here is an example of how to use these methods to validate an ISIN:
+
+```csharp
+using System;
+using LuhnDotNet;
+
+namespace Example5
+{
+  public class Program
+  {
+    public static void Main(string[] args)
+    {
+      string isin = "US0378331005";
+      bool isValid = Luhn.IsValid(isin.ConvertAlphaNumericToNumeric());
+
+      Console.WriteLine($"The ISIN {isin} is valid: {isValid}");
+    }
+  }
+}
+```
+## Compute ISIN Check Digit with LuhnDotNet and ConvertAlphaNumericToNumeric
+
+The `LuhnDotNet` library provides the `ComputeLuhnCheckDigit` method which can be used to compute the check digit of a numeric string according to the Luhn algorithm. When dealing with an International Securities Identification Number (ISIN), which is a 12-character alphanumeric code, we first need to convert the alphanumeric ISIN to a numeric string. This can be achieved using the `ConvertAlphaNumericToNumeric` method.
+
+Here is an example of how to compute the check digit of an ISIN:
+
+```csharp
+using System;
+using LuhnDotNet;
+
+namespace Example6
+{
+  public class Program
+  {
+    public static void Main(string[] args)
+    {
+      string isinWithoutCheckDigit = "US037833100";
+      byte checkDigit = Luhn.ComputeLuhnCheckDigit(isinWithoutCheckDigit.ConvertAlphaNumericToNumeric());
+
+      Console.WriteLine($"The check digit for ISIN {isinWithoutCheckDigit} is: {checkDigit}");
     }
   }
 }
