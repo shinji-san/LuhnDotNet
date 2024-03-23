@@ -243,5 +243,108 @@ namespace LuhnDotNetTest
         {
             Assert.Throws<ArgumentOutOfRangeException>(() => IsValid(invalidNumber, checkDigit));
         }
+
+        /// <summary>
+        /// Test data for ConvertAlphaNumericToNumeric method.
+        /// </summary>
+        public static IEnumerable<object[]> ConvertAlphaNumericToNumericData =>
+            new List<object[]>
+            {
+                new object[] { "A1B2C3", "101112123" },
+                new object[] { "Z9Y8X7", "359348337" },
+                new object[] { "123", "123" },
+                new object[] { "DE0006069008", "13140006069008" },
+                new object[] { "ABC", "101112" },
+                new object[] { "", "" },
+            };
+
+        /// <summary>
+        /// Tests the ConvertAlphaNumericToNumeric method.
+        /// </summary>
+        /// <param name="input">Input string</param>
+        /// <param name="expected">Expected output</param>
+        [Theory(DisplayName = "Converts an alphanumeric string to a numeric string")]
+        [MemberData(nameof(ConvertAlphaNumericToNumericData), MemberType = typeof(LuhnTest))]
+        public void ConvertAlphaNumericToNumericTest(string input, string expected)
+        {
+            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric());
+        }
+
+        /// <summary>
+        /// Tests the ConvertAlphaNumericToNumeric method with invalid input.
+        /// </summary>
+        /// <remarks>
+        /// This test checks if the ConvertAlphaNumericToNumeric method throws an ArgumentException when it is given an
+        /// invalid input string that contains non-alphanumeric characters. The test uses the Assert.Throws method from
+        /// xUnit to check if the expected exception is thrown.
+        /// </remarks>
+        [Fact]
+        public void ConvertAlphaNumericToNumericExceptionTest()
+        {
+            Assert.Throws<ArgumentException>(()=> "!@#$%^&*()".ConvertAlphaNumericToNumeric());
+        }
+
+        /// <summary>
+        /// Test data for IsValid method in combination with ConvertAlphaNumericToNumeric.
+        /// </summary>
+        public static IEnumerable<object[]> IsValidWithConvertData =>
+            new List<object[]>
+            {
+                new object[] { "DE0006069008", true },
+                new object[] { "DE0006069007", false },
+                new object[] { "DE000BAY0017", true },
+                new object[] { "DE000BAY0018", false },
+                new object[] { "AU0000XVGZA3", true },
+                new object[] { "US0378331005", true },
+            };
+
+        /// <summary>
+        /// Tests the IsValid method in combination with ConvertAlphaNumericToNumeric.
+        /// </summary>
+        /// <param name="input">Input string</param>
+        /// <param name="expected">Expected output</param>
+        [Theory(DisplayName = "Validates a numeric string converted from an alphanumeric string")]
+        [MemberData(nameof(IsValidWithConvertData), MemberType = typeof(LuhnTest))]
+        public void IsValidWithConvertTest(string input, bool expected)
+        {
+            Assert.Equal(expected, IsValid(input.ConvertAlphaNumericToNumeric()));
+        }
+
+        /// <summary>
+        /// Provides test data for the ComputeLuhnCheckDigit method in combination with ConvertAlphaNumericToNumeric.
+        /// </summary>
+        /// <remarks>
+        /// This method returns a collection of object arrays, where each array contains an input string and the
+        /// expected output for the ComputeLuhnCheckDigit method. The input string is an alphanumeric string that
+        /// represents a part of an ISIN without the check digit. The expected output is the check digit that makes the
+        /// entire ISIN valid according to the Luhn algorithm.
+        /// </remarks>
+        public static IEnumerable<object[]> ComputeLuhnCheckDigitWithConvertData =>
+            new List<object[]>
+            {
+                new object[] { "DE000606900", 8 },
+                new object[] { "DE000BAY001", 7 },
+                new object[] { "AU0000XVGZA", 3 },
+                new object[] { "US037833100", 5 },
+            };
+
+        /// <summary>
+        /// Tests the ComputeLuhnCheckDigit method in combination with ConvertAlphaNumericToNumeric.
+        /// </summary>
+        /// <param name="input">Input string</param>
+        /// <param name="expected">Expected output</param>
+        /// <remarks>
+        /// This test checks if the ComputeLuhnCheckDigit method returns the expected check digit when it is given an
+        /// alphanumeric string that represents a part of an ISIN without the check digit. The input string is first
+        /// converted to a numeric string using the ConvertAlphaNumericToNumeric method, and then the
+        /// ComputeLuhnCheckDigit method is called with this numeric string. The test uses the Assert.Equal method from
+        /// xUnit to check if the actual check digit matches the expected check digit.
+        /// </remarks>
+        [Theory]
+        [MemberData(nameof(ComputeLuhnCheckDigitWithConvertData), MemberType = typeof(LuhnTest))]
+        public void ComputeLuhnCheckDigitWithConvertTest(string input, byte expected)
+        {
+            Assert.Equal(expected, ComputeLuhnCheckDigit(input.ConvertAlphaNumericToNumeric()));
+        }
     }
 }
