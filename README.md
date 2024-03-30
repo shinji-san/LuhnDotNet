@@ -63,9 +63,9 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
   </thead>
   <tbody>
       <tr>
-          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v1.0.1" alt="LuhnDotNet NuGet"/></a></td>
-          <td rowspan=10><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 1.0.1"/></a></td>
-          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/tree/v1.0.1" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-1.0.1-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
+          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v1.1.0" alt="LuhnDotNet NuGet"/></a></td>
+          <td rowspan=10><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 1.1.0"/></a></td>
+          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/tree/v1.1.0" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-1.1.0-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
           <td>.NET 6</td>
       </tr>
       <tr>
@@ -102,10 +102,10 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
 
 1. Open a console and switch to the directory, containing your project file.
 
-2. Use the following command to install version 1.0.1 of the LuhnDotNet package:
+2. Use the following command to install version 1.1.0 of the LuhnDotNet package:
 
     ```dotnetcli
-    dotnet add package LuhnDotNet -v 1.0.1 -f <FRAMEWORK>
+    dotnet add package LuhnDotNet -v 1.1.0 -f <FRAMEWORK>
     ```
 
 3. After the completion of the command, look at the project file to make sure that the package is successfully installed.
@@ -114,7 +114,7 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
 
     ```xml
     <ItemGroup>
-      <PackageReference Include="LuhnDotNet" Version="1.0.1" />
+      <PackageReference Include="LuhnDotNet" Version="1.1.0" />
     </ItemGroup>
     ```
 ## Remove LuhnDotNet package
@@ -263,6 +263,50 @@ namespace Example6
 }
 ```
 
+## Compute credit card number with LuhnDotNet
+The `LuhnDotNet` library can be used to compute the check digit of a credit card number. The check digit is the last digit of the credit card number, which is used to validate the number according to the Luhn algorithm.
+
+```csharp
+using System;
+using LuhnDotNet;
+
+namespace Example7
+{
+  public class Program
+  {
+    public static void Main(string[] args)
+    {
+      string creditCardNumberWithoutCheckDigit = "4417 1234 5678 911".Replace(" ", "");
+      byte checkDigit = Luhn.ComputeLuhnCheckDigit(creditCardNumberWithoutCheckDigit);
+
+      Console.WriteLine($"The check digit for credit card number {creditCardNumberWithoutCheckDigit} is: {checkDigit}");
+    }
+  }
+}
+```
+
+## Validate credit card number with LuhnDotNet
+The `LuhnDotNet` library can be used to validate a credit card number according to the Luhn algorithm. The `IsValid` method returns `true` if the credit card number is valid, and `false` otherwise.
+
+```csharp
+using System;
+using LuhnDotNet;
+
+namespace Example8
+{
+  public class Program
+  {
+    public static void Main(string[] args)
+    {
+      string creditCardNumber = "4417 1234 5678 9113".Replace(" ", "");
+      bool isValid = Luhn.IsValid(creditCardNumber);
+
+      Console.WriteLine($"The credit card number {creditCardNumber} is valid: {isValid}");
+    }
+  }
+}
+```
+
 # CLI building instructions
 For the following instructions, please make sure that you are connected to the internet. If necessary, NuGet will try to restore the [xUnit](https://xunit.net/) packages.
 ## Using dotnet to build for .NET 6, .NET 7, .NET 8 and .NET FX 4.x
@@ -272,30 +316,36 @@ Use one of the following solutions with `dotnet` to build [LuhnDotNet](#luhndotn
 
 The syntax is:
 ```dotnetcli
-dotnet {build|test} -c {Debug|Release} LuhnDotNet.sln
+dotnet {restore|build|test} -c {Debug|Release} LuhnDotNet.sln
+```
+
+### Restore NuGet packages
+
+```dotnetcli
+dotnet restore LuhnDotNet.sln
 ```
 
 The instructions below are examples, which operate on the `LuhnDotNet.sln`.
 ### Build Debug configuration
 
 ```dotnetcli
-dotnet build -c Debug LuhnDotNet.sln
+dotnet build -c Debug --no-restore LuhnDotNet.sln
 ```
 
 ### Build Release configuration
 
 ```dotnetcli
-dotnet build -c Release LuhnDotNet.sln
+dotnet build -c Release --no-restore LuhnDotNet.sln
 ```
 
 ### Test Debug configuration
 
 ```dotnetcli
-dotnet test -c Debug LuhnDotNet.sln
+dotnet test -c Debug --no-restore --no-build LuhnDotNet.sln
 ```
 
 ### Test Release configuration
 
 ```dotnetcli
-dotnet test -c Release LuhnDotNet.sln
+dotnet test -c Release --no-restore --no-build LuhnDotNet.sln
 ```
