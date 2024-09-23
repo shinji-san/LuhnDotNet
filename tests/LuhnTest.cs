@@ -181,7 +181,7 @@ namespace LuhnDotNetTest
             Assert.Equal(expectedResult, IsValid(luhnNumber));
 
         /// <summary>
-        /// Tests number validation with separate check digit.
+        /// Tests number validation with a separate check digit.
         /// </summary>
         /// <param name="expectedResult">Expected validation result</param>
         /// <param name="number">Test number exclusive check digit</param>
@@ -192,7 +192,7 @@ namespace LuhnDotNetTest
             Assert.Equal(expectedResult, IsValid(number, checkDigit));
 
         /// <summary>
-        /// Tests whether or not a exception is thrown when an invalid raw number is passed to the Luhn check
+        /// Tests whether an exception is thrown when an invalid raw number is passed to the Luhn check
         /// digit algorithm. 
         /// </summary>
         [Theory(DisplayName = "Calculates the check digit for an invalid raw number to throw an exception")]
@@ -203,7 +203,7 @@ namespace LuhnDotNetTest
         }
 
         /// <summary>
-        /// Tests whether or not a exception is thrown when an invalid raw number is passed to the Luhn
+        /// Tests whether an exception is thrown when an invalid raw number is passed to the Luhn
         /// number algorithm. 
         /// </summary>
         [Theory(DisplayName = "Calculates the Luhn number for an invalid raw number to throw an exception")]
@@ -212,7 +212,7 @@ namespace LuhnDotNetTest
             Assert.Throws<ArgumentException>(() => ComputeLuhnNumber(invalidNumber));
 
         /// <summary>
-        /// Tests whether or not a exception is thrown when an invalid Luhn number is passed to the Luhn
+        /// Tests whether an exception is thrown when an invalid Luhn number is passed to the Luhn
         /// validation algorithm.
         /// </summary>
         [Theory(DisplayName = "Validates an invalid Luhn number (e.g. none-numeric characters) to throw an exception")]
@@ -223,7 +223,7 @@ namespace LuhnDotNetTest
         }
 
         /// <summary>
-        /// Tests whether or not a exception is thrown when an invalid number and check digit between 0 and 9
+        /// Tests whether an exception is thrown when an invalid number and check digit between 0 and 9
         /// is passed to the Luhn validation algorithm.
         /// </summary>
         [Theory(DisplayName = "Validates an invalid number with any check digit between 0 and 9 to throw an exception")]
@@ -234,7 +234,7 @@ namespace LuhnDotNetTest
         }
 
         /// <summary>
-        /// Tests whether or not a exception is thrown when an invalid check digit (greater tah 9) is passed to the
+        /// Tests whether an exception is thrown when an invalid check digit (greater than 9) is passed to the
         /// Luhn validation algorithm.
         /// </summary>
         [Theory(DisplayName = "Validates a number with separate check digit greater than 9 to throw an exception")]
@@ -275,7 +275,7 @@ namespace LuhnDotNetTest
         /// </summary>
         /// <remarks>
         /// This test checks if the ConvertAlphaNumericToNumeric method throws an ArgumentException when it is given an
-        /// invalid input string that contains non-alphanumeric characters. The test uses the Assert.Throws method from
+        /// invalid input string that contains non-alphanumeric characters. The test uses the Assert. Throws method from
         /// xUnit to check if the expected exception is thrown.
         /// </remarks>
         [Fact]
@@ -317,7 +317,7 @@ namespace LuhnDotNetTest
         /// This method returns a collection of object arrays, where each array contains an input string and the
         /// expected output for the ComputeLuhnCheckDigit method. The input string is an alphanumeric string that
         /// represents a part of an ISIN without the check digit. The expected output is the check digit that makes the
-        /// entire ISIN valid according to the Luhn algorithm.
+        /// entire ISIN valid, according to the Luhn algorithm.
         /// </remarks>
         public static IEnumerable<object[]> ComputeLuhnCheckDigitWithConvertData =>
             new List<object[]>
@@ -337,7 +337,7 @@ namespace LuhnDotNetTest
         /// This test checks if the ComputeLuhnCheckDigit method returns the expected check digit when it is given an
         /// alphanumeric string that represents a part of an ISIN without the check digit. The input string is first
         /// converted to a numeric string using the ConvertAlphaNumericToNumeric method, and then the
-        /// ComputeLuhnCheckDigit method is called with this numeric string. The test uses the Assert.Equal method from
+        /// ComputeLuhnCheckDigit method is called with this numeric string. The test uses the Assert. Equal method from
         /// xUnit to check if the actual check digit matches the expected check digit.
         /// </remarks>
         [Theory]
