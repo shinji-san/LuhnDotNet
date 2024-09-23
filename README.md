@@ -15,9 +15,9 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
   </thead>
   <tbody>
       <tr>
-          <td rowspan=10><a href ="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+%28All+supported+TFM%29%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20(All%20supported%20TFM)/badge.svg" alt="Build status"/></a></td>
-          <td rowspan=10><code>LuhnDotNet.sln</code></td>
-          <td rowspan=10>SDK</td>
+          <td rowspan=9><a href ="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+%28All+supported+TFM%29%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20(All%20supported%20TFM)/badge.svg" alt="Build status"/></a></td>
+          <td rowspan=9><code>LuhnDotNet.sln</code></td>
+          <td rowspan=9>SDK</td>
           <td>Standard 2.0</td>
       </tr>
       <tr>
@@ -42,9 +42,6 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
           <td>.NET 6</td>
       </tr>
       <tr>
-          <td>.NET 7</td>
-      </tr>
-      <tr>
           <td>.NET 8</td>
       </tr>
   </tbody>
@@ -63,13 +60,10 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
   </thead>
   <tbody>
       <tr>
-          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v1.1.0" alt="LuhnDotNet NuGet"/></a></td>
-          <td rowspan=10><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 1.1.0"/></a></td>
-          <td rowspan=10><a href="https://github.com/shinji-san/LuhnDotNet/tree/v1.1.0" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-1.1.0-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
+          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v1.1.0" alt="LuhnDotNet NuGet"/></a></td>
+          <td rowspan=9><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 1.1.0"/></a></td>
+          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/tree/v1.1.0" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-1.1.0-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
           <td>.NET 6</td>
-      </tr>
-      <tr>
-          <td>.NET 7</td>
       </tr>
       <tr>
           <td>.NET 8</td>
