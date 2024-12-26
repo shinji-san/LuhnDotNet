@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Add [API documentation](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html)
+- Add .NET 9 support
 
 ### Removed
 - Removed .NET 7 support
