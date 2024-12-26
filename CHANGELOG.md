@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add project icon
 - Add project social preview image
+- Add `Luhn.IsValidNumber`
+- Add `Luhn.IsValidCheckDigit`
+
+### Deprecated
+- `Luhn.IsValid` methods are deprecated. Use `Luhn.IsValidNumber` or `Luhn.IsValidCheckDigit` instead.
 
 ## [1.2.0] - 2024-12-26
 ### Added

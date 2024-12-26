@@ -1,6 +1,7 @@
 # LuhnDotNet
 ![LuhnDotNet Logo](images/social-media-preview.png)
-An C# implementation of the Luhn algorithm.
+
+A C# implementation of the Luhn algorithm.
 
 The Luhn algorithm is a checksum formula used to validate identification numbers like credit card numbers. It works by doubling every second digit from the right, summing all the digits, and checking if the total is a multiple of 10. It's widely used and is specified in ISO/IEC 7812-1.
 
@@ -138,15 +139,15 @@ using LuhnDotNet;
 
 namespace Example1
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      var checkDigit = Luhn.ComputeLuhnCheckDigit("37828224631000");
-      //// Must be 5
-      Console.WriteLine(checkDigit);
+        public static void Main(string[] args)
+        {
+            var checkDigit = "37828224631000".ComputeLuhnCheckDigit();
+            //// Must be 5
+            Console.WriteLine(checkDigit);
+        }
     }
-  }
 }
 ```
 
@@ -158,15 +159,15 @@ using LuhnDotNet;
 
 namespace Example2
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      var luhnNumber = Luhn.ComputeLuhnNumber("37828224631000");
-      //// Must be 378282246310005
-      Console.WriteLine(luhnNumber);
+        public static void Main(string[] args)
+        {
+            var luhnNumber = "37828224631000".ComputeLuhnNumber();
+            //// Must be 378282246310005
+            Console.WriteLine(luhnNumber);
+        }
     }
-  }
 }
 ```
 
@@ -178,15 +179,15 @@ using LuhnDotNet;
 
 namespace Example3
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      var isValid = Luhn.IsValid("378282246310005");
-      //// Must be 'true'
-      Console.WriteLine(isValid);
+        public static void Main(string[] args)
+        {
+            var isValid = "378282246310005".IsValidLuhnNumber();
+            //// Must be 'true'
+            Console.WriteLine(isValid);
+        }
     }
-  }
 }
 ```
 
@@ -198,15 +199,16 @@ using LuhnDotNet;
 
 namespace Example4
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      var isValid = Luhn.IsValid("37828224631000", 5);
-      //// Must be 'true'
-      Console.WriteLine(isValid);
+        public static void Main(string[] args)
+        {
+            byte checkDigit = 5;
+            var isValid = checkDigit.IsValidLuhnCheckDigit("37828224631000");
+            //// Must be 'true'
+            Console.WriteLine(isValid);
+        }
     }
-  }
 }
 ```
 
@@ -224,16 +226,15 @@ using LuhnDotNet;
 
 namespace Example5
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      string isin = "US0378331005";
-      bool isValid = Luhn.IsValid(isin.ConvertAlphaNumericToNumeric());
-
-      Console.WriteLine($"The ISIN {isin} is valid: {isValid}");
+        public static void Main(string[] args)
+        {
+            string isin = "US0378331005";
+            bool isValid = isin.ConvertAlphaNumericToNumeric().IsValidLuhnNumber();
+            Console.WriteLine($"The ISIN {isin} is valid: {isValid}");
+        }
     }
-  }
 }
 ```
 ## Compute ISIN Check Digit with LuhnDotNet and ConvertAlphaNumericToNumeric
@@ -248,16 +249,15 @@ using LuhnDotNet;
 
 namespace Example6
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      string isinWithoutCheckDigit = "US037833100";
-      byte checkDigit = Luhn.ComputeLuhnCheckDigit(isinWithoutCheckDigit.ConvertAlphaNumericToNumeric());
-
-      Console.WriteLine($"The check digit for ISIN {isinWithoutCheckDigit} is: {checkDigit}");
+        public static void Main(string[] args)
+        {
+            string isinWithoutCheckDigit = "US037833100";
+            byte checkDigit = isinWithoutCheckDigit.ConvertAlphaNumericToNumeric().ComputeLuhnCheckDigit();
+            Console.WriteLine($"The check digit for ISIN {isinWithoutCheckDigit} is: {checkDigit}");
+        }
     }
-  }
 }
 ```
 
@@ -270,16 +270,15 @@ using LuhnDotNet;
 
 namespace Example7
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      string creditCardNumberWithoutCheckDigit = "4417 1234 5678 911".Replace(" ", "");
-      byte checkDigit = Luhn.ComputeLuhnCheckDigit(creditCardNumberWithoutCheckDigit);
-
-      Console.WriteLine($"The check digit for credit card number {creditCardNumberWithoutCheckDigit} is: {checkDigit}");
+        public static void Main(string[] args)
+        {
+            string creditCardNumberWithoutCheckDigit = "4417 1234 5678 911".Replace(" ", "");
+            byte checkDigit = creditCardNumberWithoutCheckDigit.ComputeLuhnCheckDigit();
+            Console.WriteLine($"The check digit for credit card number {creditCardNumberWithoutCheckDigit} is: {checkDigit}");
+        }
     }
-  }
 }
 ```
 
@@ -292,16 +291,15 @@ using LuhnDotNet;
 
 namespace Example8
 {
-  public class Program
-  {
-    public static void Main(string[] args)
+    public class Program
     {
-      string creditCardNumber = "4417 1234 5678 9113".Replace(" ", "");
-      bool isValid = Luhn.IsValid(creditCardNumber);
-
-      Console.WriteLine($"The credit card number {creditCardNumber} is valid: {isValid}");
+        public static void Main(string[] args)
+        {
+            string creditCardNumber = "4417 1234 5678 9113".Replace(" ", "");
+            bool isValid = creditCardNumber.IsValidLuhnNumber();
+            Console.WriteLine($"The credit card number {creditCardNumber} is valid: {isValid}");
+        }
     }
-  }
 }
 ```
 
