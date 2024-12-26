@@ -10,6 +10,7 @@
         <Nullable>disable</Nullable>
         <Authors>Sebastian Walther</Authors>
         <PackageId>LuhnDotNet</PackageId>
+        <PackageIcon>icon.png</PackageIcon>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
         <PackageReleaseNotes>Changelog: https://github.com/shinji-san/LuhnDotNet/blob/v1.2.0/CHANGELOG.md</PackageReleaseNotes>
         <PackageDescription>An C# implementation of the Luhn algorithm</PackageDescription>
@@ -35,6 +36,7 @@
 
     <ItemGroup>
         <None Include="..\README.md" Pack="true" PackagePath="\"/>
+        <None Include="..\images\icon.png" Pack="true" PackagePath=""/>
     </ItemGroup>
     
     <ItemGroup>
