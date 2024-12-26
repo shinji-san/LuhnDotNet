@@ -19,9 +19,14 @@ jobs:
     - uses: actions/checkout@v4
 
     - name: Setup .NET 8
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v4.1.0
       with:
         dotnet-version: 8.0.404
+
+    - name: Setup .NET 9
+      uses: actions/setup-dotnet@v4.1.0
+      with:
+        dotnet-version: 9.0.100
 
     - name: Restore
       run: dotnet restore LuhnDotNet.sln
