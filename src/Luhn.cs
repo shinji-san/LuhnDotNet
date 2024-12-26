@@ -43,7 +43,7 @@ namespace LuhnDotNet
 #endif
 
     /// <summary>
-    /// C# implementation of the Luhn algorithm
+    /// A C# implementation of the Luhn algorithm.
     /// </summary>
     public static class Luhn
     {
@@ -57,16 +57,8 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="number">An identification number w/o check digit.</param>
         /// <returns>The calculated Luhn check digit.</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
-        [Obsolete("Use Luhn.CalculateCheckDigit instead", true)]
-        public static byte Compute(string number) => ComputeLuhnCheckDigit(number);
-
-        /// <summary>
-        /// Computes the Luhn check digit
-        /// </summary>
-        /// <param name="number">An identification number w/o check digit.</param>
-        /// <returns>The calculated Luhn check digit.</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// It contains none-numeric characters.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
 #if NET6_0_OR_GREATER
@@ -77,11 +69,12 @@ namespace LuhnDotNet
             (byte)((Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
 
         /// <summary>
-        /// Computes the Luhn number which is a combination of the given number and the calculated check digit.
+        /// Computes the Luhn number, which is a combination of the given number and the calculated check digit.
         /// </summary>
         /// <param name="number">An identification number w/o check digit.</param>
         /// <returns>The calculated Luhn number.</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// It contains none-numeric characters.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
 #if NET6_0_OR_GREATER
@@ -103,13 +96,13 @@ namespace LuhnDotNet
         }
 
         /// <summary>
-        /// Checks whether or not the Luhn Number is valid
+        /// Checks whether the Luhn Number is valid
         /// </summary>
         /// <param name="luhnNumber">An identification number w/ check digit (Luhn Number).</param>
         /// <returns><see langword="true" /> if the <paramref name="luhnNumber"/> is valid;
         /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="luhnNumber"/> is not a valid number.
-        /// The <paramref name="luhnNumber"/> contains none-numeric characters.</exception>
+        /// <exception cref="ArgumentException"><paramref name="luhnNumber"/> is not valid.
+        /// It contains none-numeric characters.</exception>
         /// <remarks>The check digit must be at the end of the <paramref name="luhnNumber"/>
         /// (on the right side).</remarks>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -122,14 +115,14 @@ namespace LuhnDotNet
             luhnNumber.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
 
         /// <summary>
-        /// Checks whether or not the concatenation of number and corresponding Luhn check digit is valid
+        /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
         /// </summary>
         /// <param name="number">Identification number w/o check digit</param>
         /// <param name="checkDigit">The Luhn check digit</param>
         /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
         /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid.
-        /// The <paramref name="number"/> contains none-numeric characters.</exception>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// It contains none-numeric characters.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
         /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
@@ -169,6 +162,8 @@ namespace LuhnDotNet
         /// <param name="alphaNumeric">The alphanumeric string to convert.</param>
         /// <returns>A numeric string where each letter in the input string is replaced by its decimal ASCII value
         /// minus 55.</returns>
+        /// <exception cref="ArgumentException">The <paramref name="alphaNumeric"/> contains a character
+        /// that is neither a letter nor a digit.</exception>
         /// <remarks>
         /// This method iterates over each character in the input string. If the character is a letter, it is replaced
         /// by its decimal ASCII value minus 55. If the character is a digit, it is left unchanged.
@@ -230,7 +225,7 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="digits">The digits represent a number w/ or w/o check digit.</param>
         /// <param name="forValidation"><see langword="true"/> if the <paramref name="digits"/> represent
-        /// a luhnNumber including check digit; otherwise <see langword="false"/></param>
+        /// a Luhn number including a check digit; otherwise <see langword="false"/></param>
         /// <returns></returns>
         private static IEnumerable<uint> DoubleEverySecondDigit(this IEnumerable<uint> digits, bool forValidation)
         {
@@ -254,7 +249,7 @@ namespace LuhnDotNet
         }
 
         /// <summary>
-        /// Checks whether or not the <paramref name="value"/> is even.
+        /// Checks whether the <paramref name="value"/> is even.
         /// </summary>
         /// <param name="value">A numeric value of type <see cref="System.Int32"/></param>
         /// <returns><see langword="true" /> if the <paramref name="value"/> is even; otherwise
@@ -263,11 +258,11 @@ namespace LuhnDotNet
 
 #if !NET6_0_OR_GREATER
         /// <summary>
-        /// Checks whether or not the the number is valid
+        /// Checks whether the number is valid
         /// </summary>
         /// <param name="number">An identification number</param>
         /// <returns>The trimmed identification number if valid</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
         private static string IsNumber(this string number)
         {
             string trimmedNumber = number?.Trim();
@@ -282,11 +277,11 @@ namespace LuhnDotNet
 
 #if NET6_0_OR_GREATER
         /// <summary>
-        /// Checks whether or not the the number is valid
+        /// Checks whether or not the number is valid
         /// </summary>
         /// <param name="number">An identification number</param>
         /// <returns>The trimmed identification number if valid</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid luhnNumber</exception>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
         private static ReadOnlySpan<char> IsNumber(this ReadOnlySpan<char> number)
         {
             var trimmedNumber = number.Trim();
