@@ -37,7 +37,7 @@ namespace LuhnDotNet
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-#if !NET6_0_OR_GREATER
+#if !NET8_0_OR_GREATER
     using System.Text;
     using System.Text.RegularExpressions;
 #endif
@@ -52,6 +52,7 @@ namespace LuhnDotNet
         /// </summary>
         private const int Modulus = 10;
 
+#if NET8_0_OR_GREATER
         /// <summary>
         /// Computes the Luhn check digit
         /// </summary>
@@ -61,12 +62,42 @@ namespace LuhnDotNet
         /// It contains none-numeric characters.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-#if NET6_0_OR_GREATER
-        public static byte ComputeLuhnCheckDigit(ReadOnlySpan<char> number) =>
-#else
-        public static byte ComputeLuhnCheckDigit(string number) =>
-#endif
+        public static byte ComputeLuhnCheckDigit(this ReadOnlySpan<char> number) =>
             (byte)((Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
+#endif
+
+        /// <summary>
+        /// Computes the Luhn check digit.
+        /// </summary>
+        /// <param name="number">An identification number w/o check digit.</param>
+        /// <returns>The calculated Luhn check digit as a byte.</returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// It contains none-numeric characters.</exception>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+        public static byte ComputeLuhnCheckDigit(this string number) =>
+#if NET8_0_OR_GREATER
+            number.AsSpan().ComputeLuhnCheckDigit();
+#else
+            (byte)((Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
+#endif
+
+#if NET8_0_OR_GREATER
+        /// <summary>
+        /// Computes the Luhn number, which is a combination of the given number and the calculated check digit.
+        /// </summary>
+        /// <param name="number">An identification number w/o check digit.</param>
+        /// <returns>The calculated Luhn number.</returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// It contains none-numeric characters.</exception>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+        public static string ComputeLuhnNumber(this ReadOnlySpan<char> number)
+        {
+            byte checkDigit = number.ComputeLuhnCheckDigit();
+            return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
+        }
+#endif
 
         /// <summary>
         /// Computes the Luhn number, which is a combination of the given number and the calculated check digit.
@@ -77,16 +108,12 @@ namespace LuhnDotNet
         /// It contains none-numeric characters.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-#if NET6_0_OR_GREATER
-        public static string ComputeLuhnNumber(ReadOnlySpan<char> number)
-#else
-        public static string ComputeLuhnNumber(string number)
-#endif
+        public static string ComputeLuhnNumber(this string number)
         {
-            byte checkDigit = (byte)((Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
-#if NET6_0_OR_GREATER
-            return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
+#if NET8_0_OR_GREATER
+            return number.AsSpan().ComputeLuhnNumber();
 #else
+            byte checkDigit = number.ComputeLuhnCheckDigit();
             return string.Format(
                 CultureInfo.InvariantCulture,
                 "{0}{1}",
@@ -94,6 +121,23 @@ namespace LuhnDotNet
                 checkDigit.ToString(CultureInfo.InvariantCulture));
 #endif
         }
+
+#if NET8_0_OR_GREATER
+        /// <summary>
+        /// Checks whether the Luhn Number is valid
+        /// </summary>
+        /// <param name="luhnNumber">An identification number w/ check digit (Luhn Number).</param>
+        /// <returns><see langword="true" /> if the <paramref name="luhnNumber"/> is valid;
+        /// otherwise <see langword="false" /></returns>
+        /// <exception cref="ArgumentException"><paramref name="luhnNumber"/> is not valid.
+        /// It contains none-numeric characters.</exception>
+        /// <remarks>The check digit must be at the end of the <paramref name="luhnNumber"/>
+        /// (on the right side).</remarks>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+        public static bool IsValid(this ReadOnlySpan<char> luhnNumber) =>
+            luhnNumber.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
+#endif
 
         /// <summary>
         /// Checks whether the Luhn Number is valid
@@ -107,13 +151,14 @@ namespace LuhnDotNet
         /// (on the right side).</remarks>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-#if NET6_0_OR_GREATER
-        public static bool IsValid(ReadOnlySpan<char> luhnNumber) =>
+        public static bool IsValid(this string luhnNumber) =>
+#if NET8_0_OR_GREATER
+            luhnNumber.AsSpan().IsValid();
 #else
-        public static bool IsValid(string luhnNumber) =>
-#endif
             luhnNumber.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
+#endif
 
+#if NET8_0_OR_GREATER
         /// <summary>
         /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
         /// </summary>
@@ -127,11 +172,7 @@ namespace LuhnDotNet
         /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-#if NET6_0_OR_GREATER
-        public static bool IsValid(ReadOnlySpan<char> number, byte checkDigit)
-#else
-        public static bool IsValid(string number, byte checkDigit)
-#endif
+        public static bool IsValid(this ReadOnlySpan<char> number, byte checkDigit)
         {
             if (checkDigit > 9)
             {
@@ -141,19 +182,51 @@ namespace LuhnDotNet
                     "The check digit must be between 0 and 9");
             }
 
-#if NET6_0_OR_GREATER
-            return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture)).AsSpan()
+            return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture))
+                .AsSpan()
+                .IsNumber()
+                .GetDigits()
+                .DoubleEverySecondDigit(true)
+                .SumDigits() == 0;
+        }
+#endif
+  
+        /// <summary>
+        /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
+        /// </summary>
+        /// <param name="number">Identification number w/o check digit</param>
+        /// <param name="checkDigit">The Luhn check digit</param>
+        /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
+        /// otherwise <see langword="false" /></returns>
+        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// It contains none-numeric characters.</exception>
+        /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
+        /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
+        [SuppressMessage("ReSharper", "UnusedMember.Global")]
+        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+        public static bool IsValid(this string number, byte checkDigit)
+        {
+#if NET8_0_OR_GREATER
+            return number.AsSpan().IsValid(checkDigit);
 #else
+            if (checkDigit > 9)
+            {
+                throw new ArgumentOutOfRangeException(
+                    nameof(checkDigit),
+                    checkDigit,
+                    "The check digit must be between 0 and 9");
+            }
+
             return string.Format(
                     CultureInfo.InvariantCulture,
                     "{0}{1}",
                     number.Trim(),
                     checkDigit.ToString(CultureInfo.InvariantCulture))
-#endif
                 .IsNumber()
                 .GetDigits()
                 .DoubleEverySecondDigit(true)
                 .SumDigits() == 0;
+#endif
         }
 
         /// <summary>
@@ -169,7 +242,7 @@ namespace LuhnDotNet
         /// by its decimal ASCII value minus 55. If the character is a digit, it is left unchanged.
         /// </remarks>
         public static string ConvertAlphaNumericToNumeric(this string alphaNumeric)
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
         {
             Span<char> result = stackalloc char[alphaNumeric.Length * 2];
             int index = 0;
@@ -256,7 +329,7 @@ namespace LuhnDotNet
         /// <see langword="false"/></returns>
         private static bool IsEven(this int value) => value % 2 == 0;
 
-#if !NET6_0_OR_GREATER
+#if !NET8_0_OR_GREATER
         /// <summary>
         /// Checks whether the number is valid
         /// </summary>
@@ -275,7 +348,7 @@ namespace LuhnDotNet
         }
 #endif
 
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
         /// <summary>
         /// Checks whether or not the number is valid
         /// </summary>
@@ -318,7 +391,7 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="number">An identification number</param>
         /// <returns>Enumeration of digits</returns>
-#if NET6_0_OR_GREATER
+#if NET8_0_OR_GREATER
         private static IEnumerable<uint> GetDigits(this ReadOnlySpan<char> number)
         {
             uint[] digits = new uint[number.Length];
