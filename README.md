@@ -1,4 +1,5 @@
 # LuhnDotNet
+![LuhnDotNet Logo](images/social-media-preview.png)
 An C# implementation of the Luhn algorithm.
 
 The Luhn algorithm is a checksum formula used to validate identification numbers like credit card numbers. It works by doubling every second digit from the right, summing all the digits, and checking if the total is a multiple of 10. It's widely used and is specified in ISO/IEC 7812-1.
