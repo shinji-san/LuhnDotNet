@@ -15,7 +15,7 @@
         <PackageDescription>An C# implementation of the Luhn algorithm</PackageDescription>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>luhn;luhn-algorithm</PackageTags>
-        <PackageProjectUrl>https://github.com/shinji-san/LuhnDotNet</PackageProjectUrl>
+        <PackageProjectUrl>https://sebastian-walther.de/LuhnDotNet/README.html</PackageProjectUrl>
         <RepositoryUrl>https://github.com/shinji-san/LuhnDotNet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
         <Version>1.1.0</Version>

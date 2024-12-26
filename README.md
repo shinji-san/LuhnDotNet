@@ -119,6 +119,9 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
 
    You can open the `.csproj` file to check the deleted package reference.
 
+# API Documentation
+You can find the API documentation [here](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html).
+
 # Usage
 ## Compute the Luhn check digit
 ```csharp
@@ -297,7 +300,7 @@ namespace Example8
 
 # CLI building instructions
 For the following instructions, please make sure that you are connected to the internet. If necessary, NuGet will try to restore the [xUnit](https://xunit.net/) packages.
-## Using dotnet to build for .NET 6, .NET 8 and .NET FX 4.x
+## Using dotnet to build for .NET 8 and .NET FX 4.x
 Use one of the following solutions with `dotnet` to build [LuhnDotNet](#luhndotnet):
 * `LuhnDotNet.sln` (all, [see table](#build--test-status-of-default-branch))
 
