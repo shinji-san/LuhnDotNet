@@ -40,6 +40,7 @@
     "globalMetadata": {
       "_appName": "LuhnDotNet",
       "_appTitle": "LuhnDotNet",
+      "_appLogoPath": "images/doc-icon.png",
       "_enableSearch": true
     }
   }
