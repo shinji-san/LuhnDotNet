@@ -12,14 +12,14 @@
         <PackageId>LuhnDotNet</PackageId>
         <PackageIcon>icon.png</PackageIcon>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
-        <PackageReleaseNotes>Changelog: https://github.com/shinji-san/LuhnDotNet/blob/v1.2.0/CHANGELOG.md</PackageReleaseNotes>
+        <PackageReleaseNotes>Changelog: https://github.com/shinji-san/LuhnDotNet/blob/v1.3.0/CHANGELOG.md</PackageReleaseNotes>
         <PackageDescription>An C# implementation of the Luhn algorithm</PackageDescription>
         <PackageReadmeFile>README.md</PackageReadmeFile>
         <PackageTags>luhn;luhn-algorithm</PackageTags>
         <PackageProjectUrl>https://sebastian-walther.de/LuhnDotNet/README.html</PackageProjectUrl>
         <RepositoryUrl>https://github.com/shinji-san/LuhnDotNet</RepositoryUrl>
         <RepositoryType>git</RepositoryType>
-        <Version>1.2.0</Version>
+        <Version>1.3.0</Version>
         <Authors>Sebastian Walther</Authors>
         <Company>Private Person</Company>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
