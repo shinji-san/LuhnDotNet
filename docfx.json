@@ -2,6 +2,9 @@
   "$schema": "https://raw.githubusercontent.com/dotnet/docfx/main/schemas/docfx.schema.json",
   "metadata": [
     {
+      "properties": {
+        "TargetFramework": "net8.0"
+      },
       "src": [
         {
           "src": "src",
@@ -40,6 +43,7 @@
     "globalMetadata": {
       "_appName": "LuhnDotNet",
       "_appTitle": "LuhnDotNet",
+      "_appLogoPath": "images/doc-icon.png",
       "_enableSearch": true
     }
   }

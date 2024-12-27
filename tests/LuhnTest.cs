@@ -1,9 +1,9 @@
 namespace LuhnDotNetTest
 {
+    using LuhnDotNet;
     using System;
     using System.Collections.Generic;
     using Xunit;
-    using static LuhnDotNet.Luhn;
 
     /// <summary>
     /// Unit tests for the C# implementation of the Luhn algorithm.
@@ -11,7 +11,7 @@ namespace LuhnDotNetTest
     public class LuhnTest
     {
         /// <summary>
-        /// Valid raw test numbers without check digit.
+        /// Valid raw test numbers without the check digit.
         /// </summary>
         public static IEnumerable<object[]> LuhnCheckDigitComputeSet =>
             new List<object[]>
@@ -151,34 +151,47 @@ namespace LuhnDotNetTest
         /// <summary>
         /// Tests the Luhn check digit calculation.
         /// </summary>
-        /// <param name="expectedCheckDigit">Expected check digit</param>
+        /// <param name="expectedCheckDigit">The expected check digit</param>
         /// <param name="rawNumber">Test number exclusive check digit</param>
         [Theory(DisplayName = "Calculates the check digit for a valid raw number")]
         [MemberData(nameof(LuhnCheckDigitComputeSet), MemberType = typeof(LuhnTest))]
-        public void ComputeLuhnCheckDigitTest(byte expectedCheckDigit, string rawNumber)
+        public void ComputeLuhnCheckDigit_ValidRawNumber_ReturnsExpectedCheckDigit(
+            byte expectedCheckDigit,
+            string rawNumber)
         {
-            Assert.Equal(expectedCheckDigit, ComputeLuhnCheckDigit(rawNumber));
+            Assert.Equal(expectedCheckDigit, rawNumber.ComputeLuhnCheckDigit());
+            Assert.Equal(expectedCheckDigit, rawNumber.AsSpan().ComputeLuhnCheckDigit());
         }
 
         /// <summary>
         /// Tests the Luhn number calculation.
         /// </summary>
-        /// <param name="expectedLuhnNumber">Expected check digit</param>
+        /// <param name="expectedLuhnNumber">The expected check digit</param>
         /// <param name="rawNumber">Test number exclusive check digit</param>
         [Theory(DisplayName = "Calculates the Luhn number for a valid raw number")]
         [MemberData(nameof(LuhnNumberComputeSet), MemberType = typeof(LuhnTest))]
-        public void ComputeLuhnNumberTest(string expectedLuhnNumber, string rawNumber) => 
-            Assert.Equal(expectedLuhnNumber, ComputeLuhnNumber(rawNumber));
+        public void ComputeLuhnNumber_ValidRawNumber_ReturnsExpectedLuhnNumber(
+            string expectedLuhnNumber,
+            string rawNumber)
+        {
+            Assert.Equal(expectedLuhnNumber, rawNumber.ComputeLuhnNumber());
+            Assert.Equal(expectedLuhnNumber, rawNumber.AsSpan().ComputeLuhnNumber());
+        }
 
         /// <summary>
         /// Tests Luhn number validation.
         /// </summary>
-        /// <param name="expectedResult">Expected validation result</param>
+        /// <param name="expectedResult">The expected validation result</param>
         /// <param name="luhnNumber">Test number inclusive check digit</param>
         [Theory(DisplayName = "Validates a number containing a check digit")]
         [MemberData(nameof(LuhnNumberValidationSet), MemberType = typeof(LuhnTest))]
-        public void LuhnNumberValidationTest(bool expectedResult, string luhnNumber) =>
-            Assert.Equal(expectedResult, IsValid(luhnNumber));
+        public void LuhnNumberValidationTest(bool expectedResult, string luhnNumber)
+        {
+            Assert.Equal(expectedResult, luhnNumber.IsValid());
+            Assert.Equal(expectedResult, luhnNumber.IsValidLuhnNumber());
+            Assert.Equal(expectedResult, luhnNumber.AsSpan().IsValid());
+            Assert.Equal(expectedResult, luhnNumber.AsSpan().IsValidLuhnNumber());
+        }
 
         /// <summary>
         /// Tests number validation with a separate check digit.
@@ -188,49 +201,66 @@ namespace LuhnDotNetTest
         /// <param name="checkDigit">Test Luhn check digit</param>
         [Theory(DisplayName = "Validates a number with separate check digit between 0 and 9")]
         [MemberData(nameof(LuhnCheckDigitValidationSet), MemberType = typeof(LuhnTest))]
-        public void LuhnCheckDigitValidationTest(bool expectedResult, string number, byte checkDigit) =>
-            Assert.Equal(expectedResult, IsValid(number, checkDigit));
+        public void LuhnCheckDigitValidationTest(bool expectedResult, string number, byte checkDigit)
+        {
+            Assert.Equal(expectedResult, number.IsValid(checkDigit));
+            Assert.Equal(expectedResult, checkDigit.IsValidLuhnCheckDigit(number));
+            Assert.Equal(expectedResult, number.AsSpan().IsValid(checkDigit));
+            Assert.Equal(expectedResult, checkDigit.IsValidLuhnCheckDigit(number.AsSpan()));
+        }
 
         /// <summary>
         /// Tests whether an exception is thrown when an invalid raw number is passed to the Luhn check
         /// digit algorithm. 
         /// </summary>
+        /// <param name="invalidNumber">Invalid raw number</param>
         [Theory(DisplayName = "Calculates the check digit for an invalid raw number to throw an exception")]
         [MemberData(nameof(InvalidNumbers), MemberType = typeof(LuhnTest))]
-        public void ComputeCheckDigitExceptionTest(string invalidNumber)
+        public void ComputeLuhnCheckDigit_InvalidRawNumber_ThrowsArgumentException(string invalidNumber)
         {
-            Assert.Throws<ArgumentException>(() => ComputeLuhnCheckDigit(invalidNumber));
+            Assert.Throws<ArgumentException>(() => invalidNumber.ComputeLuhnCheckDigit());
+            Assert.Throws<ArgumentException>(() => invalidNumber.AsSpan().ComputeLuhnCheckDigit());
         }
 
         /// <summary>
         /// Tests whether an exception is thrown when an invalid raw number is passed to the Luhn
-        /// number algorithm. 
+        /// number calculation algorithm. 
         /// </summary>
+        /// <param name="invalidNumber">Invalid raw number</param>
         [Theory(DisplayName = "Calculates the Luhn number for an invalid raw number to throw an exception")]
         [MemberData(nameof(InvalidNumbers), MemberType = typeof(LuhnTest))]
-        public void ComputeLuhnNumberExceptionTest(string invalidNumber) => 
-            Assert.Throws<ArgumentException>(() => ComputeLuhnNumber(invalidNumber));
+        public void ComputeLuhnNumber_InvalidRawNumber_ThrowsArgumentException(string invalidNumber)
+        {
+            Assert.Throws<ArgumentException>(invalidNumber.ComputeLuhnNumber);
+            Assert.Throws<ArgumentException>(() => invalidNumber.AsSpan().ComputeLuhnNumber());
+        }
 
         /// <summary>
         /// Tests whether an exception is thrown when an invalid Luhn number is passed to the Luhn
-        /// validation algorithm.
+        /// number validation algorithm.
         /// </summary>
         [Theory(DisplayName = "Validates an invalid Luhn number (e.g. none-numeric characters) to throw an exception")]
         [MemberData(nameof(InvalidNumbers), MemberType = typeof(LuhnTest))]
         public void LuhnNumberValidationExceptionTest(string invalidNumber)
         {
-            Assert.Throws<ArgumentException>(() => IsValid(invalidNumber));
+            Assert.Throws<ArgumentException>(() => invalidNumber.IsValid());
+            Assert.Throws<ArgumentException>(() => invalidNumber.IsValidLuhnNumber());
+            Assert.Throws<ArgumentException>(() => invalidNumber.AsSpan().IsValid());
+            Assert.Throws<ArgumentException>(() => invalidNumber.AsSpan().IsValidLuhnNumber());
         }
 
         /// <summary>
-        /// Tests whether an exception is thrown when an invalid number and check digit between 0 and 9
+        /// Tests whether an exception is thrown when an invalid number and a valid check digit between 0 and 9
         /// is passed to the Luhn validation algorithm.
         /// </summary>
         [Theory(DisplayName = "Validates an invalid number with any check digit between 0 and 9 to throw an exception")]
         [MemberData(nameof(InvalidNumbersAndCheckDigits), MemberType = typeof(LuhnTest))]
         public void NumberValidationExceptionTest(string invalidNumber, byte checkDigit)
         {
-            Assert.Throws<ArgumentException>(() => IsValid(invalidNumber, checkDigit));
+            Assert.Throws<ArgumentException>(() => invalidNumber.IsValid(checkDigit));
+            Assert.Throws<ArgumentException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber));
+            Assert.Throws<ArgumentException>(() => invalidNumber.AsSpan().IsValid(checkDigit));
+            Assert.Throws<ArgumentException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber.AsSpan()));
         }
 
         /// <summary>
@@ -241,7 +271,10 @@ namespace LuhnDotNetTest
         [MemberData(nameof(NumbersWithInvalidCheckDigits), MemberType = typeof(LuhnTest))]
         public void LuhnCheckDigitValidationExceptionTest(string invalidNumber, byte checkDigit)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => IsValid(invalidNumber, checkDigit));
+            Assert.Throws<ArgumentOutOfRangeException>(() => invalidNumber.IsValid(checkDigit));
+            Assert.Throws<ArgumentOutOfRangeException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber));
+            Assert.Throws<ArgumentOutOfRangeException>(() => invalidNumber.AsSpan().IsValid(checkDigit));
+            Assert.Throws<ArgumentOutOfRangeException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber.AsSpan()));
         }
 
         /// <summary>
@@ -265,7 +298,7 @@ namespace LuhnDotNetTest
         /// <param name="expected">Expected output</param>
         [Theory(DisplayName = "Converts an alphanumeric string to a numeric string")]
         [MemberData(nameof(ConvertAlphaNumericToNumericData), MemberType = typeof(LuhnTest))]
-        public void ConvertAlphaNumericToNumericTest(string input, string expected)
+        public void ConvertAlphaNumericToNumeric_ShouldReturnExpectedResult(string input, string expected)
         {
             Assert.Equal(expected, input.ConvertAlphaNumericToNumeric());
         }
@@ -278,8 +311,8 @@ namespace LuhnDotNetTest
         /// invalid input string that contains non-alphanumeric characters. The test uses the Assert. Throws method from
         /// xUnit to check if the expected exception is thrown.
         /// </remarks>
-        [Fact]
-        public void ConvertAlphaNumericToNumericExceptionTest()
+        [Fact(DisplayName = "Converts an invalid alphanumeric string to a numeric string to throw an exception")]
+        public void ConvertAlphaNumericToNumeric_InvalidInput_ThrowsArgumentException()
         {
             Assert.Throws<ArgumentException>(()=> "!@#$%^&*()".ConvertAlphaNumericToNumeric());
         }
@@ -307,7 +340,10 @@ namespace LuhnDotNetTest
         [MemberData(nameof(IsValidWithConvertData), MemberType = typeof(LuhnTest))]
         public void IsValidWithConvertTest(string input, bool expected)
         {
-            Assert.Equal(expected, IsValid(input.ConvertAlphaNumericToNumeric()));
+            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().IsValid());
+            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().IsValidLuhnNumber());
+            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().AsSpan().IsValid());
+            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().AsSpan().IsValidLuhnNumber());
         }
 
         /// <summary>
@@ -340,11 +376,14 @@ namespace LuhnDotNetTest
         /// ComputeLuhnCheckDigit method is called with this numeric string. The test uses the Assert. Equal method from
         /// xUnit to check if the actual check digit matches the expected check digit.
         /// </remarks>
-        [Theory]
+        [Theory(DisplayName = "Calculates the check digit for a valid alphanumeric string")]
         [MemberData(nameof(ComputeLuhnCheckDigitWithConvertData), MemberType = typeof(LuhnTest))]
-        public void ComputeLuhnCheckDigitWithConvertTest(string input, byte expected)
+        public void ComputeLuhnCheckDigit_WithConvertAlphaNumericToNumeric_ReturnsExpectedCheckDigit(
+            string input,
+            byte expected)
         {
-            Assert.Equal(expected, ComputeLuhnCheckDigit(input.ConvertAlphaNumericToNumeric()));
+            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().ComputeLuhnCheckDigit());
+            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().AsSpan().ComputeLuhnCheckDigit());
         }
     }
 }
