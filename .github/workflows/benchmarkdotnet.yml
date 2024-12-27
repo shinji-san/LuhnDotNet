@@ -1,0 +1,44 @@
+name: LuhnDotNet - Benchmark.Net
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+  deployments: write
+
+jobs:
+  benchmark:
+    name: Run Benchmark.Net for LuhnDotNet
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET 8
+        uses: actions/setup-dotnet@v4.1.0
+        with:
+          dotnet-version: 8.0.404
+
+      - name: Setup .NET 9
+        uses: actions/setup-dotnet@v4.1.0
+        with:
+          dotnet-version: 9.0.100
+
+      - name: Run benchmark project
+        run: dotnet run --exporters JSON --filter '*' --project benchmark/LuhnDotNetBenchmark.csproj --property:Configuration=Release --runtimes net8.0 net9.0 -f net9.0
+
+      - name: Store benchmark results
+        uses: rhysd/github-action-benchmark@v1
+        with:
+          name: Analyze Benchmark.Net results
+          tool: 'benchmarkdotnet'
+          gh-pages-branch: benchmark-results
+          benchmark-data-dir-path: ./
+          output-file-path: BenchmarkDotNet.Artifacts/results/LuhnDotNetBenchmark.LuhnDotNetBenchmark-report-full-compressed.json
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          auto-push: true
+          alert-threshold: '200%'
+          comment-on-alert: true
+          fail-on-alert: true
+          alert-comment-cc-users: '@shinji-san'

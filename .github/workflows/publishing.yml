@@ -1,4 +1,4 @@
-name: LuhnDotNet NuGet
+name: LuhnDotNet - NuGet Publishing
 
 on:
   push:

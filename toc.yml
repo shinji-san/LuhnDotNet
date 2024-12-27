@@ -1,5 +1,7 @@
 - name: API-Documentation
   href: api/
+- name: Benchmark-Results
+  href: benchmark-results/
 - name: Changelog
   href: CHANGELOG.md
 - name: License
