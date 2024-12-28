@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1735412197114,
+  "lastUpdate": 1735425975043,
   "repoUrl": "https://github.com/shinji-san/LuhnDotNet",
   "entries": {
     "Analyze Benchmark.Net results": [
@@ -1080,6 +1080,222 @@ window.BENCHMARK_DATA = {
             "value": 613.1567932537624,
             "unit": "ns",
             "range": "± 2.378568505981155"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "52977680+shinji-san@users.noreply.github.com",
+            "name": "Sebastian Walther",
+            "username": "shinji-san"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "f5af8d71e5932fd08941643261f546091159dfd6",
+          "message": "Merge pull request #80 from shinji-san/hotfix-ReadmeBadges\n\nUpdate GitHub Actions badge links in README.md\n\nResolves: #80",
+          "timestamp": "2024-12-28T23:35:18+01:00",
+          "tree_id": "a2a7aff2f8a2c34ab20833f6ccb3be3c132c7ba3",
+          "url": "https://github.com/shinji-san/LuhnDotNet/commit/f5af8d71e5932fd08941643261f546091159dfd6"
+        },
+        "date": 1735425974730,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnCheckDigitBasedOnString(number: \"79927398713\")",
+            "value": 119.80827867190042,
+            "unit": "ns",
+            "range": "± 1.2285761470219685"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnCheckDigitBasedOnSpan(number: \"79927398713\")",
+            "value": 119.39989177385966,
+            "unit": "ns",
+            "range": "± 0.9211357760966559"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnCheckDigitBasedOnString(number: \"79927398713\")",
+            "value": 116.54936645825704,
+            "unit": "ns",
+            "range": "± 0.41975874218840903"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnCheckDigitBasedOnSpan(number: \"79927398713\")",
+            "value": 116.49142030477523,
+            "unit": "ns",
+            "range": "± 0.7689537816014829"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnCheckDigitBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 684.0504997253418,
+            "unit": "ns",
+            "range": "± 4.353907153375109"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnCheckDigitBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 675.4579336302621,
+            "unit": "ns",
+            "range": "± 2.6661686948429026"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnCheckDigitBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 682.0495077768961,
+            "unit": "ns",
+            "range": "± 4.486949561913541"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnCheckDigitBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 690.3113729770367,
+            "unit": "ns",
+            "range": "± 2.506099997550194"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnNumberBasedOnString(number: \"79927398713\")",
+            "value": 139.87652767499287,
+            "unit": "ns",
+            "range": "± 1.131776874919865"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnNumberBasedOnSpan(number: \"79927398713\")",
+            "value": 136.50101068814595,
+            "unit": "ns",
+            "range": "± 1.0131228063277884"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnNumberBasedOnString(number: \"79927398713\")",
+            "value": 134.73904948968155,
+            "unit": "ns",
+            "range": "± 0.39723902319720433"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnNumberBasedOnSpan(number: \"79927398713\")",
+            "value": 129.56881165504456,
+            "unit": "ns",
+            "range": "± 0.48715303414154526"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnNumberBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 742.1777685710362,
+            "unit": "ns",
+            "range": "± 3.382557045081797"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnNumberBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 726.5421803338187,
+            "unit": "ns",
+            "range": "± 4.737950297626417"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnNumberBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 696.27812903268,
+            "unit": "ns",
+            "range": "± 2.6700346902047762"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.ComputeLuhnNumberBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 703.2121448516846,
+            "unit": "ns",
+            "range": "± 5.835082355158163"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnCheckDigitBasedOnString(number: \"79927398713\")",
+            "value": 135.8233019034068,
+            "unit": "ns",
+            "range": "± 0.6912421934241381"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnCheckDigitBasedOnSpan(number: \"79927398713\")",
+            "value": 136.83136419149545,
+            "unit": "ns",
+            "range": "± 0.6337806739488476"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnCheckDigitBasedOnString(number: \"79927398713\")",
+            "value": 133.1129549912044,
+            "unit": "ns",
+            "range": "± 0.6326133962363334"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnCheckDigitBasedOnSpan(number: \"79927398713\")",
+            "value": 137.15081795056662,
+            "unit": "ns",
+            "range": "± 0.7424402322791126"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnCheckDigitBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 683.2178314208984,
+            "unit": "ns",
+            "range": "± 3.1883550924958524"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnCheckDigitBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 721.6815228462219,
+            "unit": "ns",
+            "range": "± 5.116778330987322"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnCheckDigitBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 621.7513950788058,
+            "unit": "ns",
+            "range": "± 3.5380684956572317"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnCheckDigitBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 633.1792118208749,
+            "unit": "ns",
+            "range": "± 3.0655565827882607"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnNumberBasedOnString(number: \"79927398713\")",
+            "value": 111.55081982215246,
+            "unit": "ns",
+            "range": "± 0.4588299951984138"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnNumberBasedOnSpan(number: \"79927398713\")",
+            "value": 111.22645553520748,
+            "unit": "ns",
+            "range": "± 0.49350075828154255"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnNumberBasedOnString(number: \"79927398713\")",
+            "value": 108.62521140064511,
+            "unit": "ns",
+            "range": "± 0.26672786146365357"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnNumberBasedOnSpan(number: \"79927398713\")",
+            "value": 111.97518699566523,
+            "unit": "ns",
+            "range": "± 0.8077134262629013"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnNumberBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 627.9440352121989,
+            "unit": "ns",
+            "range": "± 2.4611633190433873"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnNumberBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 638.35226052148,
+            "unit": "ns",
+            "range": "± 2.050171702560758"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnNumberBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 632.4695623942783,
+            "unit": "ns",
+            "range": "± 3.735917488578986"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.LuhnDotNetBenchmark.IsValidLuhnNumberBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 616.4389927546183,
+            "unit": "ns",
+            "range": "± 4.51608153833566"
           }
         ]
       }
