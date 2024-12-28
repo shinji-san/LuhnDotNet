@@ -17,7 +17,7 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
   </thead>
   <tbody>
       <tr>
-          <td rowspan=9><a href ="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+%28All+supported+TFM%29%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20(All%20supported%20TFM)/badge.svg" alt="Build status"/></a></td>
+          <td rowspan=9><a href ="https://github.com/shinji-san/LuhnDotNet/actions/workflows/dotnetall.yml" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/actions/workflows/dotnetall.yml/badge.svg?branch=main" alt="Build status"/></a></td>
           <td rowspan=9><code>LuhnDotNet.sln</code></td>
           <td rowspan=9>SDK</td>
           <td>Standard 2.0</td>
@@ -62,7 +62,7 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
   </thead>
   <tbody>
       <tr>
-          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/actions?query=workflow%3A%22LuhnDotNet+NuGet%22" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/workflows/LuhnDotNet%20NuGet/badge.svg?branch=v1.3.0" alt="LuhnDotNet NuGet"/></a></td>
+          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/actions/workflows/publishing.yml" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/actions/workflows/publishing.yml/badge.svg" alt="LuhnDotNet - NuGet Publishing"/></a></td>
           <td rowspan=9><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 1.3.0"/></a></td>
           <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/tree/v1.3.0" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-1.3.0-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
           <td>.NET 8</td>
