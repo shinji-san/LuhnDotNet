@@ -1,0 +1,5 @@
+﻿<Solution>
+  <Project Path="benchmark\LuhnDotNetBenchmark.csproj" Type="Classic C#" />
+  <Project Path="src\LuhnDotNet.csproj" Type="Classic C#" />
+  <Project Path="tests\LuhnDotNetTest.csproj" Type="Classic C#" />
+</Solution>
