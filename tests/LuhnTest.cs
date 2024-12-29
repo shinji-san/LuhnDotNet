@@ -187,9 +187,7 @@ namespace LuhnDotNetTest
         [MemberData(nameof(LuhnNumberValidationSet), MemberType = typeof(LuhnTest))]
         public void LuhnNumberValidationTest(bool expectedResult, string luhnNumber)
         {
-            Assert.Equal(expectedResult, luhnNumber.IsValid());
             Assert.Equal(expectedResult, luhnNumber.IsValidLuhnNumber());
-            Assert.Equal(expectedResult, luhnNumber.AsSpan().IsValid());
             Assert.Equal(expectedResult, luhnNumber.AsSpan().IsValidLuhnNumber());
         }
 
@@ -203,9 +201,7 @@ namespace LuhnDotNetTest
         [MemberData(nameof(LuhnCheckDigitValidationSet), MemberType = typeof(LuhnTest))]
         public void LuhnCheckDigitValidationTest(bool expectedResult, string number, byte checkDigit)
         {
-            Assert.Equal(expectedResult, number.IsValid(checkDigit));
             Assert.Equal(expectedResult, checkDigit.IsValidLuhnCheckDigit(number));
-            Assert.Equal(expectedResult, number.AsSpan().IsValid(checkDigit));
             Assert.Equal(expectedResult, checkDigit.IsValidLuhnCheckDigit(number.AsSpan()));
         }
 
@@ -243,9 +239,7 @@ namespace LuhnDotNetTest
         [MemberData(nameof(InvalidNumbers), MemberType = typeof(LuhnTest))]
         public void LuhnNumberValidationExceptionTest(string invalidNumber)
         {
-            Assert.Throws<ArgumentException>(() => invalidNumber.IsValid());
             Assert.Throws<ArgumentException>(() => invalidNumber.IsValidLuhnNumber());
-            Assert.Throws<ArgumentException>(() => invalidNumber.AsSpan().IsValid());
             Assert.Throws<ArgumentException>(() => invalidNumber.AsSpan().IsValidLuhnNumber());
         }
 
@@ -257,9 +251,7 @@ namespace LuhnDotNetTest
         [MemberData(nameof(InvalidNumbersAndCheckDigits), MemberType = typeof(LuhnTest))]
         public void NumberValidationExceptionTest(string invalidNumber, byte checkDigit)
         {
-            Assert.Throws<ArgumentException>(() => invalidNumber.IsValid(checkDigit));
             Assert.Throws<ArgumentException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber));
-            Assert.Throws<ArgumentException>(() => invalidNumber.AsSpan().IsValid(checkDigit));
             Assert.Throws<ArgumentException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber.AsSpan()));
         }
 
@@ -271,9 +263,7 @@ namespace LuhnDotNetTest
         [MemberData(nameof(NumbersWithInvalidCheckDigits), MemberType = typeof(LuhnTest))]
         public void LuhnCheckDigitValidationExceptionTest(string invalidNumber, byte checkDigit)
         {
-            Assert.Throws<ArgumentOutOfRangeException>(() => invalidNumber.IsValid(checkDigit));
             Assert.Throws<ArgumentOutOfRangeException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber));
-            Assert.Throws<ArgumentOutOfRangeException>(() => invalidNumber.AsSpan().IsValid(checkDigit));
             Assert.Throws<ArgumentOutOfRangeException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber.AsSpan()));
         }
 
@@ -340,9 +330,7 @@ namespace LuhnDotNetTest
         [MemberData(nameof(IsValidWithConvertData), MemberType = typeof(LuhnTest))]
         public void IsValidWithConvertTest(string input, bool expected)
         {
-            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().IsValid());
             Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().IsValidLuhnNumber());
-            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().AsSpan().IsValid());
             Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().AsSpan().IsValidLuhnNumber());
         }
 

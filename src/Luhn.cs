@@ -135,39 +135,9 @@ namespace LuhnDotNet
         /// (on the right side).</remarks>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-        [Obsolete("Use the IsValidLuhnNumber method instead.", false)]
-        public static bool IsValid(this ReadOnlySpan<char> luhnNumber) => luhnNumber.IsValidLuhnNumber();
-
-        /// <summary>
-        /// Checks whether the Luhn Number is valid
-        /// </summary>
-        /// <param name="luhnNumber">An identification number w/ check digit (Luhn Number).</param>
-        /// <returns><see langword="true" /> if the <paramref name="luhnNumber"/> is valid;
-        /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="luhnNumber"/> is not valid.
-        /// It contains none-numeric characters.</exception>
-        /// <remarks>The check digit must be at the end of the <paramref name="luhnNumber"/>
-        /// (on the right side).</remarks>
-        [SuppressMessage("ReSharper", "UnusedMember.Global")]
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
         public static bool IsValidLuhnNumber(this ReadOnlySpan<char> luhnNumber) =>
             luhnNumber.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
 #endif
-
-        /// <summary>
-        /// Checks whether the Luhn Number is valid
-        /// </summary>
-        /// <param name="luhnNumber">An identification number w/ check digit (Luhn Number).</param>
-        /// <returns><see langword="true" /> if the <paramref name="luhnNumber"/> is valid;
-        /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="luhnNumber"/> is not valid.
-        /// It contains none-numeric characters.</exception>
-        /// <remarks>The check digit must be at the end of the <paramref name="luhnNumber"/>
-        /// (on the right side).</remarks>
-        [SuppressMessage("ReSharper", "UnusedMember.Global")]
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-        [Obsolete("Use the IsValidLuhnNumber method instead.", false)]
-        public static bool IsValid(this string luhnNumber) => luhnNumber.IsValidLuhnNumber();
 
         /// <summary>
         /// Checks whether the Luhn Number is valid
@@ -189,23 +159,6 @@ namespace LuhnDotNet
 #endif
 
 #if NET8_0_OR_GREATER
-        /// <summary>
-        /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
-        /// </summary>
-        /// <param name="number">Identification number w/o Luhn check digit</param>
-        /// <param name="checkDigit">The Luhn check digit</param>
-        /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
-        /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
-        /// It contains none-numeric characters.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
-        /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
-        [SuppressMessage("ReSharper", "UnusedMember.Global")]
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-        [Obsolete("Use the IsValidLuhnCheckDigit method instead.", false)]
-        public static bool IsValid(this ReadOnlySpan<char> number, byte checkDigit) =>
-            checkDigit.IsValidLuhnCheckDigit(number);
-
         /// <summary>
         /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
         /// </summary>
@@ -237,22 +190,6 @@ namespace LuhnDotNet
                 .SumDigits() == 0;
         }
 #endif
-
-        /// <summary>
-        /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
-        /// </summary>
-        /// <param name="number">Identification number w/o Luhn check digit</param>
-        /// <param name="checkDigit">The Luhn check digit</param>
-        /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
-        /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
-        /// It contains none-numeric characters.</exception>
-        /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
-        /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
-        [SuppressMessage("ReSharper", "UnusedMember.Global")]
-        [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-        [Obsolete("Use the IsValidLuhnCheckDigit method instead.", false)]
-        public static bool IsValid(this string number, byte checkDigit) => checkDigit.IsValidLuhnCheckDigit(number);
 
         /// <summary>
         /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
