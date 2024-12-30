@@ -52,6 +52,11 @@ namespace LuhnDotNet
         /// </summary>
         private const int Modulus = 10;
 
+        /// <summary>
+        /// Represents the ASCII code for the character '0'.
+        /// </summary>
+        private const int AsciiCodeForZero = 48;
+
 #if NET8_0_OR_GREATER
         /// <summary>
         /// Computes the Luhn check digit
@@ -63,7 +68,7 @@ namespace LuhnDotNet
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
         public static byte ComputeLuhnCheckDigit(this ReadOnlySpan<char> number) =>
-            (byte)((Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
+            (byte)((Modulus - number.ValidateAndTrimNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
 #endif
 
         /// <summary>
@@ -79,7 +84,7 @@ namespace LuhnDotNet
 #if NET8_0_OR_GREATER
             number.AsSpan().ComputeLuhnCheckDigit();
 #else
-            (byte)((Modulus - number.IsNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
+            (byte)((Modulus - number.ValidateAndTrimNumber().GetDigits().DoubleEverySecondDigit(false).SumDigits()) % Modulus);
 #endif
 
 #if NET8_0_OR_GREATER
@@ -136,7 +141,7 @@ namespace LuhnDotNet
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
         public static bool IsValidLuhnNumber(this ReadOnlySpan<char> luhnNumber) =>
-            luhnNumber.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
+            luhnNumber.ValidateAndTrimNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
 #endif
 
         /// <summary>
@@ -155,7 +160,7 @@ namespace LuhnDotNet
 #if NET8_0_OR_GREATER
             luhnNumber.AsSpan().IsValidLuhnNumber();
 #else
-            luhnNumber.IsNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
+            luhnNumber.ValidateAndTrimNumber().GetDigits().DoubleEverySecondDigit(true).SumDigits() == 0;
 #endif
 
 #if NET8_0_OR_GREATER
@@ -184,7 +189,7 @@ namespace LuhnDotNet
 
             return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture))
                 .AsSpan()
-                .IsNumber()
+                .ValidateAndTrimNumber()
                 .GetDigits()
                 .DoubleEverySecondDigit(true)
                 .SumDigits() == 0;
@@ -222,7 +227,7 @@ namespace LuhnDotNet
                     "{0}{1}",
                     number.Trim(),
                     checkDigit.ToString(CultureInfo.InvariantCulture))
-                .IsNumber()
+                .ValidateAndTrimNumber()
                 .GetDigits()
                 .DoubleEverySecondDigit(true)
                 .SumDigits() == 0;
@@ -294,12 +299,12 @@ namespace LuhnDotNet
 #endif
 
         /// <summary>
-        /// Doubling of every second digit.
+        /// Doubles every second digit of the <paramref name="digits"/> enumeration.
         /// </summary>
         /// <param name="digits">The digits represent a number w/ or w/o check digit.</param>
         /// <param name="forValidation"><see langword="true"/> if the <paramref name="digits"/> represent
         /// a Luhn number including a check digit; otherwise <see langword="false"/></param>
-        /// <returns></returns>
+        /// <returns>Enumeration of digits</returns>
         private static IEnumerable<uint> DoubleEverySecondDigit(this IEnumerable<uint> digits, bool forValidation)
         {
             int index = 0;
@@ -336,7 +341,7 @@ namespace LuhnDotNet
         /// <param name="number">An identification number</param>
         /// <returns>The trimmed identification number if valid</returns>
         /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
-        private static string IsNumber(this string number)
+        private static string ValidateAndTrimNumber(this string number)
         {
             string trimmedNumber = number?.Trim();
             if (string.IsNullOrWhiteSpace(trimmedNumber) || !Regex.IsMatch(trimmedNumber, @"^\d+$"))
@@ -355,7 +360,7 @@ namespace LuhnDotNet
         /// <param name="number">An identification number</param>
         /// <returns>The trimmed identification number if valid</returns>
         /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
-        private static ReadOnlySpan<char> IsNumber(this ReadOnlySpan<char> number)
+        private static ReadOnlySpan<char> ValidateAndTrimNumber(this ReadOnlySpan<char> number)
         {
             var trimmedNumber = number.Trim();
             if (trimmedNumber.Length == 0 || !trimmedNumber.IsDigits())
@@ -397,7 +402,7 @@ namespace LuhnDotNet
             uint[] digits = new uint[number.Length];
             for (int i = 0; i < number.Length; i++)
             {
-                digits[number.Length - i - 1] = (uint)number[i] - 48;
+                digits[number.Length - i - 1] = (uint)number[i] - AsciiCodeForZero;
             }
 
             return digits;
@@ -407,7 +412,7 @@ namespace LuhnDotNet
         {
             for (int i = number.Length - 1; i >= 0; i--)
             {
-                yield return (uint)number[i] - 48;
+                yield return (uint)number[i] - AsciiCodeForZero;
             }
         }
 #endif
