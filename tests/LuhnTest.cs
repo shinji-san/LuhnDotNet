@@ -268,7 +268,7 @@ namespace LuhnDotNetTest
         }
 
         /// <summary>
-        /// Test data for ConvertAlphaNumericToNumeric method.
+        /// Test data for AlphaNumericToNumeric method.
         /// </summary>
         public static IEnumerable<object[]> ConvertAlphaNumericToNumericData =>
             new List<object[]>
@@ -282,7 +282,7 @@ namespace LuhnDotNetTest
             };
 
         /// <summary>
-        /// Tests the ConvertAlphaNumericToNumeric method.
+        /// Tests the AlphaNumericToNumeric method.
         /// </summary>
         /// <param name="input">Input string</param>
         /// <param name="expected">Expected output</param>
@@ -290,25 +290,25 @@ namespace LuhnDotNetTest
         [MemberData(nameof(ConvertAlphaNumericToNumericData), MemberType = typeof(LuhnTest))]
         public void ConvertAlphaNumericToNumeric_ShouldReturnExpectedResult(string input, string expected)
         {
-            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric());
+            Assert.Equal(expected, input.AlphaNumericToNumeric());
         }
 
         /// <summary>
-        /// Tests the ConvertAlphaNumericToNumeric method with invalid input.
+        /// Tests the AlphaNumericToNumeric method with invalid input.
         /// </summary>
         /// <remarks>
-        /// This test checks if the ConvertAlphaNumericToNumeric method throws an ArgumentException when it is given an
+        /// This test checks if the AlphaNumericToNumeric method throws an ArgumentException when it is given an
         /// invalid input string that contains non-alphanumeric characters. The test uses the Assert. Throws method from
         /// xUnit to check if the expected exception is thrown.
         /// </remarks>
         [Fact(DisplayName = "Converts an invalid alphanumeric string to a numeric string to throw an exception")]
         public void ConvertAlphaNumericToNumeric_InvalidInput_ThrowsArgumentException()
         {
-            Assert.Throws<ArgumentException>(()=> "!@#$%^&*()".ConvertAlphaNumericToNumeric());
+            Assert.Throws<ArgumentException>(()=> "!@#$%^&*()".AlphaNumericToNumeric());
         }
 
         /// <summary>
-        /// Test data for IsValid method in combination with ConvertAlphaNumericToNumeric.
+        /// Test data for IsValid method in combination with AlphaNumericToNumeric.
         /// </summary>
         public static IEnumerable<object[]> IsValidWithConvertData =>
             new List<object[]>
@@ -322,7 +322,7 @@ namespace LuhnDotNetTest
             };
 
         /// <summary>
-        /// Tests the IsValid method in combination with ConvertAlphaNumericToNumeric.
+        /// Tests the IsValid method in combination with AlphaNumericToNumeric.
         /// </summary>
         /// <param name="input">Input string</param>
         /// <param name="expected">Expected output</param>
@@ -330,12 +330,12 @@ namespace LuhnDotNetTest
         [MemberData(nameof(IsValidWithConvertData), MemberType = typeof(LuhnTest))]
         public void IsValidWithConvertTest(string input, bool expected)
         {
-            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().IsValidLuhnNumber());
-            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().AsSpan().IsValidLuhnNumber());
+            Assert.Equal(expected, input.AlphaNumericToNumeric().IsValidLuhnNumber());
+            Assert.Equal(expected, input.AlphaNumericToNumeric().AsSpan().IsValidLuhnNumber());
         }
 
         /// <summary>
-        /// Provides test data for the ComputeLuhnCheckDigit method in combination with ConvertAlphaNumericToNumeric.
+        /// Provides test data for the ComputeLuhnCheckDigit method in combination with AlphaNumericToNumeric.
         /// </summary>
         /// <remarks>
         /// This method returns a collection of object arrays, where each array contains an input string and the
@@ -353,14 +353,14 @@ namespace LuhnDotNetTest
             };
 
         /// <summary>
-        /// Tests the ComputeLuhnCheckDigit method in combination with ConvertAlphaNumericToNumeric.
+        /// Tests the ComputeLuhnCheckDigit method in combination with AlphaNumericToNumeric.
         /// </summary>
         /// <param name="input">Input string</param>
         /// <param name="expected">Expected output</param>
         /// <remarks>
         /// This test checks if the ComputeLuhnCheckDigit method returns the expected check digit when it is given an
         /// alphanumeric string that represents a part of an ISIN without the check digit. The input string is first
-        /// converted to a numeric string using the ConvertAlphaNumericToNumeric method, and then the
+        /// converted to a numeric string using the AlphaNumericToNumeric method, and then the
         /// ComputeLuhnCheckDigit method is called with this numeric string. The test uses the Assert. Equal method from
         /// xUnit to check if the actual check digit matches the expected check digit.
         /// </remarks>
@@ -370,8 +370,8 @@ namespace LuhnDotNetTest
             string input,
             byte expected)
         {
-            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().ComputeLuhnCheckDigit());
-            Assert.Equal(expected, input.ConvertAlphaNumericToNumeric().AsSpan().ComputeLuhnCheckDigit());
+            Assert.Equal(expected, input.AlphaNumericToNumeric().ComputeLuhnCheckDigit());
+            Assert.Equal(expected, input.AlphaNumericToNumeric().AsSpan().ComputeLuhnCheckDigit());
         }
     }
 }

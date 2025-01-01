@@ -246,7 +246,7 @@ namespace LuhnDotNet
         /// This method iterates over each character in the input string. If the character is a letter, it is replaced
         /// by its decimal ASCII value minus 55. If the character is a digit, it is left unchanged.
         /// </remarks>
-        public static string ConvertAlphaNumericToNumeric(this string alphaNumeric)
+        public static string AlphaNumericToNumeric(this string alphaNumeric)
 #if NET8_0_OR_GREATER
         {
             Span<char> result = stackalloc char[alphaNumeric.Length * 2];
