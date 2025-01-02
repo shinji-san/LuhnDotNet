@@ -63,7 +63,7 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="number">An identification number w/o check digit.</param>
         /// <returns>The calculated Luhn check digit.</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not valid.
         /// It contains none-numeric characters.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
@@ -76,7 +76,7 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="number">An identification number w/o check digit.</param>
         /// <returns>The calculated Luhn check digit as a byte.</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not valid.
         /// It contains none-numeric characters.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
@@ -93,7 +93,7 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="number">An identification number w/o check digit.</param>
         /// <returns>The calculated Luhn number.</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not valid.
         /// It contains none-numeric characters.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
@@ -109,7 +109,7 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="number">An identification number w/o check digit.</param>
         /// <returns>The calculated Luhn number.</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not valid.
         /// It contains none-numeric characters.</exception>
         [SuppressMessage("ReSharper", "UnusedMember.Global")]
         [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
@@ -134,7 +134,7 @@ namespace LuhnDotNet
         /// <param name="luhnNumber">An identification number w/ check digit (Luhn Number).</param>
         /// <returns><see langword="true" /> if the <paramref name="luhnNumber"/> is valid;
         /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="luhnNumber"/> is not valid.
+        /// <exception cref="InvalidCharacterException"><paramref name="luhnNumber"/> is not valid.
         /// It contains none-numeric characters.</exception>
         /// <remarks>The check digit must be at the end of the <paramref name="luhnNumber"/>
         /// (on the right side).</remarks>
@@ -150,7 +150,7 @@ namespace LuhnDotNet
         /// <param name="luhnNumber">An identification number w/ check digit (Luhn Number).</param>
         /// <returns><see langword="true" /> if the <paramref name="luhnNumber"/> is valid;
         /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="luhnNumber"/> is not valid.
+        /// <exception cref="InvalidCharacterException"><paramref name="luhnNumber"/> is not valid.
         /// It contains none-numeric characters.</exception>
         /// <remarks>The check digit must be at the end of the <paramref name="luhnNumber"/>
         /// (on the right side).</remarks>
@@ -171,7 +171,7 @@ namespace LuhnDotNet
         /// <param name="number">Identification number w/o Luhn check digit</param>
         /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
         /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not valid.
         /// It contains none-numeric characters.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
         /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
@@ -203,7 +203,7 @@ namespace LuhnDotNet
         /// <param name="number">Identification number w/o Luhn check digit</param>
         /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
         /// otherwise <see langword="false" /></returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not valid.
+        /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not valid.
         /// It contains none-numeric characters.</exception>
         /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
         /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
@@ -240,7 +240,7 @@ namespace LuhnDotNet
         /// <param name="alphaNumeric">The alphanumeric string to convert.</param>
         /// <returns>A numeric string where each letter in the input string is replaced by its decimal ASCII value
         /// minus 55.</returns>
-        /// <exception cref="ArgumentException">The <paramref name="alphaNumeric"/> contains a character
+        /// <exception cref="InvalidCharacterException">The <paramref name="alphaNumeric"/> contains a character
         /// that is neither a letter nor a digit.</exception>
         /// <remarks>
         /// This method iterates over each character in the input string. If the character is a letter, it is replaced
@@ -268,7 +268,7 @@ namespace LuhnDotNet
                 }
                 else
                 {
-                    throw new ArgumentException($"The character '{c}' is not a letter or a digit!", nameof(alphaNumeric));
+                    throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!", nameof(alphaNumeric));
                 }
             }
 
@@ -290,7 +290,7 @@ namespace LuhnDotNet
                 }
                 else
                 {
-                    throw new ArgumentException($"The character '{c}' is not a letter or a digit!", nameof(alphaNumeric));
+                    throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!", nameof(alphaNumeric));
                 }
             }
 
@@ -340,13 +340,13 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="number">An identification number</param>
         /// <returns>The trimmed identification number if valid</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
+        /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not a valid number</exception>
         private static string ValidateAndTrimNumber(this string number)
         {
             string trimmedNumber = number?.Trim();
             if (string.IsNullOrWhiteSpace(trimmedNumber) || !Regex.IsMatch(trimmedNumber, @"^\d+$"))
             {
-                throw new ArgumentException($"The string '{number}' is not a number!", nameof(number));
+                throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
             }
 
             return trimmedNumber;
@@ -359,13 +359,13 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="number">An identification number</param>
         /// <returns>The trimmed identification number if valid</returns>
-        /// <exception cref="ArgumentException"><paramref name="number"/> is not a valid number</exception>
+        /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not a valid number</exception>
         private static ReadOnlySpan<char> ValidateAndTrimNumber(this ReadOnlySpan<char> number)
         {
             var trimmedNumber = number.Trim();
             if (trimmedNumber.Length == 0 || !trimmedNumber.IsDigits())
             {
-                throw new ArgumentException($"The string '{number}' is not a number!", nameof(number));
+                throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
             }
 
             return trimmedNumber;
