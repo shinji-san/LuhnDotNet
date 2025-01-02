@@ -37,8 +37,8 @@ namespace LuhnDotNet
     using System.Collections.Generic;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
-#if !NET8_0_OR_GREATER
     using System.Text;
+#if !NET8_0_OR_GREATER
     using System.Text.RegularExpressions;
 #endif
 
@@ -232,6 +232,34 @@ namespace LuhnDotNet
                 .DoubleEverySecondDigit(true)
                 .SumDigits() == 0;
 #endif
+        }
+
+        /// <summary>
+        /// Removes all separators from the input identifier string.
+        /// </summary>
+        /// <param name="identifier">The input identifier string with separators.</param>
+        /// <returns>The identifier string without separators.</returns>
+        /// <exception cref="ArgumentNullException">Thrown when the input identifier is null or empty.</exception>
+        public static string RemoveSeparators(this string identifier)
+        {
+            if (string.IsNullOrWhiteSpace(identifier))
+            {
+                throw new ArgumentNullException(nameof(identifier), "The identifier cannot be null or empty.");
+            }
+
+            // Define valid separators as a HashSet for O(1) lookup
+            var separators = new HashSet<char> { '/', '\\', '-', '_', '|', ',', ' ', '.' };
+            var result = new StringBuilder();
+
+            foreach (char c in identifier)
+            {
+                if (!separators.Contains(c))
+                {
+                    result.Append(c);
+                }
+            }
+
+            return result.ToString();
         }
 
         /// <summary>

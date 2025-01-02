@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 ### Added
 - Add `InvalidCharacterException` to throw an exception if the input string contains invalid characters.
+- Add `RemoveSeparators` method to remove all separators from a string. Use it, for example, with credit card numbers.
 
 ### Changed
 - Renamed `Luhn.ConvertAlphaNumericToNumeric` to `Luhn.AlphaNumericToNumeric`

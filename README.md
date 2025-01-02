@@ -274,7 +274,7 @@ namespace Example7
     {
         public static void Main(string[] args)
         {
-            string creditCardNumberWithoutCheckDigit = "4417 1234 5678 911".Replace(" ", "");
+            string creditCardNumberWithoutCheckDigit = "4417 1234 5678 911".RemoveSeparators();
             byte checkDigit = creditCardNumberWithoutCheckDigit.ComputeLuhnCheckDigit();
             Console.WriteLine($"The check digit for credit card number {creditCardNumberWithoutCheckDigit} is: {checkDigit}");
         }
@@ -295,7 +295,7 @@ namespace Example8
     {
         public static void Main(string[] args)
         {
-            string creditCardNumber = "4417 1234 5678 9113".Replace(" ", "");
+            string creditCardNumber = "4417 1234 5678 9113".RemoveSeparators();
             bool isValid = creditCardNumber.IsValidLuhnNumber();
             Console.WriteLine($"The credit card number {creditCardNumber} is valid: {isValid}");
         }
