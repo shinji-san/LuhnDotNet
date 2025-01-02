@@ -379,5 +379,21 @@ namespace LuhnDotNetTest
             Assert.Equal(expected, input.AlphaNumericToNumeric().ComputeLuhnCheckDigit());
             Assert.Equal(expected, input.AlphaNumericToNumeric().AsSpan().ComputeLuhnCheckDigit());
         }
+
+        /// <summary>
+        /// Tests that the RemoveSeparators method processes input correctly by removing separators.
+        /// </summary>
+        /// <param name="input">The input string containing separators.</param>
+        /// <param name="expected">The expected string after separators are removed.</param>
+        [Theory]
+        [InlineData("4444 5555 6666 8888", "4444555566668888")]
+        [InlineData("6666/5555/7777/9123", "6666555577779123")]
+        [InlineData(@"6666\5555\7777\9123", "6666555577779123")]
+        [InlineData("4321-5678-9012-3456", "4321567890123456")]
+        [InlineData("0987654321", "0987654321")]
+        public void RemoveSeparators_ValidInput_ReturnsExpectedResult(string input, string expected)
+        {
+            Assert.Equal(expected, input.RemoveSeparators());
+        }
     }
 }
