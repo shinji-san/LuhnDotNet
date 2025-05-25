@@ -33,9 +33,7 @@
 
 namespace LuhnDotNet;
 
-#if NET8_0_OR_GREATER
-    using System;
-#endif
+using System;
 
 /// <summary>
 /// A C# implementation of the Luhn algorithm.
@@ -135,5 +133,13 @@ internal static class LuhnAlgorithm
     /// </summary>
     /// <param name="character">The character to convert. Must represent a numeric digit.</param>
     /// <returns>The numeric value of the character as an unsigned integer.</returns>
-    private static uint ToUnsignedIntegerDigit(this char character) => (uint)character - AsciiCodeForZero;
+    private static uint ToUnsignedIntegerDigit(this char character)
+    {
+        if (character is < '0' or > '9')
+        {
+            throw new ArgumentOutOfRangeException(nameof(character), $"The character '{character}' is not a valid digit. Character must be a digit 0-9." );
+        }
+
+        return (uint)character - AsciiCodeForZero;
+    }
 }

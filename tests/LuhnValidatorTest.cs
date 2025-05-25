@@ -11,7 +11,7 @@ using Xunit;
 public class LuhnValidatorTest
 {
     /// <summary>
-    /// Test numbers with w/ and w/o valid check digit (Luhn numbers).
+    /// Test numbers with w/ and w/o a valid check digit (Luhn numbers).
     /// </summary>
     public static IEnumerable<object[]> LuhnNumberValidationSet =>
         new List<object[]>
@@ -104,7 +104,7 @@ public class LuhnValidatorTest
         };
 
     /// <summary>
-    /// Test data for IsValid method in combination with AlphaNumericToNumeric.
+    /// Test data for the IsValidLuhnNumber method in combination with AlphaNumericToNumeric.
     /// </summary>
     public static IEnumerable<object[]> IsValidWithConvertData =>
         new List<object[]>
@@ -121,7 +121,7 @@ public class LuhnValidatorTest
     /// Tests Luhn number validation.
     /// </summary>
     /// <param name="expectedResult">The expected validation result</param>
-    /// <param name="luhnNumber">Test number inclusive check digit</param>
+    /// <param name="luhnNumber">Test number, inclusive check digit</param>
     [Theory(DisplayName = "Validates a valid Luhn number")]
     [MemberData(nameof(LuhnNumberValidationSet), MemberType = typeof(LuhnValidatorTest))]
     public void IsValidLuhnNumber_ValidLuhnNumber_ReturnsExpectedResult(bool expectedResult, string luhnNumber)

@@ -80,7 +80,7 @@ public static class LuhnValidator
 
 #if NET8_0_OR_GREATER
     /// <summary>
-    /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
+    /// Checks whether the concatenation of the number and the corresponding Luhn check digit is valid
     /// </summary>
     /// <param name="checkDigit">The Luhn check digit</param>
     /// <param name="number">Identification number w/o Luhn check digit</param>
@@ -110,7 +110,7 @@ public static class LuhnValidator
 #endif
 
     /// <summary>
-    /// Checks whether the concatenation of number and corresponding Luhn check digit is valid
+    /// Checks whether the concatenation of the number and the corresponding Luhn check digit is valid
     /// </summary>
     /// <param name="checkDigit">The Luhn check digit</param>
     /// <param name="number">Identification number w/o Luhn check digit</param>

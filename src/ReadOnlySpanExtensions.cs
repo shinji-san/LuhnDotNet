@@ -24,7 +24,7 @@ public static class ReadOnlySpanExtensions
     /// </summary>
     /// <param name="alphaNumeric">The alphanumeric span to be converted.</param>
     /// <returns>A numeric representation of the input span.</returns>
-    /// <exception cref="InvalidCharacterException"><paramref name="alphaNumeric"/> contains characters that are not letters or digits.</exception>
+    /// <exception cref="InvalidCharacterException"><paramref name="alphaNumeric"/> contains characters that aren't letters or digits.</exception>
     public static ReadOnlySpan<char> AlphaNumericToNumeric(this ReadOnlySpan<char> alphaNumeric)
     {
         if (alphaNumeric.IsEmpty)

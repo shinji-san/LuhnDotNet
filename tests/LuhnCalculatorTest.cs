@@ -36,7 +36,7 @@ public class LuhnCalculatorTest
         };
 
     /// <summary>
-    /// Valid raw test numbers without check digit.
+    /// Valid raw test numbers without a check digit.
     /// </summary>
     public static IEnumerable<object[]> LuhnNumberComputeSet =>
         new List<object[]>
