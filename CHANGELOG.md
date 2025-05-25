@@ -6,29 +6,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-- Add `InvalidCharacterException` to throw an exception if the input string contains invalid characters.
-- Add `RemoveSeparators` method to remove all separators from a string. Use it, for example, with credit card numbers.
+- Added `InvalidCharacterException` to throw an exception if the input string contains invalid characters.
+- Added `RemoveSeparators` methods to remove all separators from a string or ReadOnlySpan. Use it, for example, with credit card numbers.
 
 ### Changed
-- Renamed `Luhn.ConvertAlphaNumericToNumeric` to `Luhn.AlphaNumericToNumeric`
+- Renamed `ConvertAlphaNumericToNumeric` to `AlphaNumericToNumeric`
+- Moved `AlphaNumericToNumeric` method to the `StringExtensions` and `ReadOnlySpanExtensions` classes.
+- Moved `ComputeCheckDigit` and `ComputeLuhnNumber` methods to the `LuhnCalculator` class.
+- Moved `IsValidNumber` and `IsValidCheckDigit` methods to the `LuhnValidator` class.
+- Renamed `Luhn` class to `LuhnAlgorithm`.
 
 ### Removed
 - Removed `Luhn.IsValid` methods
 
 ## [1.3.0] - 2024-12-27
 ### Added
-- Add project icon
-- Add project social preview image
-- Add `Luhn.IsValidNumber`
-- Add `Luhn.IsValidCheckDigit`
+- Added project icon
+- Added project social preview image
+- Added `Luhn.IsValidNumber`
+- Added `Luhn.IsValidCheckDigit`
 
 ### Deprecated
 - `Luhn.IsValid` methods are deprecated. Use `Luhn.IsValidNumber` or `Luhn.IsValidCheckDigit` instead.
 
 ## [1.2.0] - 2024-12-26
 ### Added
-- Add [API documentation](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html)
-- Add .NET 9 support
+- Added [API documentation](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html)
+- Added .NET 9 support
 
 ### Removed
 - Removed .NET 7 support
@@ -37,7 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2024-03-30
 ### Added
-- Add `ConvertAlphaNumericToNumeric` method to convert a string containing alphanumeric characters to a string containing only numeric characters (use case: converting an ISIN to a numeric string for Luhn validation).
+- Added `ConvertAlphaNumericToNumeric` method to convert a string containing alphanumeric characters to a string containing only numeric characters (use case: converting an ISIN to a numeric string for Luhn validation).
 
 ## [1.0.1] - 2024-03-19
 ### Fixed
