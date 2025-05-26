@@ -3,6 +3,7 @@ namespace LuhnDotNetBenchmark;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

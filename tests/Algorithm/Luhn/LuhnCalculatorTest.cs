@@ -1,6 +1,7 @@
-namespace LuhnDotNetTest;
+namespace LuhnDotNetTest.Algorithm.Luhn;
 
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -114,8 +115,8 @@ public class LuhnCalculatorTest
         string expectedLuhnNumber,
         string rawNumber)
     {
-        Assert.Equal(expectedLuhnNumber, rawNumber.ComputeLuhnNumber());
-        Assert.Equal(expectedLuhnNumber, rawNumber.AsSpan().ComputeLuhnNumber());
+        Assert.Equal(expectedLuhnNumber, (string)rawNumber.ComputeLuhnNumber());
+        Assert.Equal(expectedLuhnNumber, (string)rawNumber.AsSpan().ComputeLuhnNumber());
     }
 
     /// <summary>

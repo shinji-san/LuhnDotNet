@@ -1,6 +1,7 @@
-namespace LuhnDotNetTest;
+namespace LuhnDotNetTest.Algorithm.Luhn;
 
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 using System;
 using System.Collections.Generic;
 using Xunit;

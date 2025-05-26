@@ -31,14 +31,13 @@
 
 #endregion
 
-namespace LuhnDotNet;
+namespace LuhnDotNet.Algorithm.Luhn;
 
+#if NET8_0_OR_GREATER
 using System;
+#endif
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
-#if !NET8_0_OR_GREATER
-    using System.Text.RegularExpressions;
-#endif
 
 /// <summary>
 /// Provides methods for performing the Luhn algorithm, including computation of check digits and Luhn numbers.
@@ -87,8 +86,7 @@ public static class LuhnCalculator
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
     public static string ComputeLuhnNumber(this ReadOnlySpan<char> number)
     {
-        byte checkDigit = number.ComputeLuhnCheckDigit();
-        return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
+        return number.ComputeNumberWithCheckDigit(ComputeLuhnCheckDigit);
     }
 #endif
 
@@ -106,8 +104,8 @@ public static class LuhnCalculator
 #if NET8_0_OR_GREATER
         return number.AsSpan().ComputeLuhnNumber();
 #else
-        byte checkDigit = number.ComputeLuhnCheckDigit();
-        return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
+        var trimmedNumber = number.Trim();
+        return $"{trimmedNumber}{trimmedNumber.ComputeLuhnCheckDigit().ToString(CultureInfo.InvariantCulture)}";
 #endif
     }
 }

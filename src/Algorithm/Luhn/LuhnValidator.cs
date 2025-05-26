@@ -31,7 +31,7 @@
 
 #endregion
 
-namespace LuhnDotNet;
+namespace LuhnDotNet.Algorithm.Luhn;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
