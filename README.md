@@ -137,6 +137,7 @@ You can find the API documentation [here](https://sebastian-walther.de/LuhnDotNe
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example1
 {
@@ -157,6 +158,7 @@ namespace Example1
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example2
 {
@@ -177,6 +179,7 @@ namespace Example2
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example3
 {
@@ -197,6 +200,7 @@ namespace Example3
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example4
 {
@@ -224,6 +228,7 @@ Here is an example of how to use these methods to validate an ISIN:
 ```csharp
 using System;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example5
 {
@@ -247,6 +252,7 @@ Here is an example of how to compute the check digit of an ISIN:
 ```csharp
 using System;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example6
 {
@@ -268,6 +274,7 @@ The `LuhnDotNet` library can be used to compute the check digit of a credit card
 ```csharp
 using System;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example7
 {
@@ -289,6 +296,7 @@ The `LuhnDotNet` library can be used to validate a credit card number according 
 ```csharp
 using System;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example8
 {
@@ -304,6 +312,87 @@ namespace Example8
 }
 ```
 ## Mod11 Algorithm
+### Compute the Mod11 check digit
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example9
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var checkDigit = "809027341".ComputeMod11CheckDigit();
+            //// Must be 6
+            Console.WriteLine(checkDigit);
+        }
+    }
+}
+```
+
+### Compute the Mod11 number
+```csharp
+using System;
+using System.Collections.Generic;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example10
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var mod11Numbner = "809027341".ComputeMod11Number();
+            //// Must be 8090273416
+            Console.WriteLine(mod11Numbner);
+        }
+    }
+}
+```
+### Validate Mod11 number
+```csharp
+using System;
+using System.Collections.Generic;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example11
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var isValid = "8090273416".IsValidMod11Number();
+            //// Must be 'true'
+            Console.WriteLine(isValid);
+        }
+    }
+}
+```
+### Validate number and corresponding Mod11 check digit
+```csharp
+using System;
+using System.Collections.Generic;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example12
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            char checkDigit = 6;
+            var isValid = checkDigit.IsValidLuhnCheckDigit("809027341");
+            //// Must be 'true'
+            Console.WriteLine(isValid);
+        }
+    }
+}
+```
 
 # CLI building instructions
 For the following instructions, please make sure that you are connected to the internet. If necessary, NuGet will try to restore the [xUnit](https://xunit.net/) packages.
