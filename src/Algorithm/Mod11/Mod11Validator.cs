@@ -39,6 +39,9 @@ using System;
 using System.Linq;
 #endif
 
+/// <summary>
+/// Provides utility methods for validating numbers using the Mod-11 check digit algorithm.
+/// </summary>
 public static class Mod11Validator
 {
     /// <summary>
@@ -54,7 +57,7 @@ public static class Mod11Validator
 #if NET8_0_OR_GREATER
     public static bool IsValidMod11Number(this ReadOnlySpan<char> numberWithCheckDigit)
     {
-        var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimNumber1();
+        var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimMod11Number();
         if (validateAndTrimNumber.Length == 10)
         {
             return validateAndTrimNumber.IsValidMod11NumberFast();
@@ -80,7 +83,7 @@ public static class Mod11Validator
 #if NET8_0_OR_GREATER
         return IsValidMod11Number(numberWithCheckDigit.AsSpan());
 #else
-        var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimNumber1();
+        var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimMod11Number();
         if (validateAndTrimNumber.Length == 10)
         {
             return validateAndTrimNumber.IsValidMod11NumberFast();
@@ -149,15 +152,21 @@ public static class Mod11Validator
     {
         return character == Mod11Algorithm.SpecialCheckDigitCharacter ? Mod11Algorithm.SpecialCheckDigitValue : character.ToUnsignedIntegerDigit();
     }
-    
+
     /// <summary>
-    /// 
+    /// Trims whitespace from the provided number and validates whether it is a valid Mod-11 number, including the check digit.
     /// </summary>
-    /// <param name="number"></param>
-    /// <returns></returns>
-    /// <exception cref="InvalidCharacterException"></exception>
+    /// <param name="number">
+    /// The sequence of numeric characters (including the check digit) to validate.
+    /// </param>
+    /// <returns>
+    /// The trimmed sequence of numeric characters including the Mod-11 check digit, if the input is valid.
+    /// </returns>
+    /// <exception cref="InvalidCharacterException">
+    /// Thrown if the input contains invalid characters or doesn't end with a valid Mod-11 check digit.
+    /// </exception>
 #if NET8_0_OR_GREATER
-    private static ReadOnlySpan<char> ValidateAndTrimNumber1(this ReadOnlySpan<char> number)
+    private static ReadOnlySpan<char> ValidateAndTrimMod11Number(this ReadOnlySpan<char> number)
     {
         var trimmedNumber = number.Trim();
         var numberWithoutCheckDigit = trimmedNumber[..^1];
@@ -174,7 +183,7 @@ public static class Mod11Validator
         return trimmedNumber;
     }
 #else
-    private static string ValidateAndTrimNumber1(this string number)
+    private static string ValidateAndTrimMod11Number(this string number)
     {
         var trimmedNumber = number.Trim();
         var numberWithoutCheckDigit = trimmedNumber.Substring(0, trimmedNumber.Length - 1);
