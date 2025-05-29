@@ -24,7 +24,7 @@ public static class ReadOnlySpanExtensions
     /// </summary>
     /// <param name="number">The numeric span for which the check digit is to be calculated.</param>
     /// <returns>A byte value representing the computed check digit.</returns>
-    internal delegate byte CheckDigitCalculator(ReadOnlySpan<char> number);
+    internal delegate char CheckDigitCalculator(ReadOnlySpan<char> number);
 
     /// <summary>
     /// Converts an alphanumeric string into its numeric representation.
@@ -127,17 +127,17 @@ public static class ReadOnlySpanExtensions
         var trimmedNumber = number.ValidateAndTrimNumber();
         Span<char> result = stackalloc char[trimmedNumber.Length + 1];
         trimmedNumber.CopyTo(result[..^1]);
-        computeCheckDigit(trimmedNumber).TryFormat(result[^1..], out _, provider: CultureInfo.InvariantCulture);
+        result[^1] = computeCheckDigit(trimmedNumber);
         return result.ToString();
     }
-    
+
     /// <summary>
     /// Checks whether or not the <paramref name="number"/> contains only digits
     /// </summary>
     /// <param name="number">An identification number</param>
     /// <returns><see langword="true" /> if the <paramref name="number"/> contains only digits; otherwise
     /// <see langword="false"/></returns>
-    private static bool IsDigits(this ReadOnlySpan<char> number)
+    internal static bool IsDigits(this ReadOnlySpan<char> number)
     {
         foreach (char character in number)
         {

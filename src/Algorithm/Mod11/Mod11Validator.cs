@@ -35,6 +35,8 @@ namespace LuhnDotNet.Algorithm.Mod11;
 
 #if NET8_0_OR_GREATER
 using System;
+#else
+using System.Linq;
 #endif
 
 public static class Mod11Validator
@@ -50,18 +52,17 @@ public static class Mod11Validator
     /// otherwise, <see langword="false" />.
     /// </returns>
 #if NET8_0_OR_GREATER
-    public static bool IsValidMod11Number(ReadOnlySpan<char> numberWithCheckDigit)
+    public static bool IsValidMod11Number(this ReadOnlySpan<char> numberWithCheckDigit)
     {
-        var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimNumber();
+        var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimNumber1();
         if (validateAndTrimNumber.Length == 10)
         {
             return validateAndTrimNumber.IsValidMod11NumberFast();
         }
 
         var computeCheckDigit = validateAndTrimNumber[..^1].ComputeCheckDigit();
-        return computeCheckDigit == validateAndTrimNumber[^1].ToUnsignedIntegerDigit();
+        return computeCheckDigit == validateAndTrimNumber[^1].ToUnsignedDigitOrSpecialValue();
     }
-    
 #endif
 
     /// <summary>
@@ -74,12 +75,12 @@ public static class Mod11Validator
     /// <see langword="true" /> if the number with the check digit is valid, according to the Mod-11 algorithm;
     /// otherwise, <see langword="false" />.
     /// </returns>
-    public static bool IsValidMod11Number(string numberWithCheckDigit)
+    public static bool IsValidMod11Number(this string numberWithCheckDigit)
     {
 #if NET8_0_OR_GREATER
         return IsValidMod11Number(numberWithCheckDigit.AsSpan());
 #else
-        var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimNumber();
+        var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimNumber1();
         if (validateAndTrimNumber.Length == 10)
         {
             return validateAndTrimNumber.IsValidMod11NumberFast();
@@ -90,6 +91,107 @@ public static class Mod11Validator
 #endif
     }
 
+#if NET8_0_OR_GREATER
+    /// <summary>
+    /// Validates whether the provided check digit is valid for a given sequence of numeric characters based on the Mod-11 algorithm.
+    /// </summary>
+    /// <param name="checkDigit">The character representing the check digit to validate.</param>
+    /// <param name="number">
+    /// The sequence of numeric characters (excluding the check digit) that the check digit will be validated against.
+    /// </param>
+    /// <returns>
+    /// <see langword="true" /> if the provided check digit is valid for the given sequence of numeric characters according to the Mod-11 algorithm;
+    /// otherwise, <see langword="false" />.
+    /// </returns>
+    public static bool IsValidMod11CheckDigit(this char checkDigit, ReadOnlySpan<char> number)
+    {
+        Span<char> mod11Number = stackalloc char[number.Length + 1];
+        number.CopyTo(mod11Number[..^1]);
+        mod11Number[^1] = checkDigit;
+        ReadOnlySpan<char> readOnlyMod11Number = mod11Number;
+        return IsValidMod11Number(readOnlyMod11Number);
+    }
+#endif
+
+    /// <summary>
+    /// Validates whether the provided check digit is valid for a given sequence of numeric characters based on the Mod-11 algorithm.
+    /// </summary>
+    /// <param name="checkDigit">The check digit to validate.</param>
+    /// <param name="number">
+    /// The sequence of numeric characters (excluding the check digit) that the check digit will be validated against.
+    /// </param>
+    /// <returns>
+    /// <see langword="true" /> if the provided check digit is valid for the given sequence of numeric characters according to the Mod-11 algorithm;
+    /// otherwise, <see langword="false" />.
+    /// </returns>
+    public static bool IsValidMod11CheckDigit(this char checkDigit, string number)
+    {
+#if NET8_0_OR_GREATER
+        return checkDigit.IsValidMod11CheckDigit(number.AsSpan());
+#else
+        var mod11Number = $"{number}{checkDigit}";
+        return mod11Number.IsValidMod11Number();
+#endif
+    }
+
+    /// <summary>
+    /// Converts the specified character to its unsigned digit or a special numeric value,
+    /// depending on whether it matches the special check digit character defined in the Modulus 11 algorithm.
+    /// </summary>
+    /// <param name="character">
+    /// The character to be evaluated and converted either to its integer value or the corresponding special value.
+    /// </param>
+    /// <returns>
+    /// The unsigned numeric value of the character if it is a digit (0-9), or the numeric value 10 if the character matches
+    /// the special check digit character ('X') in the Modulus 11 algorithm.
+    /// </returns>
+    private static uint ToUnsignedDigitOrSpecialValue(this char character)
+    {
+        return character == Mod11Algorithm.SpecialCheckDigitCharacter ? Mod11Algorithm.SpecialCheckDigitValue : character.ToUnsignedIntegerDigit();
+    }
+    
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="number"></param>
+    /// <returns></returns>
+    /// <exception cref="InvalidCharacterException"></exception>
+#if NET8_0_OR_GREATER
+    private static ReadOnlySpan<char> ValidateAndTrimNumber1(this ReadOnlySpan<char> number)
+    {
+        var trimmedNumber = number.Trim();
+        var numberWithoutCheckDigit = trimmedNumber[..^1];
+        if (trimmedNumber.IsEmpty || !numberWithoutCheckDigit.IsDigits())
+        {
+            throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
+        }
+
+        if (trimmedNumber[^1] != Mod11Algorithm.SpecialCheckDigitCharacter && !char.IsDigit(trimmedNumber[^1]))
+        {
+            throw new InvalidCharacterException($"The string '{number}' ends not with a valid Mod-11 check digit!", nameof(number));
+        }
+
+        return trimmedNumber;
+    }
+#else
+    private static string ValidateAndTrimNumber1(this string number)
+    {
+        var trimmedNumber = number.Trim();
+        var numberWithoutCheckDigit = trimmedNumber.Substring(0, trimmedNumber.Length - 1);
+        if (string.IsNullOrWhiteSpace(trimmedNumber) || !numberWithoutCheckDigit.All(char.IsDigit))
+        {
+            throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
+        }
+
+        char checkDigit = trimmedNumber[trimmedNumber.Length - 1];
+        if (checkDigit != Mod11Algorithm.SpecialCheckDigitCharacter && !char.IsDigit(checkDigit))
+        {
+            throw new InvalidCharacterException($"The string '{number}' ends not with a valid Mod-11 check digit!", nameof(number));
+        }
+
+        return trimmedNumber;
+    }
+#endif
 
     /// <summary>
     /// Validates whether a given number with a Mod-11 check digit is valid using a faster computation method.
@@ -112,7 +214,7 @@ public static class Mod11Validator
         var t = 0u;
 
         for (int i = 0; i < 10; i++) {
-            t += numberWithCheckDigit[i].ToUnsignedIntegerDigit();
+            t += numberWithCheckDigit[i].ToUnsignedDigitOrSpecialValue();
             s += t;
         }
         return s % Mod11Algorithm.Modulus == 0;

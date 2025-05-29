@@ -26,7 +26,7 @@ internal static class LuhnDotNetCore
 
         return (uint)character - AsciiCodeForZero;
     }
-
+    
     /// <summary>
     /// Converts an unsigned integer representing a single digit into its corresponding character.
     /// </summary>

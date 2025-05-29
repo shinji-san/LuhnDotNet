@@ -13,7 +13,7 @@ using System.Collections.Generic;
 using System.Text;
 
 #if !NET8_0_OR_GREATER
-using System.Text.RegularExpressions;
+using System.Linq;
 #endif
 
 /// <summary>
@@ -135,7 +135,7 @@ public static class StringExtension
     internal static string ValidateAndTrimNumber(this string number)
     {
         string trimmedNumber = number?.Trim();
-        if (string.IsNullOrWhiteSpace(trimmedNumber) || !Regex.IsMatch(trimmedNumber, @"^\d+$"))
+        if (string.IsNullOrWhiteSpace(trimmedNumber) || !trimmedNumber.All(char.IsDigit))
         {
             throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
         }

@@ -74,7 +74,7 @@ public class LuhnDotNetBenchmark
     [ArgumentsSource(nameof(NumericNumbersAsString))]
     public void IsValidLuhnCheckDigitBasedOnString(string number)
     {
-        byte.MinValue.IsValidLuhnCheckDigit(number);
+        char.MinValue.IsValidLuhnCheckDigit(number);
     }
 
     [Benchmark, BenchmarkCategory(ComputeLuhnNumberCategory)]
@@ -102,7 +102,7 @@ public class LuhnDotNetBenchmark
     [ArgumentsSource(nameof(NumericNumbersAsString))]
     public void IsValidLuhnCheckDigitBasedOnSpan(string number)
     {
-        byte.MinValue.IsValidLuhnCheckDigit(number.AsSpan());
+        char.MinValue.IsValidLuhnCheckDigit(number.AsSpan());
     }
 
     [Benchmark(Baseline = true), BenchmarkCategory(AlphaNumericToNumericCategory)]

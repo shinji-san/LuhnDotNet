@@ -203,7 +203,7 @@ namespace Example4
     {
         public static void Main(string[] args)
         {
-            byte checkDigit = 5;
+            char checkDigit = 5;
             var isValid = checkDigit.IsValidLuhnCheckDigit("37828224631000");
             //// Must be 'true'
             Console.WriteLine(isValid);
@@ -254,7 +254,7 @@ namespace Example6
         public static void Main(string[] args)
         {
             string isinWithoutCheckDigit = "US037833100";
-            byte checkDigit = isinWithoutCheckDigit.AlphaNumericToNumeric().ComputeLuhnCheckDigit();
+            char checkDigit = isinWithoutCheckDigit.AlphaNumericToNumeric().ComputeLuhnCheckDigit();
             Console.WriteLine($"The check digit for ISIN {isinWithoutCheckDigit} is: {checkDigit}");
         }
     }
@@ -275,7 +275,7 @@ namespace Example7
         public static void Main(string[] args)
         {
             string creditCardNumberWithoutCheckDigit = "4417 1234 5678 911".RemoveSeparators();
-            byte checkDigit = creditCardNumberWithoutCheckDigit.ComputeLuhnCheckDigit();
+            char checkDigit = creditCardNumberWithoutCheckDigit.ComputeLuhnCheckDigit();
             Console.WriteLine($"The check digit for credit card number {creditCardNumberWithoutCheckDigit} is: {checkDigit}");
         }
     }

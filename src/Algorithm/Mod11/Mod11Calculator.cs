@@ -52,8 +52,7 @@ public static class Mod11Calculator
     /// <exception cref="InvalidCharacterException">Thrown if the <paramref name="number"/> contains invalid characters or is not properly formatted.</exception>
     public static string ComputeMod11Number(this ReadOnlySpan<char> number)
     {
-        var checkDigit = number.ComputeMod11CheckDigit();
-        return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
+        return number.ComputeNumberWithCheckDigit(ComputeMod11CheckDigit);
     }
 #endif
 
@@ -101,5 +100,13 @@ public static class Mod11Calculator
 #endif
     }
 
-    private static char FormatCheckDigit(this uint checkDigit) => checkDigit == 10 ? 'X' : checkDigit.ToCharDigit();
+    /// <summary>
+    /// Formats a given check digit to either its numeric character representation or a special character defined by the Mod11 algorithm.
+    /// </summary>
+    /// <param name="checkDigit">The computed check digit as an unsigned integer. A value of 10 will be formatted as the special check digit character.</param>
+    /// <returns>The formatted check digit as a character. Returns the special check digit character if the input is 10; otherwise, returns the numeric character representation of the input.</returns>
+    private static char FormatCheckDigit(this uint checkDigit)
+    {
+        return checkDigit == Mod11Algorithm.SpecialCheckDigitValue ? Mod11Algorithm.SpecialCheckDigitCharacter : checkDigit.ToCharDigit();
+    }
 }

@@ -20,20 +20,20 @@ public class LuhnCalculatorTest
     public static IEnumerable<object[]> LuhnCheckDigitComputeSet =>
         new List<object[]>
         {
-            new object[] { 4, "1789372997" },
-            new object[] { 0, "353011133330000" },
-            new object[] { 3, "7992739871" },
-            new object[] { 3, "07992739871" },
-            new object[] { 3, "007992739871" },
-            new object[] { 2, "110494" },
-            new object[] { 7, "1893" },
-            new object[] { 5, "37828224631000" },
-            new object[] { 5, "637095000000000" },
-            new object[] { 5, " 637095000000000" },
-            new object[] { 5, "637095000000000 " },
-            new object[] { 5, " 637095000000000 " },
-            new object[] { 3, "89999912345678901" },
-            new object[] { 3, "  89999912345678901" },
+            new object[] { '4', "1789372997" },
+            new object[] { '0', "353011133330000" },
+            new object[] { '3', "7992739871" },
+            new object[] { '3', "07992739871" },
+            new object[] { '3', "007992739871" },
+            new object[] { '2', "110494" },
+            new object[] { '7', "1893" },
+            new object[] { '5', "37828224631000" },
+            new object[] { '5', "637095000000000" },
+            new object[] { '5', " 637095000000000" },
+            new object[] { '5', "637095000000000 " },
+            new object[] { '5', " 637095000000000 " },
+            new object[] { '3', "89999912345678901" },
+            new object[] { '3', "  89999912345678901" },
         };
 
     /// <summary>
@@ -83,10 +83,10 @@ public class LuhnCalculatorTest
     public static IEnumerable<object[]> ComputeLuhnCheckDigitWithConvertData =>
         new List<object[]>
         {
-            new object[] { "DE000606900", 8 },
-            new object[] { "DE000BAY001", 7 },
-            new object[] { "AU0000XVGZA", 3 },
-            new object[] { "US037833100", 5 },
+            new object[] { "DE000606900", '8' },
+            new object[] { "DE000BAY001", '7' },
+            new object[] { "AU0000XVGZA", '3' },
+            new object[] { "US037833100", '5' },
         };
 
     /// <summary>
@@ -97,11 +97,13 @@ public class LuhnCalculatorTest
     [Theory(DisplayName = "Calculates the check digit for a valid raw number")]
     [MemberData(nameof(LuhnCheckDigitComputeSet), MemberType = typeof(LuhnCalculatorTest))]
     public void ComputeLuhnCheckDigit_ValidRawNumber_ReturnsExpectedCheckDigit(
-        byte expectedCheckDigit,
+        char expectedCheckDigit,
         string rawNumber)
     {
         Assert.Equal(expectedCheckDigit, rawNumber.ComputeLuhnCheckDigit());
+#if NET8_0_OR_GREATER
         Assert.Equal(expectedCheckDigit, rawNumber.AsSpan().ComputeLuhnCheckDigit());
+#endif
     }
 
     /// <summary>
@@ -115,8 +117,10 @@ public class LuhnCalculatorTest
         string expectedLuhnNumber,
         string rawNumber)
     {
-        Assert.Equal(expectedLuhnNumber, (string)rawNumber.ComputeLuhnNumber());
-        Assert.Equal(expectedLuhnNumber, (string)rawNumber.AsSpan().ComputeLuhnNumber());
+        Assert.Equal(expectedLuhnNumber, rawNumber.ComputeLuhnNumber());
+#if NET8_0_OR_GREATER
+        Assert.Equal(expectedLuhnNumber, rawNumber.AsSpan().ComputeLuhnNumber());
+#endif
     }
 
     /// <summary>
@@ -129,7 +133,9 @@ public class LuhnCalculatorTest
     public void ComputeLuhnCheckDigit_InvalidRawNumber_ThrowsInvalidCharacterException(string invalidNumber)
     {
         Assert.Throws<InvalidCharacterException>(() => invalidNumber.ComputeLuhnCheckDigit());
+#if NET8_0_OR_GREATER
         Assert.Throws<InvalidCharacterException>(() => invalidNumber.AsSpan().ComputeLuhnCheckDigit());
+#endif
     }
 
     /// <summary>
@@ -142,7 +148,9 @@ public class LuhnCalculatorTest
     public void ComputeLuhnNumber_InvalidRawNumber_ThrowsInvalidCharacterException(string invalidNumber)
     {
         Assert.Throws<InvalidCharacterException>(invalidNumber.ComputeLuhnNumber);
+#if NET8_0_OR_GREATER
         Assert.Throws<InvalidCharacterException>(() => invalidNumber.AsSpan().ComputeLuhnNumber());
+#endif
     }
 
     /// <summary>
@@ -161,9 +169,11 @@ public class LuhnCalculatorTest
     [MemberData(nameof(ComputeLuhnCheckDigitWithConvertData), MemberType = typeof(LuhnCalculatorTest))]
     public void ComputeLuhnCheckDigit_WithAlphaNumericToNumeric_ReturnsExpectedCheckDigit(
         string input,
-        byte expected)
+        char expected)
     {
         Assert.Equal(expected, input.AlphaNumericToNumeric().ComputeLuhnCheckDigit());
+#if NET8_0_OR_GREATER
         Assert.Equal(expected, input.AsSpan().AlphaNumericToNumeric().ComputeLuhnCheckDigit());
+#endif
     }
 }

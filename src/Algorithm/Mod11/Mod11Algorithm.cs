@@ -45,6 +45,16 @@ internal static class Mod11Algorithm
     internal const int Modulus = 11;
 
     /// <summary>
+    /// Represents the special character 'X' used as a check digit in the Modulus 11 algorithm when the computed check digit is 10.
+    /// </summary>
+    internal const char SpecialCheckDigitCharacter = 'X';
+
+    /// <summary>
+    /// Represents the numeric value 10 used in place of the special check digit character ('X') in the Modulus 11 algorithm.
+    /// </summary>
+    internal const uint SpecialCheckDigitValue = 10u;
+
+    /// <summary>
     /// Computes the check digit for a given numeric input using the Modulus 11 algorithm.
     /// </summary>
     /// <param name="number">The input sequence of numeric characters for which the check digit is to be computed.</param>
