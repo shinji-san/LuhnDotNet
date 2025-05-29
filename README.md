@@ -1,7 +1,7 @@
 # LuhnDotNet
 ![LuhnDotNet Logo](images/social-media-preview.png)
 
-A C# implementation of the Luhn algorithm.
+A C# implementation of the Luhn algorithm and other check digit algorithms, which can be used to validate identification numbers like credit card numbers, International Securities Identification Numbers (ISINs), ISBN, PZN and more.
 
 The Luhn algorithm is a checksum formula used to validate identification numbers like credit card numbers. It works by doubling every second digit from the right, summing all the digits, and checking if the total is a multiple of 10. It's widely used and is specified in ISO/IEC 7812-1.
 
@@ -131,7 +131,8 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
 You can find the API documentation [here](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html).
 
 # Usage
-## Compute the Luhn check digit
+## Luhn Algorithm
+### Compute the Luhn check digit
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -151,7 +152,7 @@ namespace Example1
 }
 ```
 
-## Compute the Luhn number
+### Compute the Luhn number
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -171,7 +172,7 @@ namespace Example2
 }
 ```
 
-## Validate Luhn number
+### Validate Luhn number
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -191,7 +192,7 @@ namespace Example3
 }
 ```
 
-## Validate number and corresponding Luhn check digit
+### Validate number and corresponding Luhn check digit
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -212,7 +213,7 @@ namespace Example4
 }
 ```
 
-## Validate ISIN with LuhnDotNet and AlphaNumericToNumeric
+### Validate ISIN with LuhnDotNet and AlphaNumericToNumeric
 
 The `LuhnDotNet` library can be used in combination with the `AlphaNumericToNumeric` method to validate an International Securities Identification Number (ISIN). An ISIN uniquely identifies a security, such as stocks, bonds or derivatives. It is a 12-character alphanumeric code.
 
@@ -237,7 +238,7 @@ namespace Example5
     }
 }
 ```
-## Compute ISIN Check Digit with LuhnDotNet and AlphaNumericToNumeric
+### Compute ISIN Check Digit with LuhnDotNet and AlphaNumericToNumeric
 
 The `LuhnDotNet` library provides the `ComputeLuhnCheckDigit` method which can be used to compute the check digit of a numeric string according to the Luhn algorithm. When dealing with an International Securities Identification Number (ISIN), which is a 12-character alphanumeric code, we first need to convert the alphanumeric ISIN to a numeric string. This can be achieved using the `AlphaNumericToNumeric` method.
 
@@ -261,7 +262,7 @@ namespace Example6
 }
 ```
 
-## Compute credit card number with LuhnDotNet
+### Compute credit card number with LuhnDotNet
 The `LuhnDotNet` library can be used to compute the check digit of a credit card number. The check digit is the last digit of the credit card number, which is used to validate the number according to the Luhn algorithm.
 
 ```csharp
@@ -282,7 +283,7 @@ namespace Example7
 }
 ```
 
-## Validate credit card number with LuhnDotNet
+### Validate credit card number with LuhnDotNet
 The `LuhnDotNet` library can be used to validate a credit card number according to the Luhn algorithm. The `IsValid` method returns `true` if the credit card number is valid, and `false` otherwise.
 
 ```csharp
@@ -302,6 +303,7 @@ namespace Example8
     }
 }
 ```
+## Mod11 Algorithm
 
 # CLI building instructions
 For the following instructions, please make sure that you are connected to the internet. If necessary, NuGet will try to restore the [xUnit](https://xunit.net/) packages.
