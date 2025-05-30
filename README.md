@@ -393,6 +393,160 @@ namespace Example12
     }
 }
 ```
+### Validate PZN with Mod11DotNet
+The `LuhnDotNet` library can also be used to validate a Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Germany. The PZN is a 8-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to validate a PZN using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example13
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string pzn = "06789572";
+            bool isValid = pzn.IsValidMod11Number();
+            Console.WriteLine($"The German PZN {pzn} is valid: {isValid}");
+        }
+    }
+}
+```
+The `LuhnDotNet` library can also be used to validate an Austrian Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Austria. The PZN is a 7-digit number, with the last digit being a check digit calculated using the Mod11 algorithm.
+Add a leading zero to the PZN to make it an 8-digit number, as the Mod11 algorithm expects an 8-digit input. The last digit is the check digit, which is calculated using the Mod11 algorithm.
+Here is an example of how to validate an Austrian PZN using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+    
+namespace Example14
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string pzn = "0" + "3855587";
+            bool isValid = pzn.IsValidMod11Number();
+            Console.WriteLine($"The Austrian PZN {pzn} is valid: {isValid}");
+        }
+    }
+}
+```
+### Copmute PZN Check Digit with LuhnDotNet and Mod11
+The `LuhnDotNet` library can be used to compute the check digit of a Pharmazentralnummer (PZN) using the Mod11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to compute the check digit of a PZN using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+namespace Example15
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string pznWithoutCheckDigit = "0678957";
+            char checkDigit = pznWithoutCheckDigit.ComputeMod11CheckDigit();
+            //// Must be 2
+            Console.WriteLine($"The check digit for PZN {pznWithoutCheckDigit} is: {checkDigit}");
+        }
+    }
+}
+```
+### Copmute PZN Number with LuhnDotNet and Mod11
+The `LuhnDotNet` library can be used to compute the complete Pharmazentralnummer (PZN) using the Mod11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to compute the complete PZN using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+namespace Example16
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string pznWithoutCheckDigit = "0678957";
+            string pznWithCheckDigit = pznWithoutCheckDigit.ComputeMod11Number();
+            //// Must be 06789572
+            Console.WriteLine($"The complete PZN for {pznWithoutCheckDigit} is: {pznWithCheckDigit}");
+        }
+    }
+}
+```
+### ISBN-10 Check Digit Calculation with Mod11
+The `LuhnDotNet` library can be used to compute the check digit of an ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to compute the check digit of an ISBN-10 number using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+namespace Example17
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string isbnWithoutCheckDigit = "3-598-21508";
+            char checkDigit = isbnWithoutCheckDigit.RemoveSeparators().ComputeMod11CheckDigit();
+            //// Must be 8
+            Console.WriteLine($"The check digit for ISBN-10 {isbnWithoutCheckDigit} is: {checkDigit}");
+        }
+    }
+}
+```
+### ISBN-10 Number Calculation with Mod11
+The `LuhnDotNet` library can be used to compute the complete ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to compute the complete ISBN-10 number using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+namespace Example18
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string isbnWithoutCheckDigit = "3-598-21508";
+            string isbnWithCheckDigit = isbnWithoutCheckDigit.RemoveSeparators().ComputeMod11Number();
+            //// Must be 3598215088
+            Console.WriteLine($"The complete ISBN-10 for {isbnWithoutCheckDigit} is: {isbnWithCheckDigit}");
+        }
+    }
+}
+```
+
+### ISBN-10 Validation with Mod11
+The `LuhnDotNet` library can be used to validate an ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to validate an ISBN-10 number using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+namespace Example19
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string isbn = "3-598-21508-8";
+            bool isValid = isbn.RemoveSeparators().IsValidMod11Number();
+            Console.WriteLine($"The ISBN-10 {isbn} is valid: {isValid}");
+        }
+    }
+}
+```
 
 # CLI building instructions
 For the following instructions, please make sure that you are connected to the internet. If necessary, NuGet will try to restore the [xUnit](https://xunit.net/) packages.

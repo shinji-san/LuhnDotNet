@@ -69,11 +69,28 @@ public class Mod11ValidatorTest
     [InlineData("94-86953-21-4", false)]
     [InlineData("0-943396-40-2", false)]
     [InlineData("0-9752298-0-0", false)]
-    public void IsValidISBN_ReturnsTrueForValidCheckDigit(string number, bool isValid)
+    public void IsValidISBN_ReturnsExpectedResult(string number, bool isValid)
     {
         Assert.Equal(isValid, number.RemoveSeparators().IsValidMod11Number());
 #if NET8_0_OR_GREATER
         Assert.Equal(isValid, number.AsSpan().RemoveSeparators().IsValidMod11Number());
+#endif
+    }
+
+    [Theory]
+    [InlineData("06789572", true)]
+    [InlineData("08497862", true)]
+    [InlineData("10835964", true)]
+    [InlineData("0" + "3855587", true)]
+    [InlineData("0" + "3911794", true)]
+    [InlineData("0" + "0497874", true)]
+    [InlineData("0" + "3500909", true)]
+    [InlineData("0" + "4208217", true)]
+    public void IsValidPZN_ReturnsExpectedResult(string number, bool isValid)
+    {
+            Assert.Equal(isValid, number.RemoveSeparators().IsValidMod11Number());
+#if NET8_0_OR_GREATER
+            Assert.Equal(isValid, number.AsSpan().RemoveSeparators().IsValidMod11Number());
 #endif
     }
 }

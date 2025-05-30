@@ -42,4 +42,15 @@ public class Mod11CalculatorTest
         Assert.Equal(expectedMod11Number,  number.AsSpan().ComputeMod11Number());
 #endif
     }
+
+    [Theory]
+    [InlineData("0678957", '2')]
+    [InlineData("0385558", '7')]
+    public void ComputePZNCheckDigit_ReturnsExpectedDigit(string number, char expectedCheckDigit)
+    {
+            Assert.Equal(expectedCheckDigit, number.ComputeMod11CheckDigit());
+#if NET8_0_OR_GREATER
+            Assert.Equal(expectedCheckDigit, number.AsSpan().ComputeMod11CheckDigit());
+#endif
+    }
 }
