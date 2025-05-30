@@ -445,6 +445,7 @@ Here is an example of how to compute the check digit of a PZN using the `LuhnDot
 using System;
 using LuhnDotNet;
 using LuhnDotNet.Algorithm.Mod11;
+
 namespace Example15
 {
     public class Program
@@ -467,6 +468,7 @@ Here is an example of how to compute the complete PZN using the `LuhnDotNet` lib
 using System;
 using LuhnDotNet;
 using LuhnDotNet.Algorithm.Mod11;
+
 namespace Example16
 {
     public class Program
@@ -489,6 +491,7 @@ Here is an example of how to compute the check digit of an ISBN-10 number using 
 using System;
 using LuhnDotNet;
 using LuhnDotNet.Algorithm.Mod11;
+
 namespace Example17
 {
     public class Program
@@ -511,6 +514,7 @@ Here is an example of how to compute the complete ISBN-10 number using the `Luhn
 using System;
 using LuhnDotNet;
 using LuhnDotNet.Algorithm.Mod11;
+
 namespace Example18
 {
     public class Program
@@ -534,6 +538,7 @@ Here is an example of how to validate an ISBN-10 number using the `LuhnDotNet` l
 using System;
 using LuhnDotNet;
 using LuhnDotNet.Algorithm.Mod11;
+
 namespace Example19
 {
     public class Program
