@@ -393,7 +393,7 @@ namespace Example12
     }
 }
 ```
-### Validate PZN with Mod11DotNet
+### Validate PZN with Mod11
 The `LuhnDotNet` library can also be used to validate a Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Germany. The PZN is a 8-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
 Here is an example of how to validate a PZN using the `LuhnDotNet` library:
 
@@ -437,7 +437,7 @@ namespace Example14
     }
 }
 ```
-### Copmute PZN Check Digit with LuhnDotNet and Mod11
+### Compute PZN Check Digit with Mod11
 The `LuhnDotNet` library can be used to compute the check digit of a Pharmazentralnummer (PZN) using the Mod11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Mod11 algorithm.
 Here is an example of how to compute the check digit of a PZN using the `LuhnDotNet` library:
 
@@ -459,7 +459,7 @@ namespace Example15
     }
 }
 ```
-### Copmute PZN Number with LuhnDotNet and Mod11
+### Compute PZN Number with Mod11
 The `LuhnDotNet` library can be used to compute the complete Pharmazentralnummer (PZN) using the Mod11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Mod11 algorithm.
 Here is an example of how to compute the complete PZN using the `LuhnDotNet` library:
 
