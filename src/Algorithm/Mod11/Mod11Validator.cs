@@ -33,11 +33,11 @@
 
 namespace LuhnDotNet.Algorithm.Mod11;
 
-#if NET8_0_OR_GREATER
 using System;
-#else
+#if !NET8_0_OR_GREATER
 using System.Linq;
 #endif
+
 
 /// <summary>
 /// Provides utility methods for validating numbers using the Mod-11 check digit algorithm.
@@ -108,6 +108,11 @@ public static class Mod11Validator
     /// </returns>
     public static bool IsValidMod11CheckDigit(this char checkDigit, ReadOnlySpan<char> number)
     {
+        if (!char.IsDigit(checkDigit) && checkDigit != Mod11Algorithm.SpecialCheckDigitCharacter)
+        {
+            throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, "The check digit must be a digit (0-9) or 'X'.");
+        }
+
         Span<char> mod11Number = stackalloc char[number.Length + 1];
         number.CopyTo(mod11Number[..^1]);
         mod11Number[^1] = checkDigit;
@@ -132,6 +137,11 @@ public static class Mod11Validator
 #if NET8_0_OR_GREATER
         return checkDigit.IsValidMod11CheckDigit(number.AsSpan());
 #else
+        if (!char.IsDigit(checkDigit) && checkDigit != Mod11Algorithm.SpecialCheckDigitCharacter)
+        {
+            throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, "The check digit must be a digit (0-9) or 'X'.");
+        }
+
         var mod11Number = $"{number}{checkDigit}";
         return mod11Number.IsValidMod11Number();
 #endif

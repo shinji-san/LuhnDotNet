@@ -93,7 +93,7 @@ public static class LuhnValidator
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
     public static bool IsValidLuhnCheckDigit(this char checkDigit, ReadOnlySpan<char> number)
     {
-        if (checkDigit is > '9' or < '0')
+        if (!char.IsDigit(checkDigit))
         {
             throw new ArgumentOutOfRangeException(
                 nameof(checkDigit),
@@ -128,7 +128,7 @@ public static class LuhnValidator
 #if NET8_0_OR_GREATER
         return checkDigit.IsValidLuhnCheckDigit(number.AsSpan());
 #else
-            if (checkDigit is > '9' or < '0')
+            if (!char.IsDigit(checkDigit))
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(checkDigit),
