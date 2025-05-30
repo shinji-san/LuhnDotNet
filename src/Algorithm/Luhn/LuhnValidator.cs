@@ -31,11 +31,10 @@
 
 #endregion
 
-namespace LuhnDotNet;
+namespace LuhnDotNet.Algorithm.Luhn;
 
 using System;
 using System.Diagnostics.CodeAnalysis;
-using System.Globalization;
 
 /// <summary>
 /// Provides functionality to validate numbers using the Luhn algorithm.
@@ -92,9 +91,9 @@ public static class LuhnValidator
     /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-    public static bool IsValidLuhnCheckDigit(this byte checkDigit, ReadOnlySpan<char> number)
+    public static bool IsValidLuhnCheckDigit(this char checkDigit, ReadOnlySpan<char> number)
     {
-        if (checkDigit > 9)
+        if (!char.IsDigit(checkDigit))
         {
             throw new ArgumentOutOfRangeException(
                 nameof(checkDigit),
@@ -102,10 +101,12 @@ public static class LuhnValidator
                 "The check digit must be between 0 and 9");
         }
 
-        return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture))
-            .AsSpan()
-            .ValidateAndTrimNumber()
-            .DoubleEverySecondDigit(true) == 0;
+        var trimmedNumber = number.ValidateAndTrimNumber();
+        Span<char> luhnNumber = stackalloc char[trimmedNumber.Length + 1];
+        trimmedNumber.CopyTo(luhnNumber[..^1]);
+        luhnNumber[^1] = checkDigit;
+        ReadOnlySpan<char> readOnlyLuhnNumber = luhnNumber;
+        return readOnlyLuhnNumber.DoubleEverySecondDigit(true) == 0;
     }
 #endif
 
@@ -122,12 +123,12 @@ public static class LuhnValidator
     /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-    public static bool IsValidLuhnCheckDigit(this byte checkDigit, string number)
+    public static bool IsValidLuhnCheckDigit(this char checkDigit, string number)
     {
 #if NET8_0_OR_GREATER
         return checkDigit.IsValidLuhnCheckDigit(number.AsSpan());
 #else
-            if (checkDigit > 9)
+            if (!char.IsDigit(checkDigit))
             {
                 throw new ArgumentOutOfRangeException(
                     nameof(checkDigit),
@@ -135,7 +136,7 @@ public static class LuhnValidator
                     "The check digit must be between 0 and 9");
             }
 
-            return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture))
+            return string.Concat(number.Trim(), checkDigit)
                 .ValidateAndTrimNumber()
                 .DoubleEverySecondDigit(true) == 0;
 #endif

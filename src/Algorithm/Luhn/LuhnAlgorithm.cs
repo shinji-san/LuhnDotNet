@@ -31,7 +31,7 @@
 
 #endregion
 
-namespace LuhnDotNet;
+namespace LuhnDotNet.Algorithm.Luhn;
 
 using System;
 
@@ -44,11 +44,6 @@ internal static class LuhnAlgorithm
     /// Modulus 10
     /// </summary>
     internal const int Modulus = 10;
-
-    /// <summary>
-    /// Represents the ASCII code for the character '0'.
-    /// </summary>
-    private const int AsciiCodeForZero = 48;
 
     /// <summary>
     /// Represents a delegate used for processing digits within the Luhn algorithm context.
@@ -96,7 +91,7 @@ internal static class LuhnAlgorithm
     /// </summary>
     /// <param name="digit">The current digit being processed from the numeric input.</param>
     /// <param name="doubleDigit">The value of the current digit multiplied by 2.</param>
-    /// <param name="index">The position of the digit in the sequence, considering rightmost digit as index 0.</param>
+    /// <param name="index">The position of the digit in the sequence, considering the rightmost digit as index 0.</param>
     /// <returns>
     /// A <see cref="System.UInt32"/> value representing the transformed digit based on its position.
     /// </returns>
@@ -127,19 +122,4 @@ internal static class LuhnAlgorithm
     /// <returns><see langword="true" /> if the <paramref name="value"/> is even; otherwise
     /// <see langword="false"/></returns>
     private static bool IsEven(this int value) => value % 2 == 0;
-
-    /// <summary>
-    /// Converts a character representing a numeric digit to its unsigned integer value.
-    /// </summary>
-    /// <param name="character">The character to convert. Must represent a numeric digit.</param>
-    /// <returns>The numeric value of the character as an unsigned integer.</returns>
-    private static uint ToUnsignedIntegerDigit(this char character)
-    {
-        if (character is < '0' or > '9')
-        {
-            throw new ArgumentOutOfRangeException(nameof(character), $"The character '{character}' is not a valid digit. Character must be a digit 0-9." );
-        }
-
-        return (uint)character - AsciiCodeForZero;
-    }
 }

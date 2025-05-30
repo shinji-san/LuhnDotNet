@@ -3,6 +3,7 @@ namespace LuhnDotNetBenchmark;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -73,7 +74,7 @@ public class LuhnDotNetBenchmark
     [ArgumentsSource(nameof(NumericNumbersAsString))]
     public void IsValidLuhnCheckDigitBasedOnString(string number)
     {
-        byte.MinValue.IsValidLuhnCheckDigit(number);
+        char.MinValue.IsValidLuhnCheckDigit(number);
     }
 
     [Benchmark, BenchmarkCategory(ComputeLuhnNumberCategory)]
@@ -101,7 +102,7 @@ public class LuhnDotNetBenchmark
     [ArgumentsSource(nameof(NumericNumbersAsString))]
     public void IsValidLuhnCheckDigitBasedOnSpan(string number)
     {
-        byte.MinValue.IsValidLuhnCheckDigit(number.AsSpan());
+        char.MinValue.IsValidLuhnCheckDigit(number.AsSpan());
     }
 
     [Benchmark(Baseline = true), BenchmarkCategory(AlphaNumericToNumericCategory)]

@@ -20,6 +20,13 @@ using System.Globalization;
 public static class ReadOnlySpanExtensions
 {
     /// <summary>
+    /// Represents a delegate used to calculate a check digit for a numeric span of characters.
+    /// </summary>
+    /// <param name="number">The numeric span for which the check digit is to be calculated.</param>
+    /// <returns>A <see cref="char"/> value representing the computed check digit.</returns>
+    internal delegate char CheckDigitCalculator(ReadOnlySpan<char> number);
+
+    /// <summary>
     /// Converts an alphanumeric string into its numeric representation.
     /// </summary>
     /// <param name="alphaNumeric">The alphanumeric span to be converted.</param>
@@ -107,12 +114,30 @@ public static class ReadOnlySpanExtensions
     }
 
     /// <summary>
+    /// Computes a numeric string with an appended check digit based on the provided number and check digit calculator function.
+    /// </summary>
+    /// <param name="number">The numeric span for which the check digit is to be computed and appended.</param>
+    /// <param name="computeCheckDigit">A delegate representing the function used to calculate the check digit.</param>
+    /// <returns>A string containing the input number with the computed check digit appended.</returns>
+    /// <exception cref="ArgumentException"><paramref name="number"/> is empty or contains non-digit characters.</exception>
+    internal static string ComputeNumberWithCheckDigit(
+        this ReadOnlySpan<char> number,
+        CheckDigitCalculator computeCheckDigit)
+    {
+        var trimmedNumber = number.ValidateAndTrimNumber();
+        Span<char> result = stackalloc char[trimmedNumber.Length + 1];
+        trimmedNumber.CopyTo(result[..^1]);
+        result[^1] = computeCheckDigit(trimmedNumber);
+        return result.ToString();
+    }
+
+    /// <summary>
     /// Checks whether or not the <paramref name="number"/> contains only digits
     /// </summary>
     /// <param name="number">An identification number</param>
     /// <returns><see langword="true" /> if the <paramref name="number"/> contains only digits; otherwise
     /// <see langword="false"/></returns>
-    private static bool IsDigits(this ReadOnlySpan<char> number)
+    internal static bool IsDigits(this ReadOnlySpan<char> number)
     {
         foreach (char character in number)
         {

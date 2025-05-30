@@ -31,14 +31,15 @@
 
 #endregion
 
-namespace LuhnDotNet;
+namespace LuhnDotNet.Algorithm.Luhn;
 
+#if NET8_0_OR_GREATER
 using System;
-using System.Diagnostics.CodeAnalysis;
+#else
 using System.Globalization;
-#if !NET8_0_OR_GREATER
-    using System.Text.RegularExpressions;
 #endif
+using System.Diagnostics.CodeAnalysis;
+
 
 /// <summary>
 /// Provides methods for performing the Luhn algorithm, including computation of check digits and Luhn numbers.
@@ -55,8 +56,12 @@ public static class LuhnCalculator
     /// It contains none-numeric characters.</exception>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-    public static byte ComputeLuhnCheckDigit(this ReadOnlySpan<char> number) =>
-        (byte)((LuhnAlgorithm.Modulus - number.ValidateAndTrimNumber().DoubleEverySecondDigit(false)) % LuhnAlgorithm.Modulus);
+    public static char ComputeLuhnCheckDigit(this ReadOnlySpan<char> number)
+    {
+        var sum = number.ValidateAndTrimNumber().DoubleEverySecondDigit(false);
+        var checkDigit = (LuhnAlgorithm.Modulus - sum) % LuhnAlgorithm.Modulus;
+        return checkDigit.ToCharDigit();
+    }
 #endif
 
     /// <summary>
@@ -68,12 +73,16 @@ public static class LuhnCalculator
     /// It contains none-numeric characters.</exception>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
-    public static byte ComputeLuhnCheckDigit(this string number) =>
+    public static char ComputeLuhnCheckDigit(this string number)
+    {
 #if NET8_0_OR_GREATER
-        number.AsSpan().ComputeLuhnCheckDigit();
+        return number.AsSpan().ComputeLuhnCheckDigit();
 #else
-        (byte)((LuhnAlgorithm.Modulus - number.ValidateAndTrimNumber().DoubleEverySecondDigit(false)) % LuhnAlgorithm.Modulus);
+        var sum = number.ValidateAndTrimNumber().DoubleEverySecondDigit(false);
+        var checkDigit = (LuhnAlgorithm.Modulus - sum) % LuhnAlgorithm.Modulus;
+        return checkDigit.ToCharDigit();
 #endif
+    }
 
 #if NET8_0_OR_GREATER
     /// <summary>
@@ -87,8 +96,7 @@ public static class LuhnCalculator
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
     public static string ComputeLuhnNumber(this ReadOnlySpan<char> number)
     {
-        byte checkDigit = number.ComputeLuhnCheckDigit();
-        return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
+        return number.ComputeNumberWithCheckDigit(ComputeLuhnCheckDigit);
     }
 #endif
 
@@ -106,8 +114,8 @@ public static class LuhnCalculator
 #if NET8_0_OR_GREATER
         return number.AsSpan().ComputeLuhnNumber();
 #else
-        byte checkDigit = number.ComputeLuhnCheckDigit();
-        return string.Concat(number.Trim(), checkDigit.ToString(CultureInfo.InvariantCulture));
+        var trimmedNumber = number.ValidateAndTrimNumber();
+        return $"{trimmedNumber}{trimmedNumber.ComputeLuhnCheckDigit().ToString(CultureInfo.InvariantCulture)}";
 #endif
     }
 }

@@ -6,10 +6,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
+- Added internal `LuhnAlgorithm` class to encapsulate Luhn algorithm related methods.
+- Added public `LuhnCalculator` class to encapsulate Luhn calculation methods.
+- Added public `LuhnValidator` class to encapsulate Luhn validation methods.
+- Added `StringExtensions` and `ReadOnlySpanExtensions` classes to encapsulate string and ReadOnlySpan related methods.
+- Added `LuhnAlgorithm.ComputeLuhnCheckDigit` method to compute the Luhn check digit.
+- Added `LuhnAlgorithm.ComputeLuhnNumber` method to compute the Luhn number.
+- Added `LuhnValidator.IsValidLuhnCheckDigit` method to validate a number with Luhn algorithm.
+- Added `LuhnValidator.IsValidLuhnNumber` method to validate a check digit with Luhn algorithm.
+- Added overloads of `LuhnValidator.IsValidLuhnCheckDigit` and `LuhnValidator.IsValidLuhnNumber` methods to accept a `ReadOnlySpan<char>` as input.
+- Added internal `Mod11Algorithm` class to encapsulate Mod11 algorithm related methods.
+- Added public `Mod11Calculator` class to encapsulate Mod11 calculation methods.
+- Added public `Mod11Validator` class to encapsulate Mod11 validation methods.
+- Added `Mod11Algorithm.ComputeMod11CheckDigit` method to compute the Mod11 check digit.
+- Added `Mod11Algorithm.ComputeMod11Number` method to compute the Mod11 number.
+- Added `Mod11Validator.IsValidMod11CheckDigit` method to validate a number with Mod11 algorithm.
+- Added `Mod11Validator.IsValidMod11Number` method to validate a check digit with Mod11 algorithm.
+- Added overloads of `Mod11Validator.IsValidMod11CheckDigit` and `Mod11Validator.IsValidMod11Number` methods to accept a `ReadOnlySpan<char>` as input.
+- Added `StringExtensions.RemoveSeparators` method to remove all separators from a string.
+- Added `ReadOnlySpanExtensions.RemoveSeparators` method to remove all separators from a ReadOnlySpan.
 - Added `InvalidCharacterException` to throw an exception if the input string contains invalid characters.
 - Added `RemoveSeparators` methods to remove all separators from a string or ReadOnlySpan. Use it, for example, with credit card numbers.
 
 ### Changed
+- Moved Luhn algorithm related methods from the `Luhn` class to the new `LuhnAlgorithm`, `LuhnCalculator`, and `LuhnValidator` classes.
+- Changed namespace for Luhn algorithm-related classes from `LuhnDotNet` to `LuhnDotNet.Algorithm.Luhn`.
+- Changed `Luhn.IsValid` methods to `LuhnValidator.IsValidLuhnCheckDigit` and `LuhnValidator.IsValidLuhnNumber`.
+- Changed return type of `LuhnAlgorithm.ComputeLuhnCheckDigit` to `char` instead of `byte`.
 - Renamed `ConvertAlphaNumericToNumeric` to `AlphaNumericToNumeric`
 - Moved `AlphaNumericToNumeric` method to the `StringExtensions` and `ReadOnlySpanExtensions` classes.
 - Moved `ComputeCheckDigit` and `ComputeLuhnNumber` methods to the `LuhnCalculator` class.

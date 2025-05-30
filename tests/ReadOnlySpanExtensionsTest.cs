@@ -1,3 +1,4 @@
+#if NET8_0_OR_GREATER
 namespace LuhnDotNetTest;
 
 using LuhnDotNet;
@@ -82,3 +83,4 @@ public class ReadOnlySpanExtensionsTest
         Assert.Throws<ArgumentNullException>(() => ((string)null)!.AsSpan().RemoveSeparators());
     }
 }
+#endif

@@ -1,7 +1,7 @@
 # LuhnDotNet
 ![LuhnDotNet Logo](images/social-media-preview.png)
 
-A C# implementation of the Luhn algorithm.
+A C# implementation of the Luhn algorithm and other check digit algorithms, which can be used to validate identification numbers like credit card numbers, International Securities Identification Numbers (ISINs), ISBN, PZN and more.
 
 The Luhn algorithm is a checksum formula used to validate identification numbers like credit card numbers. It works by doubling every second digit from the right, summing all the digits, and checking if the total is a multiple of 10. It's widely used and is specified in ISO/IEC 7812-1.
 
@@ -131,11 +131,13 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
 You can find the API documentation [here](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html).
 
 # Usage
-## Compute the Luhn check digit
+## Luhn Algorithm
+### Compute the Luhn check digit
 ```csharp
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example1
 {
@@ -151,11 +153,12 @@ namespace Example1
 }
 ```
 
-## Compute the Luhn number
+### Compute the Luhn number
 ```csharp
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example2
 {
@@ -171,11 +174,12 @@ namespace Example2
 }
 ```
 
-## Validate Luhn number
+### Validate Luhn number
 ```csharp
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example3
 {
@@ -191,11 +195,12 @@ namespace Example3
 }
 ```
 
-## Validate number and corresponding Luhn check digit
+### Validate number and corresponding Luhn check digit
 ```csharp
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example4
 {
@@ -203,7 +208,7 @@ namespace Example4
     {
         public static void Main(string[] args)
         {
-            byte checkDigit = 5;
+            char checkDigit = '5';
             var isValid = checkDigit.IsValidLuhnCheckDigit("37828224631000");
             //// Must be 'true'
             Console.WriteLine(isValid);
@@ -212,7 +217,7 @@ namespace Example4
 }
 ```
 
-## Validate ISIN with LuhnDotNet and AlphaNumericToNumeric
+### Validate ISIN with LuhnDotNet and AlphaNumericToNumeric
 
 The `LuhnDotNet` library can be used in combination with the `AlphaNumericToNumeric` method to validate an International Securities Identification Number (ISIN). An ISIN uniquely identifies a security, such as stocks, bonds or derivatives. It is a 12-character alphanumeric code.
 
@@ -223,6 +228,7 @@ Here is an example of how to use these methods to validate an ISIN:
 ```csharp
 using System;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example5
 {
@@ -237,7 +243,7 @@ namespace Example5
     }
 }
 ```
-## Compute ISIN Check Digit with LuhnDotNet and AlphaNumericToNumeric
+### Compute ISIN Check Digit with LuhnDotNet and AlphaNumericToNumeric
 
 The `LuhnDotNet` library provides the `ComputeLuhnCheckDigit` method which can be used to compute the check digit of a numeric string according to the Luhn algorithm. When dealing with an International Securities Identification Number (ISIN), which is a 12-character alphanumeric code, we first need to convert the alphanumeric ISIN to a numeric string. This can be achieved using the `AlphaNumericToNumeric` method.
 
@@ -246,6 +252,7 @@ Here is an example of how to compute the check digit of an ISIN:
 ```csharp
 using System;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example6
 {
@@ -254,19 +261,20 @@ namespace Example6
         public static void Main(string[] args)
         {
             string isinWithoutCheckDigit = "US037833100";
-            byte checkDigit = isinWithoutCheckDigit.AlphaNumericToNumeric().ComputeLuhnCheckDigit();
+            char checkDigit = isinWithoutCheckDigit.AlphaNumericToNumeric().ComputeLuhnCheckDigit();
             Console.WriteLine($"The check digit for ISIN {isinWithoutCheckDigit} is: {checkDigit}");
         }
     }
 }
 ```
 
-## Compute credit card number with LuhnDotNet
+### Compute credit card number with LuhnDotNet
 The `LuhnDotNet` library can be used to compute the check digit of a credit card number. The check digit is the last digit of the credit card number, which is used to validate the number according to the Luhn algorithm.
 
 ```csharp
 using System;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example7
 {
@@ -275,19 +283,20 @@ namespace Example7
         public static void Main(string[] args)
         {
             string creditCardNumberWithoutCheckDigit = "4417 1234 5678 911".RemoveSeparators();
-            byte checkDigit = creditCardNumberWithoutCheckDigit.ComputeLuhnCheckDigit();
+            char checkDigit = creditCardNumberWithoutCheckDigit.ComputeLuhnCheckDigit();
             Console.WriteLine($"The check digit for credit card number {creditCardNumberWithoutCheckDigit} is: {checkDigit}");
         }
     }
 }
 ```
 
-## Validate credit card number with LuhnDotNet
+### Validate credit card number with LuhnDotNet
 The `LuhnDotNet` library can be used to validate a credit card number according to the Luhn algorithm. The `IsValid` method returns `true` if the credit card number is valid, and `false` otherwise.
 
 ```csharp
 using System;
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Luhn;
 
 namespace Example8
 {
@@ -298,6 +307,247 @@ namespace Example8
             string creditCardNumber = "4417 1234 5678 9113".RemoveSeparators();
             bool isValid = creditCardNumber.IsValidLuhnNumber();
             Console.WriteLine($"The credit card number {creditCardNumber} is valid: {isValid}");
+        }
+    }
+}
+```
+## Mod11 Algorithm
+### Compute the Mod11 check digit
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example9
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var checkDigit = "809027341".ComputeMod11CheckDigit();
+            //// Must be 6
+            Console.WriteLine(checkDigit);
+        }
+    }
+}
+```
+
+### Compute the Mod11 number
+```csharp
+using System;
+using System.Collections.Generic;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example10
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var mod11Number = "809027341".ComputeMod11Number();
+            //// Must be 8090273416
+            Console.WriteLine(mod11Number);
+        }
+    }
+}
+```
+### Validate Mod11 number
+```csharp
+using System;
+using System.Collections.Generic;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example11
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            var isValid = "8090273416".IsValidMod11Number();
+            //// Must be 'true'
+            Console.WriteLine(isValid);
+        }
+    }
+}
+```
+### Validate number and corresponding Mod11 check digit
+```csharp
+using System;
+using System.Collections.Generic;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example12
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            char checkDigit = '6';
+            var isValid = checkDigit.IsValidMod11CheckDigit("809027341");
+            //// Must be 'true'
+            Console.WriteLine(isValid);
+        }
+    }
+}
+```
+### Validate PZN with Mod11
+The `LuhnDotNet` library can also be used to validate a Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Germany. The PZN is a 8-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to validate a PZN using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example13
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string pzn = "06789572";
+            bool isValid = pzn.IsValidMod11Number();
+            Console.WriteLine($"The German PZN {pzn} is valid: {isValid}");
+        }
+    }
+}
+```
+The `LuhnDotNet` library can also be used to validate an Austrian Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Austria. The PZN is a 7-digit number, with the last digit being a check digit calculated using the Mod11 algorithm.
+Add a leading zero to the PZN to make it an 8-digit number, as the Mod11 algorithm expects an 8-digit input. The last digit is the check digit, which is calculated using the Mod11 algorithm.
+Here is an example of how to validate an Austrian PZN using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+    
+namespace Example14
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string pzn = "0" + "3855587";
+            bool isValid = pzn.IsValidMod11Number();
+            Console.WriteLine($"The Austrian PZN {pzn} is valid: {isValid}");
+        }
+    }
+}
+```
+### Compute PZN Check Digit with Mod11
+The `LuhnDotNet` library can be used to compute the check digit of a Pharmazentralnummer (PZN) using the Mod11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to compute the check digit of a PZN using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example15
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string pznWithoutCheckDigit = "0678957";
+            char checkDigit = pznWithoutCheckDigit.ComputeMod11CheckDigit();
+            //// Must be 2
+            Console.WriteLine($"The check digit for PZN {pznWithoutCheckDigit} is: {checkDigit}");
+        }
+    }
+}
+```
+### Compute PZN Number with Mod11
+The `LuhnDotNet` library can be used to compute the complete Pharmazentralnummer (PZN) using the Mod11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to compute the complete PZN using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example16
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string pznWithoutCheckDigit = "0678957";
+            string pznWithCheckDigit = pznWithoutCheckDigit.ComputeMod11Number();
+            //// Must be 06789572
+            Console.WriteLine($"The complete PZN for {pznWithoutCheckDigit} is: {pznWithCheckDigit}");
+        }
+    }
+}
+```
+### ISBN-10 Check Digit Calculation with Mod11
+The `LuhnDotNet` library can be used to compute the check digit of an ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to compute the check digit of an ISBN-10 number using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example17
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string isbnWithoutCheckDigit = "3-598-21508";
+            char checkDigit = isbnWithoutCheckDigit.RemoveSeparators().ComputeMod11CheckDigit();
+            //// Must be 8
+            Console.WriteLine($"The check digit for ISBN-10 {isbnWithoutCheckDigit} is: {checkDigit}");
+        }
+    }
+}
+```
+### ISBN-10 Number Calculation with Mod11
+The `LuhnDotNet` library can be used to compute the complete ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to compute the complete ISBN-10 number using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example18
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string isbnWithoutCheckDigit = "3-598-21508";
+            string isbnWithCheckDigit = isbnWithoutCheckDigit.RemoveSeparators().ComputeMod11Number();
+            //// Must be 3598215088
+            Console.WriteLine($"The complete ISBN-10 for {isbnWithoutCheckDigit} is: {isbnWithCheckDigit}");
+        }
+    }
+}
+```
+
+### ISBN-10 Validation with Mod11
+The `LuhnDotNet` library can be used to validate an ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+Here is an example of how to validate an ISBN-10 number using the `LuhnDotNet` library:
+
+```csharp
+using System;
+using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11;
+
+namespace Example19
+{
+    public class Program
+    {
+        public static void Main(string[] args)
+        {
+            string isbn = "3-598-21508-8";
+            bool isValid = isbn.RemoveSeparators().IsValidMod11Number();
+            Console.WriteLine($"The ISBN-10 {isbn} is valid: {isValid}");
         }
     }
 }
