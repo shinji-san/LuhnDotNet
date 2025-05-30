@@ -90,7 +90,7 @@ public static class Mod11Validator
         }
 
         var computeCheckDigit = validateAndTrimNumber.Substring(0, validateAndTrimNumber.Length - 1).ComputeCheckDigit();
-        return computeCheckDigit == validateAndTrimNumber[numberWithCheckDigit.Length - 1].ToUnsignedIntegerDigit();
+        return computeCheckDigit == validateAndTrimNumber[validateAndTrimNumber.Length - 1].ToUnsignedIntegerDigit();
 #endif
     }
 
