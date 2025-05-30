@@ -345,9 +345,9 @@ namespace Example10
     {
         public static void Main(string[] args)
         {
-            var mod11Numbner = "809027341".ComputeMod11Number();
+            var mod11Number = "809027341".ComputeMod11Number();
             //// Must be 8090273416
-            Console.WriteLine(mod11Numbner);
+            Console.WriteLine(mod11Number);
         }
     }
 }
@@ -385,7 +385,7 @@ namespace Example12
     {
         public static void Main(string[] args)
         {
-            char checkDigit = 6;
+            char checkDigit = '6';
             var isValid = checkDigit.IsValidLuhnCheckDigit("809027341");
             //// Must be 'true'
             Console.WriteLine(isValid);

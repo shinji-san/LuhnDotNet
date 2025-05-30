@@ -23,7 +23,7 @@ public static class ReadOnlySpanExtensions
     /// Represents a delegate used to calculate a check digit for a numeric span of characters.
     /// </summary>
     /// <param name="number">The numeric span for which the check digit is to be calculated.</param>
-    /// <returns>A byte value representing the computed check digit.</returns>
+    /// <returns>A <see cref="char"/> value representing the computed check digit.</returns>
     internal delegate char CheckDigitCalculator(ReadOnlySpan<char> number);
 
     /// <summary>

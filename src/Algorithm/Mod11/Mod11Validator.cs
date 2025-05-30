@@ -89,7 +89,7 @@ public static class Mod11Validator
             return validateAndTrimNumber.IsValidMod11NumberFast();
         }
 
-        var computeCheckDigit = validateAndTrimNumber.Substring(0, numberWithCheckDigit.Length - 1).ComputeCheckDigit();
+        var computeCheckDigit = validateAndTrimNumber.Substring(0, validateAndTrimNumber.Length - 1).ComputeCheckDigit();
         return computeCheckDigit == validateAndTrimNumber[numberWithCheckDigit.Length - 1].ToUnsignedIntegerDigit();
 #endif
     }
