@@ -208,7 +208,7 @@ namespace Example4
     {
         public static void Main(string[] args)
         {
-            char checkDigit = 5;
+            char checkDigit = '5';
             var isValid = checkDigit.IsValidLuhnCheckDigit("37828224631000");
             //// Must be 'true'
             Console.WriteLine(isValid);
@@ -386,7 +386,7 @@ namespace Example12
         public static void Main(string[] args)
         {
             char checkDigit = '6';
-            var isValid = checkDigit.IsValidLuhnCheckDigit("809027341");
+            var isValid = checkDigit.IsValidMod11CheckDigit("809027341");
             //// Must be 'true'
             Console.WriteLine(isValid);
         }

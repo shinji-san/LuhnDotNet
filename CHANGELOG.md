@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added overloads of `LuhnValidator.IsValidLuhnCheckDigit` and `LuhnValidator.IsValidLuhnNumber` methods to accept a `ReadOnlySpan<char>` as input.
 - Added internal `Mod11Algorithm` class to encapsulate Mod11 algorithm related methods.
 - Added public `Mod11Calculator` class to encapsulate Mod11 calculation methods.
-- Added publix `Mod11Validator` class to encapsulate Mod11 validation methods.
+- Added public `Mod11Validator` class to encapsulate Mod11 validation methods.
 - Added `Mod11Algorithm.ComputeMod11CheckDigit` method to compute the Mod11 check digit.
 - Added `Mod11Algorithm.ComputeMod11Number` method to compute the Mod11 number.
 - Added `Mod11Validator.IsValidMod11CheckDigit` method to validate a number with Mod11 algorithm.
@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Moved Luhn algorithm related methods from the `Luhn` class to the new `LuhnAlgorithm`, `LuhnCalculator`, and `LuhnValidator` classes.
-- Changed namespace for Luhn algorithm-related classes from `LuhnDotNet` to `LuhnDotNet.Algorithms.Luhn`.
+- Changed namespace for Luhn algorithm-related classes from `LuhnDotNet` to `LuhnDotNet.Algorithm.Luhn`.
 - Changed `Luhn.IsValid` methods to `LuhnValidator.IsValidLuhnCheckDigit` and `LuhnValidator.IsValidLuhnNumber`.
 - Changed return type of `LuhnAlgorithm.ComputeLuhnCheckDigit` to `char` instead of `byte`.
 - Renamed `ConvertAlphaNumericToNumeric` to `AlphaNumericToNumeric`
