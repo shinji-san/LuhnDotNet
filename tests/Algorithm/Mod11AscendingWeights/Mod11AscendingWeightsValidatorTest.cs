@@ -1,12 +1,11 @@
-using LuhnDotNet.Algorithm.Mod11;
-
-namespace LuhnDotNetTest.Algorithm.Mod11;
+namespace LuhnDotNetTest.Algorithm.Mod11AscendingWeights;
 
 using LuhnDotNet;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 using System;
 using Xunit;
 
-public class Mod11ValidatorTest
+public class Mod11AscendingWeightsValidatorTest
 {
     [Theory]
     [InlineData("06319429")]
@@ -18,6 +17,9 @@ public class Mod11ValidatorTest
     [InlineData("0306406152")]
     [InlineData("8090273416")]
     [InlineData("097522980X")]
+    [InlineData("0714105449")]
+    [InlineData("0441005608")]
+    [InlineData("1568656521")]
     public void IsValidMod11Number_ReturnsTrueForValidNumber(string number)
     {
         Assert.True( number.IsValidMod11Number());
@@ -36,6 +38,9 @@ public class Mod11ValidatorTest
     [InlineData("030640615", '2')]
     [InlineData("809027341", '6')]
     [InlineData("097522980", 'X')]
+    [InlineData("071410544",'9')]
+    [InlineData("044100560",'8')]
+    [InlineData("156865652",'1')]
     public void IsValidMod11CheckDigit_ReturnsTrueForValidCheckDigit(string number, char checkDigit)
     {
         Assert.True(checkDigit.IsValidMod11CheckDigit(number));
@@ -69,6 +74,9 @@ public class Mod11ValidatorTest
     [InlineData("94-86953-21-4", false)]
     [InlineData("0-943396-40-2", false)]
     [InlineData("0-9752298-0-0", false)]
+    [InlineData("0317-8471", false)]
+    [InlineData("1050-124X", false)]
+    [InlineData("978-92-95055-12-4", true)]
     public void IsValidISBN_ReturnsExpectedResult(string number, bool isValid)
     {
         Assert.Equal(isValid, number.RemoveSeparators().IsValidMod11Number());

@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// <copyright file="Mod11Calculator.cs" company="Private">
+// <copyright file="Mod11AscendingWeightsCalculator.cs" company="Private">
 // Copyright (c) 2025 All Rights Reserved
 // </copyright>
 // <author>Sebastian Walther</author>
@@ -31,17 +31,18 @@
 
 #endregion
 
-namespace LuhnDotNet.Algorithm.Mod11;
+namespace LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 #if NET8_0_OR_GREATER
 using System;
-#endif
+#else
 using System.Globalization;
+#endif
 
 /// <summary>
-/// Provides methods to compute and return a Modulus 11 (Mod11) check digit.
+/// Provides functionality to compute Modulus 11 (Mod11) check digits and numbers with ascending weights.
 /// </summary>
-public static class Mod11Calculator
+public static class Mod11AscendingWeightsCalculator
 {
 #if NET8_0_OR_GREATER
     /// <summary>
@@ -107,6 +108,6 @@ public static class Mod11Calculator
     /// <returns>The formatted check digit as a character. Returns the special check digit character if the input is 10; otherwise, returns the numeric character representation of the input.</returns>
     private static char FormatCheckDigit(this uint checkDigit)
     {
-        return checkDigit == Mod11Algorithm.SpecialCheckDigitValue ? Mod11Algorithm.SpecialCheckDigitCharacter : checkDigit.ToCharDigit();
+        return checkDigit == Mod11AscendingWeightsAlgorithm.SpecialCheckDigitValue ? Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter : checkDigit.ToCharDigit();
     }
 }

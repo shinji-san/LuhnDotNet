@@ -5,6 +5,8 @@ A C# implementation of the Luhn algorithm and other check digit algorithms, whic
 
 The Luhn algorithm is a checksum formula used to validate identification numbers like credit card numbers. It works by doubling every second digit from the right, summing all the digits, and checking if the total is a multiple of 10. It's widely used and is specified in ISO/IEC 7812-1.
 
+The Modulo 11 algorithm with ascending weights  is another checksum formula used to validate identification numbers like PZN (Pharmazentralnummer) and ISBN-10. It works by multiplying each digit by a weight, summing the results, and calculating the check digit based on the modulo 11 of the sum.
+
 # Build & Test Status Of Default Branch
 <table>
   <thead>
@@ -131,7 +133,17 @@ The Luhn algorithm is a checksum formula used to validate identification numbers
 You can find the API documentation [here](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html).
 
 # Usage
-## Luhn Algorithm
+| Identification Number                                 | Check Digit Algorithm            |
+|-------------------------------------------------------|----------------------------------|
+| Credit Card Number                                    | Luhn                             |
+| International Securities Identification Number (ISIN) | Luhn                             |
+| Deutsche Bahn AG (DB) locomotive number               | Luhn                             |
+| UIC identification marking for tractive stock         | Luhn                             |
+| German Pharmazentralnummer (PZN)                      | Modulo 11 with ascending weights |
+| Austrian Pharmazentralnummer (PZN)                    | Modulo 11 with ascending weights |
+| ISBN-10                                               | Modulo 11 with ascending weights |
+
+## Luhn algorithm
 ### Compute the Luhn check digit
 ```csharp
 using System;
@@ -311,12 +323,13 @@ namespace Example8
     }
 }
 ```
-## Mod11 Algorithm
+## Modulo 11 algorithm with ascending weights
+This implementation uses sum modulo 11 as a direct remainder and can't be used for ISSN.
 ### Compute the Mod11 check digit
 ```csharp
 using System;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example9
 {
@@ -337,7 +350,7 @@ namespace Example9
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example10
 {
@@ -357,7 +370,7 @@ namespace Example10
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example11
 {
@@ -377,7 +390,7 @@ namespace Example11
 using System;
 using System.Collections.Generic;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example12
 {
@@ -400,7 +413,7 @@ Here is an example of how to validate a PZN using the `LuhnDotNet` library:
 ```csharp
 using System;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example13
 {
@@ -422,7 +435,7 @@ Here is an example of how to validate an Austrian PZN using the `LuhnDotNet` lib
 ```csharp
 using System;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
     
 namespace Example14
 {
@@ -444,7 +457,7 @@ Here is an example of how to compute the check digit of a PZN using the `LuhnDot
 ```csharp
 using System;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example15
 {
@@ -467,7 +480,7 @@ Here is an example of how to compute the complete PZN using the `LuhnDotNet` lib
 ```csharp
 using System;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example16
 {
@@ -490,7 +503,7 @@ Here is an example of how to compute the check digit of an ISBN-10 number using 
 ```csharp
 using System;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example17
 {
@@ -513,7 +526,7 @@ Here is an example of how to compute the complete ISBN-10 number using the `Luhn
 ```csharp
 using System;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example18
 {
@@ -537,7 +550,7 @@ Here is an example of how to validate an ISBN-10 number using the `LuhnDotNet` l
 ```csharp
 using System;
 using LuhnDotNet;
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 namespace Example19
 {

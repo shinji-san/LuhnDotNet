@@ -1,10 +1,10 @@
-namespace LuhnDotNetTest.Algorithm.Mod11;
+namespace LuhnDotNetTest.Algorithm.Mod11AscendingWeights;
 
-using LuhnDotNet.Algorithm.Mod11;
+using LuhnDotNet.Algorithm.Mod11AscendingWeights;
 using System;
 using Xunit;
 
-public class Mod11CalculatorTest
+public class Mod11AscendingWeightsCalculatorTest
 {
 
     [Theory]
@@ -37,9 +37,9 @@ public class Mod11CalculatorTest
     [InlineData("097522980", "097522980X")]
     public void ComputeMod11Number_ReturnsExpectedDigit(string number, string expectedMod11Number)
     {
-        Assert.Equal(expectedMod11Number,  number.ComputeMod11Number());
+        Assert.Equal(expectedMod11Number,  (string)number.ComputeMod11Number());
 #if NET8_0_OR_GREATER
-        Assert.Equal(expectedMod11Number,  number.AsSpan().ComputeMod11Number());
+        Assert.Equal(expectedMod11Number,  (string)number.AsSpan().ComputeMod11Number());
 #endif
     }
 

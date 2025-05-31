@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// <copyright file="Mod11Validator.cs" company="Private">
+// <copyright file="Mod11AscendingWeightsValidator.cs" company="Private">
 // Copyright (c) 2025 All Rights Reserved
 // </copyright>
 // <author>Sebastian Walther</author>
@@ -31,18 +31,18 @@
 
 #endregion
 
-namespace LuhnDotNet.Algorithm.Mod11;
+namespace LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 using System;
 #if !NET8_0_OR_GREATER
 using System.Linq;
 #endif
 
-
 /// <summary>
-/// Provides utility methods for validating numbers using the Mod-11 check digit algorithm.
+/// Provides static methods for validating numbers with Mod-11 check digits,
+/// using ascending weights in the calculation process.
 /// </summary>
-public static class Mod11Validator
+public static class Mod11AscendingWeightsValidator
 {
     /// <summary>
     /// Validates whether a given number with a Mod-11 check digit is valid.
@@ -108,7 +108,7 @@ public static class Mod11Validator
     /// </returns>
     public static bool IsValidMod11CheckDigit(this char checkDigit, ReadOnlySpan<char> number)
     {
-        if (!char.IsDigit(checkDigit) && checkDigit != Mod11Algorithm.SpecialCheckDigitCharacter)
+        if (!char.IsDigit(checkDigit) && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
         {
             throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, "The check digit must be a digit (0-9) or 'X'.");
         }
@@ -137,7 +137,7 @@ public static class Mod11Validator
 #if NET8_0_OR_GREATER
         return checkDigit.IsValidMod11CheckDigit(number.AsSpan());
 #else
-        if (!char.IsDigit(checkDigit) && checkDigit != Mod11Algorithm.SpecialCheckDigitCharacter)
+        if (!char.IsDigit(checkDigit) && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
         {
             throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, "The check digit must be a digit (0-9) or 'X'.");
         }
@@ -160,7 +160,7 @@ public static class Mod11Validator
     /// </returns>
     private static uint ToUnsignedDigitOrSpecialValue(this char character)
     {
-        return character == Mod11Algorithm.SpecialCheckDigitCharacter ? Mod11Algorithm.SpecialCheckDigitValue : character.ToUnsignedIntegerDigit();
+        return character == Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter ? Mod11AscendingWeightsAlgorithm.SpecialCheckDigitValue : character.ToUnsignedIntegerDigit();
     }
 
     /// <summary>
@@ -185,7 +185,7 @@ public static class Mod11Validator
             throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
         }
 
-        if (trimmedNumber[^1] != Mod11Algorithm.SpecialCheckDigitCharacter && !char.IsDigit(trimmedNumber[^1]))
+        if (trimmedNumber[^1] != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter && !char.IsDigit(trimmedNumber[^1]))
         {
             throw new InvalidCharacterException($"The string '{number}' ends not with a valid Mod-11 check digit!", nameof(number));
         }
@@ -203,7 +203,7 @@ public static class Mod11Validator
         }
 
         char checkDigit = trimmedNumber[trimmedNumber.Length - 1];
-        if (checkDigit != Mod11Algorithm.SpecialCheckDigitCharacter && !char.IsDigit(checkDigit))
+        if (checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter && !char.IsDigit(checkDigit))
         {
             throw new InvalidCharacterException($"The string '{number}' ends not with a valid Mod-11 check digit!", nameof(number));
         }
@@ -236,6 +236,6 @@ public static class Mod11Validator
             t += numberWithCheckDigit[i].ToUnsignedDigitOrSpecialValue();
             s += t;
         }
-        return s % Mod11Algorithm.Modulus == 0;
+        return s % Mod11AscendingWeightsAlgorithm.Modulus == 0;
     }
 }
