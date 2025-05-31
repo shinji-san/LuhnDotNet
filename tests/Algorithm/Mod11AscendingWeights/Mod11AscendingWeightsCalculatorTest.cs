@@ -37,9 +37,9 @@ public class Mod11AscendingWeightsCalculatorTest
     [InlineData("097522980", "097522980X")]
     public void ComputeMod11Number_ReturnsExpectedDigit(string number, string expectedMod11Number)
     {
-        Assert.Equal(expectedMod11Number,  (string)number.ComputeMod11Number());
+        Assert.Equal(expectedMod11Number, number.ComputeMod11Number());
 #if NET8_0_OR_GREATER
-        Assert.Equal(expectedMod11Number,  (string)number.AsSpan().ComputeMod11Number());
+        Assert.Equal(expectedMod11Number, number.AsSpan().ComputeMod11Number());
 #endif
     }
 

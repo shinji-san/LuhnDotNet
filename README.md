@@ -5,7 +5,7 @@ A C# implementation of the Luhn algorithm and other check digit algorithms, whic
 
 The Luhn algorithm is a checksum formula used to validate identification numbers like credit card numbers. It works by doubling every second digit from the right, summing all the digits, and checking if the total is a multiple of 10. It's widely used and is specified in ISO/IEC 7812-1.
 
-The Modulo 11 algorithm with ascending weights  is another checksum formula used to validate identification numbers like PZN (Pharmazentralnummer) and ISBN-10. It works by multiplying each digit by a weight, summing the results, and calculating the check digit based on the modulo 11 of the sum.
+The Modulo 11 algorithm with ascending weights is another checksum formula used to validate identification numbers like PZN (Pharmazentralnummer) and ISBN-10. It works by multiplying each digit by a weight, summing the results, and calculating the check digit based on the modulo 11 of the sum.
 
 # Build & Test Status Of Default Branch
 <table>
