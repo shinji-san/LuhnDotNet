@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// <copyright file="Mod11Algorithm.cs" company="Private">
+// <copyright file="Mod11AscendingWeightsAlgorithm.cs" company="Private">
 // Copyright (c) 2025 All Rights Reserved
 // </copyright>
 // <author>Sebastian Walther</author>
@@ -31,13 +31,17 @@
 
 #endregion
 
-namespace LuhnDotNet.Algorithm.Mod11;
+namespace LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
 #if NET8_0_OR_GREATER
 using System;
 #endif
 
-internal static class Mod11Algorithm
+/// <summary>
+/// Provides an implementation of the Modulus 11 algorithm with ascending weights.
+/// The algorithm is used to compute and validate check digits for sequences of numeric characters.
+/// </summary>
+internal static class Mod11AscendingWeightsAlgorithm
 {
     /// <summary>
     /// Modulus 11
