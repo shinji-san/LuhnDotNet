@@ -143,7 +143,7 @@ You can find the API documentation [here](https://sebastian-walther.de/LuhnDotNe
 | Austrian Pharmazentralnummer (PZN)                    | Modulo 11 with ascending weights |
 | ISBN-10                                               | Modulo 11 with ascending weights |
 
-## Luhn algorithm
+## Luhn Algorithm
 ### Compute the Luhn check digit
 ```csharp
 using System;
@@ -323,9 +323,9 @@ namespace Example8
     }
 }
 ```
-## Modulo 11 algorithm with ascending weights
+## Modulo 11 Algorithm with ascending weights
 This implementation uses sum modulo 11 as a direct remainder and can't be used for ISSN.
-### Compute the Mod11 check digit
+### Compute the Modulo 11 check digit
 ```csharp
 using System;
 using LuhnDotNet;
@@ -345,7 +345,7 @@ namespace Example9
 }
 ```
 
-### Compute the Mod11 number
+### Compute the Modulo 11 number
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -365,7 +365,7 @@ namespace Example10
     }
 }
 ```
-### Validate Mod11 number
+### Validate Modulo 11 number
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -385,7 +385,7 @@ namespace Example11
     }
 }
 ```
-### Validate number and corresponding Mod11 check digit
+### Validate number and corresponding Modulo 11 check digit
 ```csharp
 using System;
 using System.Collections.Generic;
@@ -406,8 +406,8 @@ namespace Example12
     }
 }
 ```
-### Validate PZN with Mod11
-The `LuhnDotNet` library can also be used to validate a Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Germany. The PZN is a 8-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+### Validate PZN with Modulo 11
+The `LuhnDotNet` library can also be used to validate a Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Germany. The PZN is a 8-digit number, and the last digit is a check digit calculated using the Modulo 11 algorithm.
 Here is an example of how to validate a PZN using the `LuhnDotNet` library:
 
 ```csharp
@@ -428,8 +428,8 @@ namespace Example13
     }
 }
 ```
-The `LuhnDotNet` library can also be used to validate an Austrian Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Austria. The PZN is a 7-digit number, with the last digit being a check digit calculated using the Mod11 algorithm.
-Add a leading zero to the PZN to make it an 8-digit number, as the Mod11 algorithm expects an 8-digit input. The last digit is the check digit, which is calculated using the Mod11 algorithm.
+The `LuhnDotNet` library can also be used to validate an Austrian Pharmazentralnummer (PZN), which is a unique identifier for pharmaceuticals in Austria. The PZN is a 7-digit number, with the last digit being a check digit calculated using the Modulo 11 algorithm.
+Add a leading zero to the PZN to make it an 8-digit number, as the Mod11 algorithm expects an 8-digit input. The last digit is the check digit, which is calculated using the Modulo 11 algorithm.
 Here is an example of how to validate an Austrian PZN using the `LuhnDotNet` library:
 
 ```csharp
@@ -450,8 +450,8 @@ namespace Example14
     }
 }
 ```
-### Compute PZN Check Digit with Mod11
-The `LuhnDotNet` library can be used to compute the check digit of a Pharmazentralnummer (PZN) using the Mod11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Mod11 algorithm.
+### Compute PZN Check Digit with Modulo 11
+The `LuhnDotNet` library can be used to compute the check digit of a Pharmazentralnummer (PZN) using the Modulo 11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Modulo 11 algorithm.
 Here is an example of how to compute the check digit of a PZN using the `LuhnDotNet` library:
 
 ```csharp
@@ -473,8 +473,8 @@ namespace Example15
     }
 }
 ```
-### Compute PZN Number with Mod11
-The `LuhnDotNet` library can be used to compute the complete Pharmazentralnummer (PZN) using the Mod11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Mod11 algorithm.
+### Compute PZN Number with Modulo 11
+The `LuhnDotNet` library can be used to compute the complete Pharmazentralnummer (PZN) using the Modulo 11 algorithm. The PZN is a unique identifier for pharmaceuticals in Germany and Austria, and the last digit is a check digit calculated using the Modulo 11 algorithm.
 Here is an example of how to compute the complete PZN using the `LuhnDotNet` library:
 
 ```csharp
@@ -496,8 +496,8 @@ namespace Example16
     }
 }
 ```
-### ISBN-10 Check Digit Calculation with Mod11
-The `LuhnDotNet` library can be used to compute the check digit of an ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+### ISBN-10 Check Digit Calculation with Modulo 11
+The `LuhnDotNet` library can be used to compute the check digit of an ISBN-10 number using the Modulo 11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Modulo 11 algorithm.
 Here is an example of how to compute the check digit of an ISBN-10 number using the `LuhnDotNet` library:
 
 ```csharp
@@ -519,8 +519,8 @@ namespace Example17
     }
 }
 ```
-### ISBN-10 Number Calculation with Mod11
-The `LuhnDotNet` library can be used to compute the complete ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+### ISBN-10 Number Calculation with Modulo 11
+The `LuhnDotNet` library can be used to compute the complete ISBN-10 number using the Modulo 11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Modulo 11 algorithm.
 Here is an example of how to compute the complete ISBN-10 number using the `LuhnDotNet` library:
 
 ```csharp
@@ -543,8 +543,8 @@ namespace Example18
 }
 ```
 
-### ISBN-10 Validation with Mod11
-The `LuhnDotNet` library can be used to validate an ISBN-10 number using the Mod11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Mod11 algorithm.
+### ISBN-10 Validation with Modulo 11
+The `LuhnDotNet` library can be used to validate an ISBN-10 number using the Modulo 11 algorithm. The ISBN-10 is a 10-digit number, and the last digit is a check digit calculated using the Modulo 11 algorithm.
 Here is an example of how to validate an ISBN-10 number using the `LuhnDotNet` library:
 
 ```csharp

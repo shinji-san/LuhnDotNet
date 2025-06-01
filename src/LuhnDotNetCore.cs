@@ -3,7 +3,7 @@ namespace LuhnDotNet;
 using System;
 
 /// <summary>
-/// A static utility class supporting functionality related to the Luhn, Modulus 11, Damm, and other algorithms.
+/// A static utility class supporting functionality related to the Luhn, Modulo 11, Damm, and other algorithms.
 /// </summary>
 internal static class LuhnDotNetCore
 {
@@ -21,7 +21,7 @@ internal static class LuhnDotNetCore
     {
         if (!char.IsDigit(character))
         {
-            throw new ArgumentOutOfRangeException(nameof(character), $"The character '{character}' is not a valid digit. Character must be a digit 0-9." );
+            throw new ArgumentOutOfRangeException(nameof(character), $"The character '{character}' is not a valid digit.  Character must be between '0' and '9'." );
         }
 
         return (uint)character - AsciiCodeForZero;

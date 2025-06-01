@@ -36,7 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed `Luhn.IsValid` methods to `LuhnValidator.IsValidLuhnCheckDigit` and `LuhnValidator.IsValidLuhnNumber`.
 - Changed return type of `LuhnAlgorithm.ComputeLuhnCheckDigit` to `char` instead of `byte`.
 - Renamed `ConvertAlphaNumericToNumeric` to `AlphaNumericToNumeric`
-- Moved `AlphaNumericToNumeric` method to the `StringExtensions` and it's overloaded version to `ReadOnlySpanExtensions` class.
+- Moved `AlphaNumericToNumeric` method to the `StringExtensions` and its overloaded version to `ReadOnlySpanExtensions` class.
 - Moved `ComputeCheckDigit` and `ComputeLuhnNumber` methods to the `LuhnCalculator` class.
 - Moved `IsValidNumber` and `IsValidCheckDigit` methods to the `LuhnValidator` class.
 - Renamed `Luhn` class to `LuhnAlgorithm`.
