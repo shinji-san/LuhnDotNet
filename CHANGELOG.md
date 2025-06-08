@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `InvalidCharacterException` to throw an exception if the input string contains invalid characters.
 - Added `RemoveSeparators` methods to remove all separators from a string or ReadOnlySpan. Use it, for example, with credit card numbers.
 - Added internal `LuhnDotNetCore` class to encapsulate functionality related to the Luhn, Modulus 11, and other algorithms.
+- Added Damm algorithm implementation with `DammAlgorithm`, `DammCalculator`, and `DammValidator` classes.
 
 ### Changed
 - Moved Luhn algorithm related methods from the `Luhn` class to the new `LuhnAlgorithm`, `LuhnCalculator`, and `LuhnValidator` classes.

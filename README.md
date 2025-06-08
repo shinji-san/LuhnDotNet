@@ -133,15 +133,16 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
 You can find the API documentation [here](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html).
 
 # Usage
-| Identification Number                                 | Check Digit Algorithm            |
-|-------------------------------------------------------|----------------------------------|
-| Credit Card Number                                    | Luhn                             |
-| International Securities Identification Number (ISIN) | Luhn                             |
-| Deutsche Bahn AG (DB) locomotive number               | Luhn                             |
-| UIC identification marking for tractive stock         | Luhn                             |
-| German Pharmazentralnummer (PZN)                      | Modulo 11 with ascending weights |
-| Austrian Pharmazentralnummer (PZN)                    | Modulo 11 with ascending weights |
-| ISBN-10                                               | Modulo 11 with ascending weights |
+| Identification Number                                   | Check Digit Algorithm            |
+|---------------------------------------------------------|----------------------------------|
+| Credit Card Number                                      | Luhn                             |
+| International Securities Identification Number (ISIN)   | Luhn                             |
+| Deutsche Bahn AG (DB) locomotive number                 | Luhn                             |
+| UIC identification marking for tractive stock           | Luhn                             |
+| New Format for Singapore IP Application Numbers at IPOS | Damm                             |
+| German Pharmazentralnummer (PZN)                        | Modulo 11 with ascending weights |
+| Austrian Pharmazentralnummer (PZN)                      | Modulo 11 with ascending weights |
+| ISBN-10                                                 | Modulo 11 with ascending weights |
 
 ## Luhn Algorithm
 ### Compute the Luhn check digit

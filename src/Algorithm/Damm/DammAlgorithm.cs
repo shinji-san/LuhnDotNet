@@ -75,12 +75,12 @@ internal static class DammAlgorithm
     /// <param name="number">The numeric input provided as a <see cref="ReadOnlySpan{char}"/> representing the digits to process.</param>
     /// <returns>The calculated check digit as a <see cref="char"/>.</returns>
 #if NET8_0_OR_GREATER
-    internal static char CalculateCheckDigit(this ReadOnlySpan<char> number)
+    internal static char ComputeCheckDigit(this ReadOnlySpan<char> number)
 #else
-    internal static uint CalculateCheckDigit(this string number)
+    internal static uint ComputeCheckDigit(this string number)
 #endif
     {
-        return CalculateCheckDigit(number, DefaultAntisymmetricQuasigroup);
+        return number.ComputeCheckDigit(DefaultAntisymmetricQuasigroup);
     }
 
     /// <summary>
@@ -90,9 +90,9 @@ internal static class DammAlgorithm
     /// <param name="antisymmetricQuasigroup">A ten-by-ten antisymmetric quasigroup table </param>
     /// <returns>The calculated check digit as a <see cref="char"/>.</returns>
 #if NET8_0_OR_GREATER
-    internal static char CalculateCheckDigit(this ReadOnlySpan<char> number, uint[,] antisymmetricQuasigroup)
+    internal static char ComputeCheckDigit(this ReadOnlySpan<char> number, uint[,] antisymmetricQuasigroup)
 #else
-    internal static uint CalculateCheckDigit(this string number, uint[,] antisymmetricQuasigroup)
+    internal static uint ComputeCheckDigit(this string number, uint[,] antisymmetricQuasigroup)
 #endif
     {
         if (antisymmetricQuasigroup.GetLength(0) != 10 || antisymmetricQuasigroup.GetLength(1) != 10)

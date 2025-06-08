@@ -44,6 +44,7 @@ using System.Linq;
 /// </summary>
 public static class Mod11AscendingWeightsValidator
 {
+#if NET8_0_OR_GREATER
     /// <summary>
     /// Validates whether a given number with a Mod-11 check digit is valid.
     /// </summary>
@@ -54,7 +55,6 @@ public static class Mod11AscendingWeightsValidator
     /// <see langword="true" /> if the number with the check digit is valid, according to the Mod-11 algorithm;
     /// otherwise, <see langword="false" />.
     /// </returns>
-#if NET8_0_OR_GREATER
     public static bool IsValidMod11Number(this ReadOnlySpan<char> numberWithCheckDigit)
     {
         var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimMod11Number();

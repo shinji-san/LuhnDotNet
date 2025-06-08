@@ -8,11 +8,16 @@ using Xunit;
 
 public class DammCalculatorTest
 {
-
     [Theory]
     [InlineData("572", '4')]
     [InlineData("1234567", '1')]
     [InlineData("11294", '6')]
+    [InlineData("0", '0')]
+    [InlineData("9", '2')]
+    [InlineData("00000", '0')]
+    [InlineData("99999", '9')]
+    [InlineData("   572   ", '4')]
+    [InlineData("   1234567   ", '1')]
     public void ComputeDammCheckDigit_ReturnsExpectedCheckDigit(string number, char expectedCheckDigit)
     {
         Assert.Equal(expectedCheckDigit, number.ComputeDammCheckDigit());
@@ -25,6 +30,8 @@ public class DammCalculatorTest
     [InlineData("572", "5724")]
     [InlineData("1234567", "12345671")]
     [InlineData("11294", "112946")]
+    [InlineData("   572   ", "5724")]
+    [InlineData("   1234567   ", "12345671")]
     public void ComputeDammNumber_ReturnsExpectedDammNumber(string number, string expectedDammNumber)
     {
         Assert.Equal(expectedDammNumber, number.ComputeDammNumber());
@@ -67,6 +74,10 @@ public class DammCalculatorTest
     [InlineData("572", '4')]
     [InlineData("1234567", '1')]
     [InlineData("11294", '6')]
+    [InlineData("0", '0')]
+    [InlineData("9", '2')]
+    [InlineData("00000", '0')]
+    [InlineData("99999", '9')]
     public void ComputeDammCheckDigit_WithCustomQuasigroup_ReturnsExpectedCheckDigit(string number,
         char expectedCheckDigit)
     {
@@ -172,31 +183,6 @@ public class DammCalculatorTest
 #if NET8_0_OR_GREATER
         Assert.Throws<InvalidCharacterException>(() =>
             invalidNumber.AsSpan().ComputeDammNumber(antisymmetricQuasigroup));
-#endif
-    }
-
-    [Theory]
-    [InlineData("0", '0')]
-    [InlineData("9", '2')]
-    [InlineData("00000", '0')]
-    [InlineData("99999", '9')]
-    public void ComputeDammCheckDigit_EdgeCases_ReturnsExpectedCheckDigit(string number, char expectedCheckDigit)
-    {
-        Assert.Equal(expectedCheckDigit, number.ComputeDammCheckDigit());
-#if NET8_0_OR_GREATER
-        Assert.Equal(expectedCheckDigit, number.AsSpan().ComputeDammCheckDigit());
-#endif
-    }
-
-    [Theory]
-    [InlineData("   572   ", '4')]
-    [InlineData("   1234567   ", '1')]
-    public void ComputeDammCheckDigit_WithWhitespace_TrimsAndReturnsExpectedCheckDigit(string number,
-        char expectedCheckDigit)
-    {
-        Assert.Equal(expectedCheckDigit, number.ComputeDammCheckDigit());
-#if NET8_0_OR_GREATER
-        Assert.Equal(expectedCheckDigit, number.AsSpan().ComputeDammCheckDigit());
 #endif
     }
 }

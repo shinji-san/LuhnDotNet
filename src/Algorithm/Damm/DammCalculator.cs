@@ -115,9 +115,9 @@ public static class DammCalculator
     public static char ComputeDammCheckDigit(this string number)
     {
 #if NET8_0_OR_GREATER
-        return number.AsSpan().ValidateAndTrimNumber().CalculateCheckDigit();
+        return number.AsSpan().ValidateAndTrimNumber().ComputeCheckDigit();
 #else
-        return number.ValidateAndTrimNumber().CalculateCheckDigit().ToCharDigit();
+        return number.ValidateAndTrimNumber().ComputeCheckDigit().ToCharDigit();
 #endif
     }    
 
@@ -130,7 +130,7 @@ public static class DammCalculator
     /// <exception cref="InvalidCharacterException"><paramref name="number"/> contains non-digit characters or is empty.</exception>
     public static char ComputeDammCheckDigit(this ReadOnlySpan<char> number)
     {
-        return number.ValidateAndTrimNumber().CalculateCheckDigit();
+        return number.ValidateAndTrimNumber().ComputeCheckDigit();
     }
 #endif
 
@@ -145,9 +145,9 @@ public static class DammCalculator
     public static char ComputeDammCheckDigit(this string number, uint[,] antisymmetricQuasiGroup)
     {
 #if NET8_0_OR_GREATER
-        return number.AsSpan().ValidateAndTrimNumber().CalculateCheckDigit(antisymmetricQuasiGroup);
+        return number.AsSpan().ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup);
 #else
-        return number.ValidateAndTrimNumber().CalculateCheckDigit(antisymmetricQuasiGroup).ToCharDigit();
+        return number.ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup).ToCharDigit();
 #endif
     }
 
@@ -162,7 +162,7 @@ public static class DammCalculator
     /// <exception cref="ArgumentException">The antisymmetric quasigroup must be a 10x10 matrix.</exception>
     public static char ComputeDammCheckDigit(this ReadOnlySpan<char> number, uint[,] antisymmetricQuasiGroup)
     {
-        return number.ValidateAndTrimNumber().CalculateCheckDigit(antisymmetricQuasiGroup);
+        return number.ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup);
     }
 #endif
 }
