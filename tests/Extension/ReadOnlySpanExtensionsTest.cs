@@ -1,7 +1,8 @@
 #if NET8_0_OR_GREATER
-namespace LuhnDotNetTest;
+namespace LuhnDotNetTest.Extension;
 
 using LuhnDotNet;
+using LuhnDotNet.Extensions;
 using System;
 using System.Collections.Generic;
 using Xunit;

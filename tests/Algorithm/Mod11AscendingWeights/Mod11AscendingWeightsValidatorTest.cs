@@ -2,6 +2,7 @@ namespace LuhnDotNetTest.Algorithm.Mod11AscendingWeights;
 
 using LuhnDotNet;
 using LuhnDotNet.Algorithm.Mod11AscendingWeights;
+using LuhnDotNet.Extensions;
 using System;
 using Xunit;
 

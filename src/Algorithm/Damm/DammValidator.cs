@@ -33,6 +33,7 @@
 
 namespace LuhnDotNet.Algorithm.Damm;
 
+using Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 

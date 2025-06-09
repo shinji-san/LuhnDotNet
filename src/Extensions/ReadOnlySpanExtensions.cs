@@ -7,7 +7,7 @@
 // ----------------------------------------------------------------------------
 
 #if NET8_0_OR_GREATER
-namespace LuhnDotNet;
+namespace LuhnDotNet.Extensions;
 
 using System;
 using System.Collections.Generic;

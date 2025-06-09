@@ -4,6 +4,7 @@ using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using LuhnDotNet;
 using LuhnDotNet.Algorithm.Luhn;
+using LuhnDotNet.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;

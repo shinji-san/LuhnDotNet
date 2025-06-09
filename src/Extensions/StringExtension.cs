@@ -6,7 +6,7 @@
 // <date>11/13/2022 08:48:55 PM</date>
 // ----------------------------------------------------------------------------
 
-namespace LuhnDotNet;
+namespace LuhnDotNet.Extensions;
 
 using System;
 using System.Collections.Generic;
