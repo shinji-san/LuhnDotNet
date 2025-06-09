@@ -34,10 +34,9 @@
 namespace LuhnDotNet.Algorithm.Damm;
 
 using Extensions;
-
-#if NET8_0_OR_GREATER
 using System;
-#else
+
+#if !NET8_0_OR_GREATER
 using System.Globalization;
 #endif
 

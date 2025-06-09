@@ -33,7 +33,9 @@
 
 namespace LuhnDotNet.Algorithm.Damm;
 
+#if NET8_0_OR_GREATER
 using System;
+#endif
 
 /// <summary>
 /// Provides methods for calculating and validating check digits
@@ -69,29 +71,40 @@ internal static class DammAlgorithm
         { 2, 5, 8, 1, 4, 3, 6, 7, 9, 0 }
     };
 
+#if NET8_0_OR_GREATER
     /// <summary>
-    /// Calculates the check digit for a given numeric input using the Damm algorithm.
+    /// Computes the check digit for a given numeric input using the Damm algorithm.
     /// </summary>
     /// <param name="number">The numeric input provided as a <see cref="ReadOnlySpan{char}"/> representing the digits to process.</param>
     /// <returns>The calculated check digit as a <see cref="char"/>.</returns>
-#if NET8_0_OR_GREATER
     internal static char ComputeCheckDigit(this ReadOnlySpan<char> number)
 #else
+    /// <summary>
+    /// Computes the check digit for a provided string representing a number using the default antisymmetric quasigroup.
+    /// </summary>
+    /// <param name="number">The input number as a string for which the check digit is to be calculated.</param>
+    /// <returns>The computed check digit as an unsigned integer.</returns>
     internal static uint ComputeCheckDigit(this string number)
 #endif
     {
         return number.ComputeCheckDigit(DefaultAntisymmetricQuasigroup);
     }
-
+    
+#if NET8_0_OR_GREATER
     /// <summary>
-    /// Calculates the check digit for a given numeric input using the Damm algorithm.
+    /// Computes the check digit for a given numeric input using the Damm algorithm.
     /// </summary>
     /// <param name="number">The numeric input provided as a <see cref="ReadOnlySpan{char}"/> representing the digits to process.</param>
     /// <param name="antisymmetricQuasigroup">A ten-by-ten antisymmetric quasigroup table </param>
     /// <returns>The calculated check digit as a <see cref="char"/>.</returns>
-#if NET8_0_OR_GREATER
     internal static char ComputeCheckDigit(this ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasigroup)
 #else
+    /// <summary>
+    /// Computes the check digit for a given number using the Damm algorithm with an antisymmetric quasigroup.
+    /// </summary>
+    /// <param name="number">The input number as a string to process to compute the check digit.</param>
+    /// <param name="antisymmetricQuasigroup">An instance of <see cref="AntisymmetricQuasiGroup"/> used in the Damm algorithm.</param>
+    /// <returns>The computed check digit as an unsigned integer.</returns>
     internal static uint ComputeCheckDigit(this string number, AntisymmetricQuasiGroup antisymmetricQuasigroup)
 #endif
     {

@@ -81,7 +81,6 @@ public class DammCalculatorTest
     public void ComputeDammCheckDigit_WithCustomQuasigroup_ReturnsExpectedCheckDigit(string number,
         char expectedCheckDigit)
     {
-        // Standard antisymmetric quasigroup table
         uint[,] antisymmetricQuasigroup =
         {
             { 0, 3, 1, 7, 5, 9, 8, 6, 4, 2 },
@@ -109,7 +108,6 @@ public class DammCalculatorTest
     public void ComputeDammNumber_WithCustomQuasigroup_ReturnsExpectedDammNumber(string number,
         string expectedDammNumber)
     {
-        // Standard antisymmetric quasigroup table
         uint[,] antisymmetricQuasigroup =
         {
             { 0, 3, 1, 7, 5, 9, 8, 6, 4, 2 },
@@ -165,8 +163,7 @@ public class DammCalculatorTest
 
         Assert.Throws<InvalidCharacterException>(() => invalidNumber.ComputeDammCheckDigit(antisymmetricQuasigroup));
 #if NET8_0_OR_GREATER
-        Assert.Throws<InvalidCharacterException>(() =>
-            invalidNumber.AsSpan().ComputeDammCheckDigit(antisymmetricQuasigroup));
+        Assert.Throws<InvalidCharacterException>(() => invalidNumber.AsSpan().ComputeDammCheckDigit(antisymmetricQuasigroup));
 #endif
     }
 
@@ -181,8 +178,7 @@ public class DammCalculatorTest
 
         Assert.Throws<InvalidCharacterException>(() => invalidNumber.ComputeDammNumber(antisymmetricQuasigroup));
 #if NET8_0_OR_GREATER
-        Assert.Throws<InvalidCharacterException>(() =>
-            invalidNumber.AsSpan().ComputeDammNumber(antisymmetricQuasigroup));
+        Assert.Throws<InvalidCharacterException>(() => invalidNumber.AsSpan().ComputeDammNumber(antisymmetricQuasigroup));
 #endif
     }
 }

@@ -57,6 +57,19 @@ public static class DammValidator
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
     public static bool IsValidDammNumber(this ReadOnlySpan<char> dammNumber) =>
         dammNumber.ValidateAndTrimNumber().ComputeCheckDigit() == '0';
+
+    /// <summary>
+    /// Validates whether the provided Damm Number is correct using the Damm algorithm.
+    /// </summary>
+    /// <param name="dammNumber">The identification number including the check digit.</param>
+    /// <param name="antisymmetricQuasiGroup">The anti-symmetric quasi-group used by the Damm algorithm for validation.</param>
+    /// <returns><see langword="true"/> if the <paramref name="dammNumber"/> is valid according to the Damm algorithm;
+    /// otherwise, <see langword="false"/>.</returns>
+    /// <exception cref="ArgumentNullException"><paramref name="antisymmetricQuasiGroup"/> is <see langword="null"/>.</exception>
+    /// <remarks>The last digit of the <paramref name="dammNumber"/> is treated as the check digit during validation.</remarks>
+    public static bool IsValidDammNumber(this ReadOnlySpan<char> dammNumber,
+        AntisymmetricQuasiGroup antisymmetricQuasiGroup) =>
+        dammNumber.ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup) == '0';
 #endif
 
     /// <summary>
@@ -78,6 +91,22 @@ public static class DammValidator
         dammNumber.ValidateAndTrimNumber().ComputeCheckDigit() == '0';
 #endif
 
+    /// <summary>
+    /// Checks whether the provided Damm Number is valid using the Damm algorithm.
+    /// </summary>
+    /// <param name="dammNumber">The Damm Number, which is an identification number that includes a check digit.</param>
+    /// <param name="antisymmetricQuasiGroup">The anti-symmetric quasi-group used by the Damm algorithm for validation.</param>
+    /// <returns><see langword="true" /> if the <paramref name="dammNumber"/> is valid;
+    /// otherwise <see langword="false" />.</returns>
+    /// <exception cref="InvalidCharacterException"><paramref name="dammNumber"/> contains non-numeric characters.</exception>
+    /// <remarks>The check digit must be placed at the end of the <paramref name="dammNumber"/> (on the right side).</remarks>
+    public static bool IsValidDammNumber(this string dammNumber, AntisymmetricQuasiGroup antisymmetricQuasiGroup) =>
+#if NET8_0_OR_GREATER
+        dammNumber.AsSpan().IsValidDammNumber(antisymmetricQuasiGroup);
+#else
+        dammNumber.ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup) == '0';
+#endif
+    
 #if NET8_0_OR_GREATER
     /// <summary>
     /// Checks whether the concatenation of the number and the corresponding Damm check digit is valid
@@ -108,6 +137,38 @@ public static class DammValidator
         dammNumber[^1] = checkDigit;
         ReadOnlySpan<char> readOnlyDammNumber = dammNumber;
         return readOnlyDammNumber.IsValidDammNumber();
+    }
+    
+    /// <summary>
+    /// Checks whether the concatenation of the number and the corresponding Damm check digit is valid
+    /// </summary>
+    /// <param name="checkDigit">The Damm check digit</param>
+    /// <param name="number">Identification number w/o Damm check digit</param>
+    /// <param name="antisymmetricQuasiGroup">A ten-by-ten antisymmetric quasigroup table.</param>
+    /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
+    /// otherwise <see langword="false" /></returns>
+    /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not valid.
+    /// It contains non-numeric characters.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
+    /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+    public static bool IsValidDammCheckDigit(this char checkDigit, ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasiGroup)
+    {
+        if (!char.IsDigit(checkDigit))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(checkDigit),
+                checkDigit,
+                "The check digit must be between 0 and 9");
+        }
+
+        var trimmedNumber = number.ValidateAndTrimNumber();
+        Span<char> dammNumber = stackalloc char[trimmedNumber.Length + 1];
+        trimmedNumber.CopyTo(dammNumber[..^1]);
+        dammNumber[^1] = checkDigit;
+        ReadOnlySpan<char> readOnlyDammNumber = dammNumber;
+        return readOnlyDammNumber.IsValidDammNumber(antisymmetricQuasiGroup);
     }
 #endif
 
@@ -140,6 +201,40 @@ public static class DammValidator
         return string.Concat(number.Trim(), checkDigit)
             .ValidateAndTrimNumber()
             .IsValidDammNumber();
+#endif
+    }
+
+    /// <summary>
+    /// Checks whether the concatenation of the number and the corresponding Damm check digit is valid
+    /// </summary>
+    /// <param name="checkDigit">The Damm check digit</param>
+    /// <param name="number">Identification number w/o Damm check digit</param>
+    /// <param name="antisymmetricQuasiGroup">A ten-by-ten antisymmetric quasigroup table.</param>
+    /// <returns><see langword="true" /> if the <paramref name="number"/> is valid;
+    /// otherwise <see langword="false" /></returns>
+    /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not valid.
+    /// It contains non-numeric characters.</exception>
+    /// <exception cref="ArgumentOutOfRangeException">The <paramref name="checkDigit"/> value is greater than 9.
+    /// The <paramref name="checkDigit"/> value must be between 0 and 9.</exception>
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
+    public static bool IsValidDammCheckDigit(this char checkDigit, string number,
+        AntisymmetricQuasiGroup antisymmetricQuasiGroup)
+    {
+#if NET8_0_OR_GREATER
+        return checkDigit.IsValidDammCheckDigit(number.AsSpan(), antisymmetricQuasiGroup);
+#else
+        if (!char.IsDigit(checkDigit))
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(checkDigit),
+                checkDigit,
+                "The check digit must be between 0 and 9");
+        }
+
+        return string.Concat(number.Trim(), checkDigit)
+            .ValidateAndTrimNumber()
+            .IsValidDammNumber(antisymmetricQuasiGroup);
 #endif
     }
 }

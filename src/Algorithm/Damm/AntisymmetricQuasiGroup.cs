@@ -80,6 +80,7 @@ public class AntisymmetricQuasiGroup
     /// <exception cref="IndexOutOfRangeException">
     /// Thrown if the specified indices are outside the valid bounds of the table.
     /// </exception>
+    [CLSCompliant(false)]
     public uint this[uint i, uint j] => this.table[i, j];
 
     /// <summary>
