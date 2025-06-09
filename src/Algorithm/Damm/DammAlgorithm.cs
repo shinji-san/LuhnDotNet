@@ -90,16 +90,11 @@ internal static class DammAlgorithm
     /// <param name="antisymmetricQuasigroup">A ten-by-ten antisymmetric quasigroup table </param>
     /// <returns>The calculated check digit as a <see cref="char"/>.</returns>
 #if NET8_0_OR_GREATER
-    internal static char ComputeCheckDigit(this ReadOnlySpan<char> number, uint[,] antisymmetricQuasigroup)
+    internal static char ComputeCheckDigit(this ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasigroup)
 #else
-    internal static uint ComputeCheckDigit(this string number, uint[,] antisymmetricQuasigroup)
+    internal static uint ComputeCheckDigit(this string number, AntisymmetricQuasiGroup antisymmetricQuasigroup)
 #endif
     {
-        if (antisymmetricQuasigroup.GetLength(0) != 10 || antisymmetricQuasigroup.GetLength(1) != 10)
-        {
-            throw new ArgumentException("The antisymmetric quasigroup must be a 10x10 matrix.", nameof(antisymmetricQuasigroup));
-        }
-
         var interimDigit = 0u;
         foreach (var digit in number)
         {

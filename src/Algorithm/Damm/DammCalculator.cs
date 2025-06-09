@@ -84,7 +84,7 @@ public static class DammCalculator
     /// <returns>A string containing the input number with the computed Damm check digit appended.</returns>
     /// <exception cref="InvalidCharacterException"><paramref name="number"/> is empty or contains non-digit characters.</exception>
     /// <exception cref="ArgumentException">The antisymmetric quasigroup must be a 10x10 matrix.</exception>
-    public static string ComputeDammNumber(this ReadOnlySpan<char> number, uint[,] antisymmetricQuasiGroup)
+    public static string ComputeDammNumber(this ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasiGroup)
     {
         return number.ValidateAndTrimNumber().ComputeNumberWithCheckDigit(n => ComputeDammCheckDigit(n, antisymmetricQuasiGroup));
     }
@@ -98,7 +98,7 @@ public static class DammCalculator
     /// <returns>A string containing the input number with the computed Damm check digit appended.</returns>
     /// <exception cref="InvalidCharacterException"><paramref name="number"/> is empty or contains non-digit characters.</exception>
     /// <exception cref="ArgumentException">The antisymmetric quasigroup must be a 10x10 matrix.</exception>
-    public static string ComputeDammNumber(this string number, uint[,] antisymmetricQuasiGroup)
+    public static string ComputeDammNumber(this string number, AntisymmetricQuasiGroup antisymmetricQuasiGroup)
     {
 #if NET8_0_OR_GREATER
         return number.AsSpan().ComputeDammNumber(antisymmetricQuasiGroup);
@@ -144,7 +144,7 @@ public static class DammCalculator
     /// <returns>The computed Damm algorithm check digit as a <see cref="char"/>.</returns>
     /// <exception cref="InvalidCharacterException"><paramref name="number"/> is empty or contains non-digit characters.</exception>
     /// <exception cref="ArgumentException">The antisymmetric quasigroup must be a 10x10 matrix.</exception>
-    public static char ComputeDammCheckDigit(this string number, uint[,] antisymmetricQuasiGroup)
+    public static char ComputeDammCheckDigit(this string number, AntisymmetricQuasiGroup antisymmetricQuasiGroup)
     {
 #if NET8_0_OR_GREATER
         return number.AsSpan().ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup);
@@ -162,7 +162,7 @@ public static class DammCalculator
     /// <returns>The check digit calculated using the Damm algorithm as a <see cref="char"/>.</returns>
     /// <exception cref="InvalidCharacterException"><paramref name="number"/> contains non-digit characters or is empty.</exception>
     /// <exception cref="ArgumentException">The antisymmetric quasigroup must be a 10x10 matrix.</exception>
-    public static char ComputeDammCheckDigit(this ReadOnlySpan<char> number, uint[,] antisymmetricQuasiGroup)
+    public static char ComputeDammCheckDigit(this ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasiGroup)
     {
         return number.ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup);
     }
