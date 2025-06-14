@@ -62,11 +62,11 @@ public class DammValidatorTest
      [Theory]
      [InlineData("572", 'a')]
      [InlineData("0000", 'X')]
-     public void IsValidDammCheckDigit_WithNonDigitCheckDigit_ThrowsArgumentOutOfRangeException(string number, char invalidCheckDigit)
+     public void IsValidDammCheckDigit_WithNonDigitCheckDigit_ThrowsInvalidCharacterException(string number, char invalidCheckDigit)
      {
-         Assert.Throws<ArgumentOutOfRangeException>(() => invalidCheckDigit.IsValidDammCheckDigit(number));
+         Assert.Throws<InvalidCharacterException>(() => invalidCheckDigit.IsValidDammCheckDigit(number));
 #if NET8_0_OR_GREATER
-         Assert.Throws<ArgumentOutOfRangeException>(() => invalidCheckDigit.IsValidDammCheckDigit(number.AsSpan()));
+         Assert.Throws<InvalidCharacterException>(() => invalidCheckDigit.IsValidDammCheckDigit(number.AsSpan()));
 #endif
      }
 
@@ -137,11 +137,11 @@ public class DammValidatorTest
      [Theory]
      [InlineData("572", 'a')]
      [InlineData("0000", 'X')]
-     public void IsValidDammCheckDigit_WithCustomQuasiGroup_WithNonDigitCheckDigit_ThrowsArgumentOutOfRangeException(string number, char invalidCheckDigit)
+     public void IsValidDammCheckDigit_WithCustomQuasiGroup_WithNonDigitCheckDigit_ThrowsInvalidCharacterException(string number, char invalidCheckDigit)
      {
-         Assert.Throws<ArgumentOutOfRangeException>(() => invalidCheckDigit.IsValidDammCheckDigit(number, CustomQuasiGroup));
+         Assert.Throws<InvalidCharacterException>(() => invalidCheckDigit.IsValidDammCheckDigit(number, CustomQuasiGroup));
 #if NET8_0_OR_GREATER
-         Assert.Throws<ArgumentOutOfRangeException>(() => invalidCheckDigit.IsValidDammCheckDigit(number.AsSpan(), CustomQuasiGroup));
+         Assert.Throws<InvalidCharacterException>(() => invalidCheckDigit.IsValidDammCheckDigit(number.AsSpan(), CustomQuasiGroup));
 #endif
      }
 

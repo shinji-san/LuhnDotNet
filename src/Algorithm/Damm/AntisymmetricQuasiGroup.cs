@@ -34,6 +34,7 @@
 namespace LuhnDotNet.Algorithm.Damm;
 
 using System;
+using System.Linq;
 
 /// <summary>
 /// Represents a mathematical structure known as an antisymmetric quasigroup.
@@ -48,14 +49,82 @@ public class AntisymmetricQuasiGroup
     /// <summary>
     /// Represents an antisymmetric quasigroup used in certain error detection algorithms, such as the Damm algorithm.
     /// </summary>
+    /// <param name="table">A jagged array representing the antisymmetric quasigroup.</param>
+    /// <exception cref="ArgumentException">Thrown if the provided table is not a valid 10x10 antisymmetric quasigroup matrix.</exception>
     private AntisymmetricQuasiGroup(uint[,] table)
     {
         if (table.GetLength(0) != Dimension || table.GetLength(1) != Dimension)
         {
-            throw new ArgumentException($"The antisymmetric quasigroup must be a {Dimension}x{Dimension} matrix.");
+            throw new ArgumentException($"The antisymmetric quasigroup must be a {Dimension}x{Dimension} matrix.", nameof(table));
         }
 
         this.table = table;
+    }
+
+    /// <summary>
+    /// Represents an antisymmetric quasigroup used in certain error detection algorithms, such as the Damm algorithm.
+    /// </summary>
+    /// <param name="table">A two-dimensional array representing the antisymmetric quasigroup.</param>
+    /// <exception cref="ArgumentException">Thrown if the provided table is not a valid 10x10 antisymmetric quasigroup matrix.</exception>
+    private AntisymmetricQuasiGroup(uint[][] table)
+    {
+        if (table.Length != Dimension || table.Any(row => row.Length != Dimension))
+        {
+            throw new ArgumentException($"The antisymmetric quasigroup must be a {Dimension}x{Dimension} matrix.", nameof(table));
+        }
+
+        this.table = new uint[Dimension, Dimension];
+        for (int i = 0; i < Dimension; i++)
+        {
+            for (int j = 0; j < Dimension; j++)
+            {
+                this.table[i, j] = table[i][j];
+            }
+        }
+    }
+
+    /// <summary>
+    /// Represents an antisymmetric quasigroup used in certain error detection algorithms, such as the Damm algorithm.
+    /// </summary>
+    /// <param name="table">A jagged array representing the antisymmetric quasigroup.</param>
+    /// <exception cref="ArgumentException">Thrown if the provided table is not a valid 10x10 antisymmetric quasigroup matrix.</exception>
+    private AntisymmetricQuasiGroup(int[,] table)
+    {
+        if (table.GetLength(0) != Dimension || table.GetLength(1) != Dimension)
+        {
+            throw new ArgumentException($"The antisymmetric quasigroup must be a {Dimension}x{Dimension} matrix.", nameof(table));
+        }
+
+        this.table = new uint[Dimension, Dimension];
+        for (int i = 0; i < Dimension; i++)
+        {
+            for (int j = 0; j < Dimension; j++)
+            {
+                this.table[i, j] = (uint)table[i, j];
+            }
+        }
+    }
+
+    /// <summary>
+    /// Represents an antisymmetric quasigroup used in certain error detection algorithms, such as the Damm algorithm.
+    /// </summary>
+    /// <param name="table">A two-dimensional array representing the antisymmetric quasigroup.</param>
+    /// <exception cref="ArgumentException">Thrown if the provided table is not a valid 10x10 antisymmetric quasigroup matrix.</exception>
+    private AntisymmetricQuasiGroup(int[][] table)
+    {
+        if (table.Length != Dimension || table.Any(row => row.Length != Dimension))
+        {
+            throw new ArgumentException($"The antisymmetric quasigroup must be a {Dimension}x{Dimension} matrix.", nameof(table));
+        }
+
+        this.table = new uint[Dimension, Dimension];
+        for (int i = 0; i < Dimension; i++)
+        {
+            for (int j = 0; j < Dimension; j++)
+            {
+                this.table[i, j] = (uint)table[i][j];
+            }
+        }
     }
 
     /// <summary>
@@ -68,8 +137,9 @@ public class AntisymmetricQuasiGroup
     /// <exception cref="IndexOutOfRangeException">
     /// Thrown if the specified indices are out of bounds of the table.
     /// </exception>
+    [CLSCompliant(false)]
     public uint this[int i, int j] => this.table[i, j];
-
+    
     /// <summary>
     /// Indexer that provides access to elements in the antisymmetric quasigroup table
     /// using unsigned integer indices.
@@ -84,10 +154,41 @@ public class AntisymmetricQuasiGroup
     public uint this[uint i, uint j] => this.table[i, j];
 
     /// <summary>
-    /// Enables implicit conversion from a 2D array to an instance of the AntisymmetricQuasiGroup class.
-    /// Ensures that a properly formatted table can be directly converted into the associated data structure.
+    /// Defines an implicit conversion from a two-dimensional array of unsigned integers
+    /// to an instance of <see cref="AntisymmetricQuasiGroup"/>.
     /// </summary>
-    /// <param name="table">A two-dimensional array representing the antisymmetric quasigroup.</param>
-    /// <returns>An AntisymmetricQuasiGroup instance initialized with the provided table.</returns>
+    /// <param name="table">A two-dimensional array of unsigned integers representing the antisymmetric quasigroup.</param>
+    /// <returns>An instance of <see cref="AntisymmetricQuasiGroup"/> initialized with the provided table.</returns>
+    /// <exception cref="ArgumentException">Thrown if the provided table is not a valid 10x10 antisymmetric quasigroup matrix.</exception>
+    [CLSCompliant(false)]
     public static implicit operator AntisymmetricQuasiGroup(uint[,] table) => new AntisymmetricQuasiGroup(table);
+
+    /// <summary>
+    /// Defines an implicit conversion from a jagged array of unsigned integers
+    /// to an instance of <see cref="AntisymmetricQuasiGroup"/>.
+    /// </summary>
+    /// <param name="table">A jagged array of unsigned integers representing the antisymmetric quasigroup.</param>
+    /// <returns>An instance of <see cref="AntisymmetricQuasiGroup"/> initialized with the provided table.</returns>
+    /// <exception cref="ArgumentException">Thrown if the provided table is not a valid 10x10 antisymmetric quasigroup matrix.</exception>
+    [CLSCompliant(false)]
+    public static implicit operator AntisymmetricQuasiGroup(uint[][] table) => new AntisymmetricQuasiGroup(table);
+
+    /// <summary>
+    /// Defines an implicit conversion from a two-dimensional array of signed integers
+    /// to an instance of <see cref="AntisymmetricQuasiGroup"/>.
+    /// </summary>
+    /// <param name="table">A two-dimensional array of signed integers representing the antisymmetric quasigroup.</param>
+    /// <returns>An instance of <see cref="AntisymmetricQuasiGroup"/> initialized with the provided table.</returns>
+    /// <exception cref="ArgumentException">Thrown if the provided table is not a valid 10x10 antisymmetric quasigroup matrix.</exception>
+    public static implicit operator AntisymmetricQuasiGroup(int[,] table) => new AntisymmetricQuasiGroup(table);
+
+    /// <summary>
+    /// Defines an implicit conversion from a jagged array of integers
+    /// to an instance of <see cref="AntisymmetricQuasiGroup"/>.
+    /// </summary>
+    /// <param name="table">A jagged array of integers representing the antisymmetric quasigroup.</param>
+    /// <returns>An instance of <see cref="AntisymmetricQuasiGroup"/> initialized with the provided table.</returns>
+    /// <exception cref="ArgumentException">Thrown if the provided table is not a valid 10x10 antisymmetric quasigroup matrix.</exception>
+    [CLSCompliant(false)]
+    public static implicit operator AntisymmetricQuasiGroup(int[][] table) => new AntisymmetricQuasiGroup(table);
 } 

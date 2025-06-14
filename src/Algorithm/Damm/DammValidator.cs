@@ -123,14 +123,7 @@ public static class DammValidator
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
     public static bool IsValidDammCheckDigit(this char checkDigit, ReadOnlySpan<char> number)
     {
-        if (!char.IsDigit(checkDigit))
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(checkDigit),
-                checkDigit,
-                "The check digit must be between 0 and 9");
-        }
-
+        checkDigit.ThrowIfNotDigit();
         var trimmedNumber = number.ValidateAndTrimNumber();
         Span<char> dammNumber = stackalloc char[trimmedNumber.Length + 1];
         trimmedNumber.CopyTo(dammNumber[..^1]);
@@ -155,13 +148,7 @@ public static class DammValidator
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
     public static bool IsValidDammCheckDigit(this char checkDigit, ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasiGroup)
     {
-        if (!char.IsDigit(checkDigit))
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(checkDigit),
-                checkDigit,
-                "The check digit must be between 0 and 9");
-        }
+        checkDigit.ThrowIfNotDigit();
 
         var trimmedNumber = number.ValidateAndTrimNumber();
         Span<char> dammNumber = stackalloc char[trimmedNumber.Length + 1];
@@ -190,14 +177,7 @@ public static class DammValidator
 #if NET8_0_OR_GREATER
         return checkDigit.IsValidDammCheckDigit(number.AsSpan());
 #else
-        if (!char.IsDigit(checkDigit))
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(checkDigit),
-                checkDigit,
-                "The check digit must be between 0 and 9");
-        }
-
+        checkDigit.ThrowIfNotDigit(nameof(checkDigit));
         return string.Concat(number.Trim(), checkDigit)
             .ValidateAndTrimNumber()
             .IsValidDammNumber();
@@ -224,14 +204,7 @@ public static class DammValidator
 #if NET8_0_OR_GREATER
         return checkDigit.IsValidDammCheckDigit(number.AsSpan(), antisymmetricQuasiGroup);
 #else
-        if (!char.IsDigit(checkDigit))
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(checkDigit),
-                checkDigit,
-                "The check digit must be between 0 and 9");
-        }
-
+        checkDigit.ThrowIfNotDigit(nameof(checkDigit));
         return string.Concat(number.Trim(), checkDigit)
             .ValidateAndTrimNumber()
             .IsValidDammNumber(antisymmetricQuasiGroup);

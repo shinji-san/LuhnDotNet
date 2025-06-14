@@ -111,7 +111,7 @@ public static class Mod11AscendingWeightsValidator
     {
         if (!char.IsDigit(checkDigit) && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
         {
-            throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, "The check digit must be a digit (0-9) or 'X'.");
+            throw new InvalidCharacterException($"The check {checkDigit} digit must be a digit (0-9) or 'X'.", nameof(checkDigit));
         }
 
         Span<char> mod11Number = stackalloc char[number.Length + 1];
@@ -140,7 +140,7 @@ public static class Mod11AscendingWeightsValidator
 #else
         if (!char.IsDigit(checkDigit) && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
         {
-            throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, "The check digit must be a digit (0-9) or 'X'.");
+            throw new InvalidCharacterException($"The check {checkDigit} digit must be a digit (0-9) or 'X'.", nameof(checkDigit));
         }
 
         var mod11Number = $"{number}{checkDigit}";

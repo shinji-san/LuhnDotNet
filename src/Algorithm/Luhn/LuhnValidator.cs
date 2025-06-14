@@ -94,13 +94,7 @@ public static class LuhnValidator
     [SuppressMessage("ReSharper", "HeapView.ObjectAllocation")]
     public static bool IsValidLuhnCheckDigit(this char checkDigit, ReadOnlySpan<char> number)
     {
-        if (!char.IsDigit(checkDigit))
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(checkDigit),
-                checkDigit,
-                "The check digit must be between 0 and 9");
-        }
+        checkDigit.ThrowIfNotDigit();
 
         var trimmedNumber = number.ValidateAndTrimNumber();
         Span<char> luhnNumber = stackalloc char[trimmedNumber.Length + 1];
@@ -129,17 +123,10 @@ public static class LuhnValidator
 #if NET8_0_OR_GREATER
         return checkDigit.IsValidLuhnCheckDigit(number.AsSpan());
 #else
-            if (!char.IsDigit(checkDigit))
-            {
-                throw new ArgumentOutOfRangeException(
-                    nameof(checkDigit),
-                    checkDigit,
-                    "The check digit must be between 0 and 9");
-            }
-
-            return string.Concat(number.Trim(), checkDigit)
-                .ValidateAndTrimNumber()
-                .DoubleEverySecondDigit(true) == 0;
+        checkDigit.ThrowIfNotDigit(nameof(checkDigit));
+        return string.Concat(number.Trim(), checkDigit)
+            .ValidateAndTrimNumber()
+            .DoubleEverySecondDigit(true) == 0;
 #endif
     }
 }

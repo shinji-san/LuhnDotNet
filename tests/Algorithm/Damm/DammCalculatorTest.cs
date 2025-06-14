@@ -8,7 +8,7 @@ using Xunit;
 
 public class DammCalculatorTest
 {
-    [Theory]
+    [Theory(DisplayName = "Computes Damm check digit for numbers")]
     [InlineData("572", '4')]
     [InlineData("1234567", '1')]
     [InlineData("11294", '6')]
@@ -26,7 +26,7 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Computes Damm number for numbers")]
     [InlineData("572", "5724")]
     [InlineData("1234567", "12345671")]
     [InlineData("11294", "112946")]
@@ -40,14 +40,14 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Compute Damm check digit for invalid numbers throws InvalidCharacterException")]
     [InlineData(null)]
     [InlineData("")]
     [InlineData("abc")]
     [InlineData("12a3")]
     [InlineData("12 3")]
     [InlineData("12.3")]
-    public void ComputeDammCheckDigit_InvalidInput_ThrowsInvalidCharacterException(string invalidNumber)
+    public void ComputeDammCheckDigit_WithInvalidNumber_ThrowsInvalidCharacterException(string invalidNumber)
     {
         Assert.Throws<InvalidCharacterException>(() => invalidNumber.ComputeDammCheckDigit());
 #if NET8_0_OR_GREATER
@@ -55,14 +55,14 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Compute Damm number for invalid numbers throws InvalidCharacterException")]
     [InlineData(null)]
     [InlineData("")]
     [InlineData("abc")]
     [InlineData("12a3")]
     [InlineData("12 3")]
     [InlineData("12.3")]
-    public void ComputeDammNumber_InvalidInput_ThrowsInvalidCharacterException(string invalidNumber)
+    public void ComputeDammNumber_WithInvalidNumber_ThrowsInvalidCharacterException(string invalidNumber)
     {
         Assert.Throws<InvalidCharacterException>(invalidNumber.ComputeDammNumber);
 #if NET8_0_OR_GREATER
@@ -70,7 +70,7 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Validates Damm check digit for numbers with custom quasigroup")]
     [InlineData("572", '4')]
     [InlineData("1234567", '1')]
     [InlineData("11294", '6')]
@@ -101,7 +101,7 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Computes Damm number for numbers with custom quasigroup")]
     [InlineData("572", "5724")]
     [InlineData("1234567", "12345671")]
     [InlineData("11294", "112946")]
@@ -128,10 +128,9 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Fact]
-    public void ComputeDammCheckDigit_InvalidQuasigroupSize_ThrowsArgumentException()
+    [Fact(DisplayName = "Compute Damm check digit with  invalid quasigroup size throws ArgumentException")]
+    public void ComputeDammCheckDigit_WithInvalidQuasigroupSize_ThrowsArgumentException()
     {
-        // 5x5 matrix instead of 10x10
         uint[,] invalidQuasigroup = new uint[5, 5];
 
         Assert.Throws<ArgumentException>(() => "123".ComputeDammCheckDigit(invalidQuasigroup));
@@ -140,10 +139,9 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Fact]
-    public void ComputeDammNumber_InvalidQuasigroupSize_ThrowsArgumentException()
+    [Fact(DisplayName = "Compute Damm number with invalid quasigroup size throws ArgumentException")]
+    public void ComputeDammNumber_WithInvalidQuasigroupSize_ThrowsArgumentException()
     {
-        // 10x5 matrix instead of 10x10
         uint[,] invalidQuasigroup = new uint[10, 5];
 
         Assert.Throws<ArgumentException>(() => "123".ComputeDammNumber(invalidQuasigroup));
@@ -152,11 +150,11 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Compute Damm check digit with custom quasigroup for invalid numbers throws InvalidCharacterException")]
     [InlineData("")]
     [InlineData("abc")]
     [InlineData("12a3")]
-    public void ComputeDammCheckDigit_WithCustomQuasigroup_InvalidInput_ThrowsInvalidCharacterException(
+    public void ComputeDammCheckDigit_WithCustomQuasigroup_InvalidNumber_ThrowsInvalidCharacterException(
         string invalidNumber)
     {
         uint[,] antisymmetricQuasigroup = new uint[10, 10];
@@ -167,11 +165,11 @@ public class DammCalculatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Compute Damm number with custom quasigroup for invalid numbers throws InvalidCharacterException")]
     [InlineData("")]
     [InlineData("abc")]
     [InlineData("12a3")]
-    public void ComputeDammNumber_WithCustomQuasigroup_InvalidInput_ThrowsInvalidCharacterException(
+    public void ComputeDammNumber_WithCustomQuasigroup_InvalidNumber_ThrowsInvalidCharacterException(
         string invalidNumber)
     {
         uint[,] antisymmetricQuasigroup = new uint[10, 10];
