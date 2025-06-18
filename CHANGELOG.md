@@ -30,12 +30,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `RemoveSeparators` methods to remove all separators from a string or ReadOnlySpan. Use it, for example, with credit card numbers.
 - Added internal `LuhnDotNetCore` class to encapsulate functionality related to the Luhn, Modulus 11, and other algorithms.
 - Added Damm algorithm implementation with `DammAlgorithm`, `DammCalculator`, and `DammValidator` classes.
+- Added `CharExtensions` class with `ThrowIfNotDigit` to throw an exception if a character is not a digit.
 
 ### Changed
+- Changed return type of `LuhnAlgorithm.ComputeLuhnCheckDigit` to `char` instead of `byte`.
 - Moved Luhn algorithm related methods from the `Luhn` class to the new `LuhnAlgorithm`, `LuhnCalculator`, and `LuhnValidator` classes.
 - Changed namespace for Luhn algorithm-related classes from `LuhnDotNet` to `LuhnDotNet.Algorithm.Luhn`.
 - Changed `Luhn.IsValid` methods to `LuhnValidator.IsValidLuhnCheckDigit` and `LuhnValidator.IsValidLuhnNumber`.
-- Changed return type of `LuhnAlgorithm.ComputeLuhnCheckDigit` to `char` instead of `byte`.
 - Renamed `ConvertAlphaNumericToNumeric` to `AlphaNumericToNumeric`
 - Moved `AlphaNumericToNumeric` method to the `StringExtensions` and its overloaded version to `ReadOnlySpanExtensions` class.
 - Moved `ComputeCheckDigit` and `ComputeLuhnNumber` methods to the `LuhnCalculator` class.
