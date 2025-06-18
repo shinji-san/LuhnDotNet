@@ -137,8 +137,7 @@ public class AntisymmetricQuasiGroup
     /// <exception cref="IndexOutOfRangeException">
     /// Thrown if the specified indices are out of bounds of the table.
     /// </exception>
-    [CLSCompliant(false)]
-    public uint this[int i, int j] => this.table[i, j];
+    public int this[int i, int j] => (int)this.table[i, j];
     
     /// <summary>
     /// Indexer that provides access to elements in the antisymmetric quasigroup table
