@@ -2,6 +2,7 @@ namespace LuhnDotNetTest.Algorithm.Luhn;
 
 using LuhnDotNet;
 using LuhnDotNet.Algorithm.Luhn;
+using LuhnDotNet.Extensions;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -171,7 +172,7 @@ public class LuhnValidatorTest
     /// </summary>
     [Theory(DisplayName = "Validates an invalid number with any check digit between 0 and 9 to throw an exception")]
     [MemberData(nameof(InvalidNumbersAndCheckDigits), MemberType = typeof(LuhnValidatorTest))]
-    public void IsValidLuhnCheckDigit_InvalidInput_ThrowsInvalidCharacterException(
+    public void IsValidLuhnCheckDigit_InvalidNumber_ThrowsInvalidCharacterException(
         string invalidNumber,
         char checkDigit)
     {
@@ -187,13 +188,13 @@ public class LuhnValidatorTest
     /// </summary>
     [Theory(DisplayName = "Validates a number with separate check digit greater than 9 to throw an exception")]
     [MemberData(nameof(NumbersWithInvalidCheckDigits), MemberType = typeof(LuhnValidatorTest))]
-    public void IsValidLuhnCheckDigit_InvalidInput_ThrowsArgumentOutOfRangeException(
-        string invalidNumber,
-        char checkDigit)
+    public void IsValidLuhnCheckDigit_InvalidCheckDigit_ThrowsInvalidCharacterException(
+        string number,
+        char invalidCheckDigit)
     {
-        Assert.Throws<ArgumentOutOfRangeException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber));
+        Assert.Throws<InvalidCharacterException>(() => invalidCheckDigit.IsValidLuhnCheckDigit(number));
 #if NET8_0_OR_GREATER
-        Assert.Throws<ArgumentOutOfRangeException>(() => checkDigit.IsValidLuhnCheckDigit(invalidNumber.AsSpan()));
+        Assert.Throws<InvalidCharacterException>(() => invalidCheckDigit.IsValidLuhnCheckDigit(number.AsSpan()));
 #endif
     }
 

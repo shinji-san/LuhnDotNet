@@ -1,5 +1,6 @@
 namespace LuhnDotNet;
 
+using Extensions;
 using System;
 
 /// <summary>
@@ -19,11 +20,12 @@ internal static class LuhnDotNetCore
     /// <returns>The numeric value of the character as an unsigned integer.</returns>
     internal static uint ToUnsignedIntegerDigit(this char character)
     {
-        if (!char.IsDigit(character))
-        {
-            throw new ArgumentOutOfRangeException(nameof(character), $"The character '{character}' is not a valid digit.  Character must be between '0' and '9'." );
-        }
-
+#if NET8_0_OR_GREATER
+        character.ThrowIfNotDigit();
+#else
+        character.ThrowIfNotDigit(nameof(character));
+#endif
+        
         return (uint)character - AsciiCodeForZero;
     }
     

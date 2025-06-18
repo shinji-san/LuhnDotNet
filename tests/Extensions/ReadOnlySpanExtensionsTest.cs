@@ -1,14 +1,13 @@
-namespace LuhnDotNetTest;
+#if NET8_0_OR_GREATER
+namespace LuhnDotNetTest.Extensions;
 
 using LuhnDotNet;
+using LuhnDotNet.Extensions;
 using System;
 using System.Collections.Generic;
 using Xunit;
 
-/// <summary>
-/// Unit tests for the C# implementation of the Luhn algorithm.
-/// </summary>
-public class StringExtensionTest
+public class ReadOnlySpanExtensionsTest
 {
     /// <summary>
     /// Test data for AlphaNumericToNumeric method.
@@ -26,13 +25,13 @@ public class StringExtensionTest
     /// <summary>
     /// Tests the AlphaNumericToNumeric method.
     /// </summary>
-    /// <param name="input">Input string</param>
+    /// <param name="input">Input ReadOnlySpan{char}</param>
     /// <param name="expected">Expected output</param>
-    [Theory(DisplayName = "Converts an alphanumeric string to a numeric string")]
-    [MemberData(nameof(AlphaNumericToNumericData), MemberType = typeof(StringExtensionTest))]
+    [Theory(DisplayName = "Converts an alphanumeric ReadOnlySpan<char> to a numeric ReadOnlySpan<char>")]
+    [MemberData(nameof(AlphaNumericToNumericData), MemberType = typeof(ReadOnlySpanExtensionsTest))]
     public void AlphaNumericToNumeric_ValidInput_ShouldReturnExpectedResult(string input, string expected)
     {
-        Assert.Equal(expected, input.AlphaNumericToNumeric());
+        Assert.Equal(expected.AsSpan(), input.AsSpan().AlphaNumericToNumeric());
     }
 
     /// <summary>
@@ -43,28 +42,27 @@ public class StringExtensionTest
     /// invalid input string that contains non-alphanumeric characters. The test uses the Assert. Throws method from
     /// xUnit to check if the expected exception is thrown.
     /// </remarks>
-    [Fact(DisplayName = "Converts an invalid alphanumeric string to a numeric string to throw an exception")]
+    [Fact(DisplayName = "Converts an invalid alphanumeric ReadOnlySpan<char> to a numeric ReadOnlySpan<char> to throw an exception")]
     public void AlphaNumericToNumeric_InvalidInput_ThrowsInvalidCharacterException()
     {
-        Assert.Throws<InvalidCharacterException>(()=> "!@#$%^&*()".AlphaNumericToNumeric());
+        Assert.Throws<InvalidCharacterException>(()=> "!@#$%^&*()".AsSpan().AlphaNumericToNumeric());
     }
 
     /// <summary>
-    /// Validates that the AlphaNumericToNumeric method throws an ArgumentNullException
-    /// when passed an empty or null string input.
+    /// Tests that the AlphaNumericToNumeric method throws an ArgumentNullException when the input is empty or null.
     /// </summary>
-    [Fact(DisplayName = "Converts an empty alphanumeric string to a numeric string to throw an exception")]
+    [Fact(DisplayName = "Converts an empty alphanumeric ReadOnlySpan<char> to a numeric ReadOnlySpan<char> to throw an exception")]
     public void AlphaNumericToNumeric_EmptyInput_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => "".AlphaNumericToNumeric());
-        Assert.Throws<ArgumentNullException>(() => ((string)null)!.AlphaNumericToNumeric());
+        Assert.Throws<ArgumentNullException>(() => "".AsSpan().AlphaNumericToNumeric());
+        Assert.Throws<ArgumentNullException>(() => ((string)null)!.AsSpan().AlphaNumericToNumeric());
     }
 
     /// <summary>
     /// Tests that the RemoveSeparators method processes input correctly by removing separators.
     /// </summary>
-    /// <param name="input">The input string containing separators.</param>
-    /// <param name="expected">The expected string after separators are removed.</param>
+    /// <param name="input">The input ReadOnlySpan{char} containing separators.</param>
+    /// <param name="expected">The expected ReadOnlySpan{char} after separators are removed.</param>
     [Theory]
     [InlineData("4444 5555 6666 8888", "4444555566668888")]
     [InlineData("6666/5555/7777/9123", "6666555577779123")]
@@ -73,17 +71,17 @@ public class StringExtensionTest
     [InlineData("0987654321", "0987654321")]
     public void RemoveSeparators_ValidInput_ReturnsExpectedResult(string input, string expected)
     {
-        Assert.Equal(expected, input.RemoveSeparators());
+        Assert.Equal(expected.AsSpan(), input.AsSpan().RemoveSeparators());
     }
 
     /// <summary>
-    /// Tests the RemoveSeparators method to ensure it throws an ArgumentNullException
-    /// when the input string is null or empty.
+    /// Tests the RemoveSeparators method to ensure it throws an ArgumentNullException when provided with an empty or null input.
     /// </summary>
-    [Fact(DisplayName = "Remove separators from an invalid string to throw an exception")]
+    [Fact(DisplayName = "Remove separators from an empty ReadOnlySpan<char> to throw an exception")]
     public void RemoveSeparators_EmptyInput_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>(() => "".RemoveSeparators());
-        Assert.Throws<ArgumentNullException>(() => ((string)null)!.RemoveSeparators());
+        Assert.Throws<ArgumentNullException>(() => "".AsSpan().RemoveSeparators());
+        Assert.Throws<ArgumentNullException>(() => ((string)null)!.AsSpan().RemoveSeparators());
     }
 }
+#endif

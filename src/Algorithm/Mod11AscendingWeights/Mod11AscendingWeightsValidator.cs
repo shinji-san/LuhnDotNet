@@ -33,6 +33,7 @@
 
 namespace LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
+using Extensions;
 using System;
 #if !NET8_0_OR_GREATER
 using System.Linq;
@@ -44,6 +45,7 @@ using System.Linq;
 /// </summary>
 public static class Mod11AscendingWeightsValidator
 {
+#if NET8_0_OR_GREATER
     /// <summary>
     /// Validates whether a given number with a Mod-11 check digit is valid.
     /// </summary>
@@ -54,7 +56,6 @@ public static class Mod11AscendingWeightsValidator
     /// <see langword="true" /> if the number with the check digit is valid, according to the Mod-11 algorithm;
     /// otherwise, <see langword="false" />.
     /// </returns>
-#if NET8_0_OR_GREATER
     public static bool IsValidMod11Number(this ReadOnlySpan<char> numberWithCheckDigit)
     {
         var validateAndTrimNumber = numberWithCheckDigit.ValidateAndTrimMod11Number();
@@ -110,7 +111,7 @@ public static class Mod11AscendingWeightsValidator
     {
         if (!char.IsDigit(checkDigit) && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
         {
-            throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, "The check digit must be a digit (0-9) or 'X'.");
+            throw new InvalidCharacterException($"The check {checkDigit} digit must be a digit (0-9) or 'X'.", nameof(checkDigit));
         }
 
         Span<char> mod11Number = stackalloc char[number.Length + 1];
@@ -139,7 +140,7 @@ public static class Mod11AscendingWeightsValidator
 #else
         if (!char.IsDigit(checkDigit) && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
         {
-            throw new ArgumentOutOfRangeException(nameof(checkDigit), checkDigit, "The check digit must be a digit (0-9) or 'X'.");
+            throw new InvalidCharacterException($"The check {checkDigit} digit must be a digit (0-9) or 'X'.", nameof(checkDigit));
         }
 
         var mod11Number = $"{number}{checkDigit}";

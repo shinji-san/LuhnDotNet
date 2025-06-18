@@ -1,13 +1,13 @@
 namespace LuhnDotNetTest.Algorithm.Mod11AscendingWeights;
 
-using LuhnDotNet;
 using LuhnDotNet.Algorithm.Mod11AscendingWeights;
+using LuhnDotNet.Extensions;
 using System;
 using Xunit;
 
 public class Mod11AscendingWeightsValidatorTest
 {
-    [Theory]
+    [Theory(DisplayName = "Validates Mod11 numbers")]
     [InlineData("06319429")]
     [InlineData("04908802")]
     [InlineData("06789572")]
@@ -28,7 +28,7 @@ public class Mod11AscendingWeightsValidatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Validates numbers with separate Mod11 check digits")]
     [InlineData("0631942", '9')]
     [InlineData("0490880", '2')]
     [InlineData("0678957", '2')]
@@ -49,7 +49,7 @@ public class Mod11AscendingWeightsValidatorTest
 #endif
     }
     
-    [Theory]
+    [Theory(DisplayName = "Validates ISBN-10 numbers")]
     [InlineData("99921-58-10-7", true)]
     [InlineData("9971-5-0210-0", true)]
     [InlineData("960-425-059-0", true)]
@@ -85,7 +85,7 @@ public class Mod11AscendingWeightsValidatorTest
 #endif
     }
 
-    [Theory]
+    [Theory(DisplayName = "Validates PZN numbers")]
     [InlineData("06789572", true)]
     [InlineData("08497862", true)]
     [InlineData("10835964", true)]
