@@ -3,7 +3,6 @@ namespace LuhnDotNetBenchmark;
 using BenchmarkDotNet.Attributes;
 using BenchmarkDotNet.Configs;
 using LuhnDotNet.Algorithm.Damm;
-using LuhnDotNet.Algorithm.Luhn;
 using LuhnDotNet.Extensions;
 using System;
 using System.Collections.Generic;
@@ -45,7 +44,7 @@ public class DammBenchmark : ISingleCheckDigitBenchmark
     [ArgumentsSource(nameof(NumericNumbersAsString))]
     public void ComputeNumberBasedOnString(string number)
     {
-        number.ComputeLuhnNumber();
+        number.ComputeDammNumber();
     }
 
     [Benchmark(Baseline = true), BenchmarkCategory(Category.ComputeCheckDigitCategory)]
