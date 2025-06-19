@@ -1,8 +1,14 @@
 - name: API-Documentation
   href: api/
-- name: Benchmark-Results
-  href: benchmark-results/
 - name: Changelog
   href: CHANGELOG.md
 - name: License
   href: LICENSE.md
+- name: Luhn-Benchmark
+  href: luhn-benchmark-results/
+- name: Damm-Benchmark
+  href: damm-benchmark-results/
+- name: Mod11-Asc-Benchmark
+  href: mod11asc-benchmark-results/
+- name: Helper-Benchmark
+  href: helper-benchmark-results/

@@ -4,20 +4,62 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0] - 2025-06-29
+### Added
+- Added internal `LuhnAlgorithm` class to encapsulate Luhn algorithm related methods.
+- Added public `LuhnCalculator` class to encapsulate Luhn calculation methods.
+- Added public `LuhnValidator` class to encapsulate Luhn validation methods.
+- Added `StringExtensions` and `ReadOnlySpanExtensions` classes to encapsulate string and ReadOnlySpan related methods.
+- Added `LuhnAlgorithm.ComputeLuhnCheckDigit` method to compute the Luhn check digit.
+- Added `LuhnAlgorithm.ComputeLuhnNumber` method to compute the Luhn number.
+- Added `LuhnValidator.IsValidLuhnCheckDigit` method to validate a check digit with Luhn algorithm.
+- Added `LuhnValidator.IsValidLuhnNumber` method to validate a number with Luhn algorithm.
+- Added overloads of `LuhnValidator.IsValidLuhnCheckDigit` and `LuhnValidator.IsValidLuhnNumber` methods to accept a `ReadOnlySpan<char>` as input.
+- Added internal `Mod11AscendingWeightsAlgorithm` class to encapsulate Mod11 algorithm related methods.
+- Added public `Mod11AscendingWeightsCalculator` class to encapsulate Mod11 calculation methods.
+- Added public `Mod11AscendingWeightsValidator` class to encapsulate Mod11 validation methods.
+- Added `Mod11AscendingWeightsCalculator.ComputeMod11CheckDigit` method to compute the Mod11 check digit.
+- Added `Mod11AscendingWeightsCalculator.ComputeMod11Number` method to compute the Mod11 number.
+- Added overloads of `Mod11AscendingWeightsCalculator.ComputeMod11CheckDigit` and `Mod11AscendingWeightsCalculator.ComputeMod11Number` methods to accept a `ReadOnlySpan<char>` as input.
+- Added `Mod11AscendingWeightsValidator.IsValidMod11CheckDigit` method to validate a check digit with Mod11 algorithm.
+- Added `Mod11AscendingWeightsValidator.IsValidMod11Number` method to validate a number with Mod11 algorithm.
+- Added overloads of `Mod11AscendingWeightsValidator.IsValidMod11CheckDigit` and `Mod11AscendingWeightsValidator.IsValidMod11Number` methods to accept a `ReadOnlySpan<char>` as input.
+- Added `StringExtensions.RemoveSeparators` method to remove all separators from a string.
+- Added `ReadOnlySpanExtensions.RemoveSeparators` method to remove all separators from a ReadOnlySpan.
+- Added `InvalidCharacterException` to throw an exception if the input string contains invalid characters.
+- Added `RemoveSeparators` methods to remove all separators from a string or ReadOnlySpan. Use it, for example, with credit card numbers.
+- Added internal `LuhnDotNetCore` class to encapsulate functionality related to the Luhn, Modulus 11, and other algorithms.
+- Added Damm algorithm implementation with `DammAlgorithm`, `DammCalculator`, and `DammValidator` classes.
+- Added `CharExtensions` class with `ThrowIfNotDigit` to throw an exception if a character is not a digit.
+
+### Changed
+- Changed return type of `LuhnAlgorithm.ComputeLuhnCheckDigit` to `char` instead of `byte`.
+- Moved Luhn algorithm related methods from the `Luhn` class to the new `LuhnAlgorithm`, `LuhnCalculator`, and `LuhnValidator` classes.
+- Changed namespace for Luhn algorithm-related classes from `LuhnDotNet` to `LuhnDotNet.Algorithm.Luhn`.
+- Changed `Luhn.IsValid` methods to `LuhnValidator.IsValidLuhnCheckDigit` and `LuhnValidator.IsValidLuhnNumber`.
+- Renamed `ConvertAlphaNumericToNumeric` to `AlphaNumericToNumeric`
+- Moved `AlphaNumericToNumeric` method to the `StringExtensions` and its overloaded version to `ReadOnlySpanExtensions` class.
+- Moved `ComputeCheckDigit` and `ComputeLuhnNumber` methods to the `LuhnCalculator` class.
+- Moved `IsValidNumber` and `IsValidCheckDigit` methods to the `LuhnValidator` class.
+- Renamed `Luhn` class to `LuhnAlgorithm`.
+
+### Removed
+- Removed `Luhn.IsValid` methods
+
 ## [1.3.0] - 2024-12-27
 ### Added
-- Add project icon
-- Add project social preview image
-- Add `Luhn.IsValidNumber`
-- Add `Luhn.IsValidCheckDigit`
+- Added project icon
+- Added project social preview image
+- Added `Luhn.IsValidNumber`
+- Added `Luhn.IsValidCheckDigit`
 
 ### Deprecated
 - `Luhn.IsValid` methods are deprecated. Use `Luhn.IsValidNumber` or `Luhn.IsValidCheckDigit` instead.
 
 ## [1.2.0] - 2024-12-26
 ### Added
-- Add [API documentation](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html)
-- Add .NET 9 support
+- Added [API documentation](https://sebastian-walther.de/LuhnDotNet/api/LuhnDotNet.html)
+- Added .NET 9 support
 
 ### Removed
 - Removed .NET 7 support
@@ -26,7 +68,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.1.0] - 2024-03-30
 ### Added
-- Add `ConvertAlphaNumericToNumeric` method to convert a string containing alphanumeric characters to a string containing only numeric characters (use case: converting an ISIN to a numeric string for Luhn validation).
+- Added `ConvertAlphaNumericToNumeric` method to convert a string containing alphanumeric characters to a string containing only numeric characters (use case: converting an ISIN to a numeric string for Luhn validation).
 
 ## [1.0.1] - 2024-03-19
 ### Fixed
@@ -66,6 +108,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Added initial version of LuhnDotNet
 
+[2.0.0]: https://github.com/shinji-san/LuhnDotNet/compare/v1.3.0..v2.0.0
 [1.3.0]: https://github.com/shinji-san/LuhnDotNet/compare/v1.2.0..v1.3.0
 [1.2.0]: https://github.com/shinji-san/LuhnDotNet/compare/v1.1.0..v1.2.0
 [1.1.0]: https://github.com/shinji-san/LuhnDotNet/compare/v1.0.1..v1.1.0
