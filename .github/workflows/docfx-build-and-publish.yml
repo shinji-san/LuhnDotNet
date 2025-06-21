@@ -48,11 +48,29 @@ jobs:
       - name: Run docfx
         run: docfx docfx.json
 
-      - name: Checkout Benchmark Results in subdirectory
+      - name: Checkout Helper Benchmark Results in subdirectory
         uses: actions/checkout@v4
         with:
-          ref: benchmark-results
-          path: benchmark-results
+          ref: helper-benchmark-results
+          path: helper-benchmark-results
+
+      - name: Checkout Luhn Benchmark Results in subdirectory
+        uses: actions/checkout@v4
+        with:
+          ref: luhn-benchmark-results
+          path: luhn-benchmark-results
+
+      - name: Checkout Damm Benchmark Results in subdirectory
+        uses: actions/checkout@v4
+        with:
+          ref: damm-benchmark-results
+          path: damm-benchmark-results
+
+      - name: Checkout Mod11 Asc Benchmark Results in subdirectory
+        uses: actions/checkout@v4
+        with:
+          ref: mod11asc-benchmark-results
+          path: mod11asc-benchmark-results
 
       - name: Copy benchmark results to _site
         run:  -|
