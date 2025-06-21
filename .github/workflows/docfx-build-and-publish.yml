@@ -6,6 +6,12 @@ on:
       - LuhnDotNet - Benchmark.Net
     types:
       - completed
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Deploy documentation"
+        required: true
+        default: "staging"
 
 permissions:
   actions: read
@@ -49,7 +55,11 @@ jobs:
           path: benchmark-results
 
       - name: Copy benchmark results to _site
-        run: rsync -av --exclude '.git' benchmark-results/ _site/benchmark-results/
+        run:  -|
+              rsync -av --exclude '.git' helper-benchmark-results/ _site/helper-benchmark-results/
+              rsync -av --exclude '.git' luhn-benchmark-results/ _site/luhn-benchmark-results/
+              rsync -av --exclude '.git' damm-benchmark-results/ _site/damm-benchmark-results/
+              rsync -av --exclude '.git' mod11asc-benchmark-results/ _site/mod11asc-benchmark-results/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
