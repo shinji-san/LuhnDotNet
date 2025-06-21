@@ -14,6 +14,8 @@ using System.Text;
 
 #if !NET8_0_OR_GREATER
 using System.Linq;
+#else
+using System.Buffers;
 #endif
 
 /// <summary>
@@ -41,31 +43,46 @@ public static class StringExtension
             throw new ArgumentNullException(nameof(alphaNumeric), "The number cannot be empty.");
         }
 
-        Span<char> result = stackalloc char[alphaNumeric.Length * 2];
-        int index = 0;
-
-        foreach (char c in alphaNumeric.ToUpper())
+        char[]? rentedFromPool = null;
+        var length = alphaNumeric.Length * 2;
+        try
         {
-            if (char.IsLetter(c))
+            var buffer = length > LuhnDotNetCore.MaxStackLimit
+                ? (rentedFromPool = ArrayPool<char>.Shared.Rent(length))
+                : stackalloc char[length];
+            var result = buffer[..length];
+            int index = 0;
+
+            foreach (char c in alphaNumeric.ToUpper())
             {
-                string numericValue = (c - 55).ToString();
-                foreach (char numChar in numericValue)
+                if (char.IsLetter(c))
                 {
-                    result[index++] = numChar;
+                    string numericValue = (c - 55).ToString();
+                    foreach (char numChar in numericValue)
+                    {
+                        result[index++] = numChar;
+                    }
+                }
+                else if (char.IsDigit(c))
+                {
+                    result[index++] = c;
+                }
+                else
+                {
+                    throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!",
+                        nameof(alphaNumeric));
                 }
             }
-            else if (char.IsDigit(c))
+
+            return result[..index].ToString();
+        }
+        finally
+        {
+            if (rentedFromPool is not null)
             {
-                result[index++] = c;
-            }
-            else
-            {
-                throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!",
-                    nameof(alphaNumeric));
+                ArrayPool<char>.Shared.Return(rentedFromPool, clearArray: false);
             }
         }
-
-        return result[..index].ToString();
     }
 #else
     {

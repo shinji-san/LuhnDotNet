@@ -9,6 +9,11 @@ using System;
 internal static class LuhnDotNetCore
 {
     /// <summary>
+    /// Specifies the maximum limit for a stack size, used to constrain operations or prevent excessive resource usage.
+    /// </summary>
+    internal const int MaxStackLimit = 512;
+
+    /// <summary>
     /// Represents the ASCII code for the character '0'.
     /// </summary>
     private const int AsciiCodeForZero = 48;

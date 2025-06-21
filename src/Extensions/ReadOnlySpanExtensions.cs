@@ -10,6 +10,7 @@
 namespace LuhnDotNet.Extensions;
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -27,11 +28,22 @@ public static class ReadOnlySpanExtensions
     internal delegate char CheckDigitCalculator(ReadOnlySpan<char> number);
 
     /// <summary>
+    /// Represents a delegate that defines a method to validate a numeric sequence
+    /// contained within a <see cref="ReadOnlySpan{T}"/> of characters.
+    /// Returns a boolean indicating whether the sequence passes the validation criteria.
+    /// </summary>
+    /// <param name="span">The read-only span of characters representing the numeric sequence to be validated.</param>
+    /// <returns><see langword="true"/> if the span represents a valid numeric sequence,
+    /// otherwise <see langword="false"/>.</returns>
+    internal delegate bool IsValidNumber(ReadOnlySpan<char> span);
+
+    /// <summary>
     /// Converts an alphanumeric string into its numeric representation.
     /// </summary>
     /// <param name="alphaNumeric">The alphanumeric span to be converted.</param>
     /// <returns>A numeric representation of the input span.</returns>
-    /// <exception cref="InvalidCharacterException"><paramref name="alphaNumeric"/> contains characters that aren't letters or digits.</exception>
+    /// <exception cref="InvalidCharacterException"><paramref name="alphaNumeric"/> contains characters that
+    /// aren't letters or digits.</exception>
     public static ReadOnlySpan<char> AlphaNumericToNumeric(this ReadOnlySpan<char> alphaNumeric)
     {
         if (alphaNumeric.IsEmpty)
@@ -125,7 +137,7 @@ public static class ReadOnlySpanExtensions
         CheckDigitCalculator computeCheckDigit)
     {
         var trimmedNumber = number.ValidateAndTrimNumber();
-        Span<char> result = stackalloc char[trimmedNumber.Length + 1];
+        Span<char> result = new char[trimmedNumber.Length + 1];
         trimmedNumber.CopyTo(result[..^1]);
         result[^1] = computeCheckDigit(trimmedNumber);
         return result.ToString();
@@ -148,6 +160,41 @@ public static class ReadOnlySpanExtensions
         }
 
         return true;
+    }
+
+    /// <summary>
+    /// Creates a number with the specified check digit appended and validates it using the provided validation delegate.
+    /// </summary>
+    /// <param name="number">The base number to which the check digit will be appended.</param>
+    /// <param name="checkDigit">The check digit to append to the base number.</param>
+    /// <param name="isValid">A delegate function to validate the constructed number with the
+    /// appended check digit.</param>
+    /// <returns><see langword="true"/> if the constructed number with the appended check digit is valid,
+    /// otherwise <see langword="false"/>.</returns>
+    internal static bool CreateNumberWithCheckDigit(
+        this ReadOnlySpan<char> number,
+        char checkDigit,
+        IsValidNumber isValid)
+    {
+        int bufferLength = number.Length + 1;
+        char[]? rentedFromPool = null;
+        try
+        {
+            var buffer = bufferLength > LuhnDotNetCore.MaxStackLimit
+                ? (rentedFromPool = ArrayPool<char>.Shared.Rent(bufferLength))
+                : stackalloc char[bufferLength];
+            var numberWithCheckDigit = buffer[..bufferLength];
+            number.CopyTo(numberWithCheckDigit[..^1]);
+            numberWithCheckDigit[^1] = checkDigit;
+            return isValid(numberWithCheckDigit);
+        }
+        finally
+        {
+            if (rentedFromPool is not null)
+            {
+                ArrayPool<char>.Shared.Return(rentedFromPool, clearArray: false);
+            }
+        }
     }
 }
 

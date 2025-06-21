@@ -114,11 +114,7 @@ public static class Mod11AscendingWeightsValidator
             throw new InvalidCharacterException($"The check {checkDigit} digit must be a digit (0-9) or 'X'.", nameof(checkDigit));
         }
 
-        Span<char> mod11Number = stackalloc char[number.Length + 1];
-        number.CopyTo(mod11Number[..^1]);
-        mod11Number[^1] = checkDigit;
-        ReadOnlySpan<char> readOnlyMod11Number = mod11Number;
-        return IsValidMod11Number(readOnlyMod11Number);
+        return number.CreateNumberWithCheckDigit(checkDigit, n => n.IsValidMod11Number());
     }
 #endif
 

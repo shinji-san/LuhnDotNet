@@ -97,11 +97,7 @@ public static class LuhnValidator
         checkDigit.ThrowIfNotDigit();
 
         var trimmedNumber = number.ValidateAndTrimNumber();
-        Span<char> luhnNumber = stackalloc char[trimmedNumber.Length + 1];
-        trimmedNumber.CopyTo(luhnNumber[..^1]);
-        luhnNumber[^1] = checkDigit;
-        ReadOnlySpan<char> readOnlyLuhnNumber = luhnNumber;
-        return readOnlyLuhnNumber.DoubleEverySecondDigit(true) == 0;
+        return trimmedNumber.CreateNumberWithCheckDigit(checkDigit, n => n.DoubleEverySecondDigit(true) == 0);
     }
 #endif
 

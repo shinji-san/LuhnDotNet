@@ -125,11 +125,7 @@ public static class DammValidator
     {
         checkDigit.ThrowIfNotDigit();
         var trimmedNumber = number.ValidateAndTrimNumber();
-        Span<char> dammNumber = stackalloc char[trimmedNumber.Length + 1];
-        trimmedNumber.CopyTo(dammNumber[..^1]);
-        dammNumber[^1] = checkDigit;
-        ReadOnlySpan<char> readOnlyDammNumber = dammNumber;
-        return readOnlyDammNumber.IsValidDammNumber();
+        return trimmedNumber.CreateNumberWithCheckDigit(checkDigit, n => n.IsValidDammNumber());
     }
     
     /// <summary>
@@ -149,13 +145,8 @@ public static class DammValidator
     public static bool IsValidDammCheckDigit(this char checkDigit, ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasiGroup)
     {
         checkDigit.ThrowIfNotDigit();
-
         var trimmedNumber = number.ValidateAndTrimNumber();
-        Span<char> dammNumber = stackalloc char[trimmedNumber.Length + 1];
-        trimmedNumber.CopyTo(dammNumber[..^1]);
-        dammNumber[^1] = checkDigit;
-        ReadOnlySpan<char> readOnlyDammNumber = dammNumber;
-        return readOnlyDammNumber.IsValidDammNumber(antisymmetricQuasiGroup);
+        return trimmedNumber.CreateNumberWithCheckDigit(checkDigit, n => n.IsValidDammNumber(antisymmetricQuasiGroup));
     }
 #endif
 

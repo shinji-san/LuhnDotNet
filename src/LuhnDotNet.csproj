@@ -7,7 +7,7 @@
         <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
         <ImplicitUsings>disable</ImplicitUsings>
         <LangVersion>latest</LangVersion>
-        <Nullable>disable</Nullable>
+        <Nullable>enable</Nullable>
         <Authors>Sebastian Walther</Authors>
         <PackageId>LuhnDotNet</PackageId>
         <PackageIcon>icon.png</PackageIcon>
