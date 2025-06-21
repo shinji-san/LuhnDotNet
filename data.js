@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1750521362447,
+  "lastUpdate": 1750521938646,
   "repoUrl": "https://github.com/shinji-san/LuhnDotNet",
   "entries": {
     "Analyze Damm benchmark results": [
@@ -936,6 +936,318 @@ window.BENCHMARK_DATA = {
             "value": 376.246113709041,
             "unit": "ns",
             "range": "± 2.6371303987059234"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "52977680+shinji-san@users.noreply.github.com",
+            "name": "Sebastian Walther",
+            "username": "shinji-san"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "b83c27c4fc34f6af93f9f767d4b1cbfa17dbff3d",
+          "message": "Merge pull request #106 from shinji-san/hotfix-DocGenBenchmarkResults2\n\nFix indentation in rsync commands in `docfx-build-and-publish.yml`\n\nResolves: #106",
+          "timestamp": "2025-06-21T17:22:31+02:00",
+          "tree_id": "5bbd29b6977cb08782d690c3a57139a33e0e65d0",
+          "url": "https://github.com/shinji-san/LuhnDotNet/commit/b83c27c4fc34f6af93f9f767d4b1cbfa17dbff3d"
+        },
+        "date": 1750521938349,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeChainBasedOnString(number: \"A7992-B7398-C7134\")",
+            "value": 498.2663121904646,
+            "unit": "ns",
+            "range": "± 5.8100825286134015"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeChainBasedOnSpan(number: \"A7992-B7398-C7134\")",
+            "value": 462.6961752451383,
+            "unit": "ns",
+            "range": "± 2.461726072321498"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeChainBasedOnString(number: \"A7992-B7398-C7134\")",
+            "value": 472.4863539475661,
+            "unit": "ns",
+            "range": "± 2.273249474353722"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeChainBasedOnSpan(number: \"A7992-B7398-C7134\")",
+            "value": 446.0819141705831,
+            "unit": "ns",
+            "range": "± 3.281851715467317"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeChainBasedOnString(number: \"US-7992-7398-7134\")",
+            "value": 489.09667001451766,
+            "unit": "ns",
+            "range": "± 4.037472924938597"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeChainBasedOnSpan(number: \"US-7992-7398-7134\")",
+            "value": 450.1018579346793,
+            "unit": "ns",
+            "range": "± 2.738667944880912"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeChainBasedOnString(number: \"US-7992-7398-7134\")",
+            "value": 455.6786430358887,
+            "unit": "ns",
+            "range": "± 4.293037326304724"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeChainBasedOnSpan(number: \"US-7992-7398-7134\")",
+            "value": 432.1510912821843,
+            "unit": "ns",
+            "range": "± 1.690238364316076"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeCheckDigitBasedOnString(number: \"79927398713\")",
+            "value": 45.96152679966046,
+            "unit": "ns",
+            "range": "± 0.11711116113893613"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeCheckDigitBasedOnSpan(number: \"79927398713\")",
+            "value": 45.23189627272742,
+            "unit": "ns",
+            "range": "± 0.3137142498411599"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeCheckDigitBasedOnString(number: \"79927398713\")",
+            "value": 43.93820986350377,
+            "unit": "ns",
+            "range": "± 0.2350789915315649"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeCheckDigitBasedOnSpan(number: \"79927398713\")",
+            "value": 46.356106336300186,
+            "unit": "ns",
+            "range": "± 0.19747551321899026"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeCheckDigitBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 350.599897146225,
+            "unit": "ns",
+            "range": "± 0.6706306079130636"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeCheckDigitBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 373.5695064749037,
+            "unit": "ns",
+            "range": "± 0.8193776565111459"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeCheckDigitBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 343.5824697567866,
+            "unit": "ns",
+            "range": "± 0.6577698971420305"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeCheckDigitBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 347.91149689356484,
+            "unit": "ns",
+            "range": "± 2.583103525487804"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeNumberBasedOnString(number: \"79927398713\")",
+            "value": 91.61198175350825,
+            "unit": "ns",
+            "range": "± 0.7033143068255248"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeNumberBasedOnSpan(number: \"79927398713\")",
+            "value": 90.469531083107,
+            "unit": "ns",
+            "range": "± 0.6867985879308799"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeNumberBasedOnString(number: \"79927398713\")",
+            "value": 86.5594555565289,
+            "unit": "ns",
+            "range": "± 0.3275904434158072"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeNumberBasedOnSpan(number: \"79927398713\")",
+            "value": 86.40259861487608,
+            "unit": "ns",
+            "range": "± 0.32737692640074756"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeNumberBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 514.9019838479849,
+            "unit": "ns",
+            "range": "± 1.7817303315388915"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeNumberBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 537.9027359485626,
+            "unit": "ns",
+            "range": "± 1.1778638234681191"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeNumberBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 472.44712809153964,
+            "unit": "ns",
+            "range": "± 1.5495339952070257"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ComputeNumberBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 469.4533977508545,
+            "unit": "ns",
+            "range": "± 0.9757516746269781"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidCheckDigitBasedOnString(number: \"79927398713\")",
+            "value": 69.81964030632606,
+            "unit": "ns",
+            "range": "± 0.1312885727641109"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidCheckDigitBasedOnSpan(number: \"79927398713\")",
+            "value": 69.11309868555803,
+            "unit": "ns",
+            "range": "± 0.344186329910241"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidCheckDigitBasedOnString(number: \"79927398713\")",
+            "value": 68.82470857245582,
+            "unit": "ns",
+            "range": "± 0.5762992331362629"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidCheckDigitBasedOnSpan(number: \"79927398713\")",
+            "value": 67.94758615323475,
+            "unit": "ns",
+            "range": "± 0.34516960987646744"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidCheckDigitBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 429.1498578275953,
+            "unit": "ns",
+            "range": "± 1.2518801753131783"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidCheckDigitBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 426.7612724304199,
+            "unit": "ns",
+            "range": "± 0.7151054494910114"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidCheckDigitBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 393.66065194056586,
+            "unit": "ns",
+            "range": "± 0.36492908550680647"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidCheckDigitBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 389.2939482132594,
+            "unit": "ns",
+            "range": "± 0.29036351752229295"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidNumberBasedOnString(number: \"79927398713\")",
+            "value": 45.151739716529846,
+            "unit": "ns",
+            "range": "± 0.07188956025223707"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidNumberBasedOnSpan(number: \"79927398713\")",
+            "value": 45.466605520248415,
+            "unit": "ns",
+            "range": "± 0.22038329975081003"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidNumberBasedOnString(number: \"79927398713\")",
+            "value": 42.96882470754477,
+            "unit": "ns",
+            "range": "± 0.12790806702897378"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidNumberBasedOnSpan(number: \"79927398713\")",
+            "value": 43.189169615507126,
+            "unit": "ns",
+            "range": "± 0.1320777594580336"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidNumberBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 348.69355326432446,
+            "unit": "ns",
+            "range": "± 0.38070901824447234"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidNumberBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 350.74293169608484,
+            "unit": "ns",
+            "range": "± 0.6686830203149418"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidNumberBasedOnString(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 346.3476755959647,
+            "unit": "ns",
+            "range": "± 1.341164353219498"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.IsValidNumberBasedOnSpan(number: \"79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 343.2796579996745,
+            "unit": "ns",
+            "range": "± 0.2693790442462523"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ValidationChainBasedOnString(number: \"A7992-B7398-C7134\")",
+            "value": 560.5698013305664,
+            "unit": "ns",
+            "range": "± 2.569163117922788"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ValidationChainBasedOnSpan(number: \"A7992-B7398-C7134\")",
+            "value": 388.05680666651045,
+            "unit": "ns",
+            "range": "± 1.2803532110308227"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ValidationChainBasedOnString(number: \"A7992-B7398-C7134\")",
+            "value": 398.1392923672994,
+            "unit": "ns",
+            "range": "± 1.6767018706047576"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ValidationChainBasedOnSpan(number: \"A7992-B7398-C7134\")",
+            "value": 504.43774487422064,
+            "unit": "ns",
+            "range": "± 1.1901370231443622"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ValidationChainBasedOnString(number: \"US-7992-7398-7134\")",
+            "value": 400.4467873913901,
+            "unit": "ns",
+            "range": "± 0.7816058227758906"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ValidationChainBasedOnSpan(number: \"US-7992-7398-7134\")",
+            "value": 375.7556024619511,
+            "unit": "ns",
+            "range": "± 1.293972790484205"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ValidationChainBasedOnString(number: \"US-7992-7398-7134\")",
+            "value": 391.6833487238203,
+            "unit": "ns",
+            "range": "± 3.813234792154613"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.DammBenchmark.ValidationChainBasedOnSpan(number: \"US-7992-7398-7134\")",
+            "value": 379.9725767771403,
+            "unit": "ns",
+            "range": "± 3.2858504554831827"
           }
         ]
       }
