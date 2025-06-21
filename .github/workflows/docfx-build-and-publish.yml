@@ -73,11 +73,11 @@ jobs:
           path: mod11asc-benchmark-results
 
       - name: Copy benchmark results to _site
-        run:  -|
-              rsync -av --exclude '.git' helper-benchmark-results/ _site/helper-benchmark-results/
-              rsync -av --exclude '.git' luhn-benchmark-results/ _site/luhn-benchmark-results/
-              rsync -av --exclude '.git' damm-benchmark-results/ _site/damm-benchmark-results/
-              rsync -av --exclude '.git' mod11asc-benchmark-results/ _site/mod11asc-benchmark-results/
+        run: |
+          rsync -av --exclude '.git' helper-benchmark-results/ _site/helper-benchmark-results/
+          rsync -av --exclude '.git' luhn-benchmark-results/ _site/luhn-benchmark-results/
+          rsync -av --exclude '.git' damm-benchmark-results/ _site/damm-benchmark-results/
+          rsync -av --exclude '.git' mod11asc-benchmark-results/ _site/mod11asc-benchmark-results/
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
