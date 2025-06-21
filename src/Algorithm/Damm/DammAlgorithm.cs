@@ -33,6 +33,7 @@
 
 namespace LuhnDotNet.Algorithm.Damm;
 
+using Extensions;
 #if NET8_0_OR_GREATER
 using System;
 #endif
@@ -75,7 +76,8 @@ internal static class DammAlgorithm
     /// <summary>
     /// Computes the check digit for a given numeric input using the Damm algorithm.
     /// </summary>
-    /// <param name="number">The numeric input provided as a <see cref="ReadOnlySpan{char}"/> representing the digits to process.</param>
+    /// <param name="number">The numeric input provided as a <see cref="ReadOnlySpan{T}"/> of characters
+    /// representing the digits to process.</param>
     /// <returns>The calculated check digit as a <see cref="char"/>.</returns>
     internal static char ComputeCheckDigit(this ReadOnlySpan<char> number)
 #else
@@ -94,7 +96,8 @@ internal static class DammAlgorithm
     /// <summary>
     /// Computes the check digit for a given numeric input using the Damm algorithm.
     /// </summary>
-    /// <param name="number">The numeric input provided as a <see cref="ReadOnlySpan{char}"/> representing the digits to process.</param>
+    /// <param name="number">The numeric input provided as a <see cref="ReadOnlySpan{T}"/> of characters
+    /// representing the digits to process.</param>
     /// <param name="antisymmetricQuasigroup">A ten-by-ten antisymmetric quasigroup table </param>
     /// <returns>The calculated check digit as a <see cref="char"/>.</returns>
     internal static char ComputeCheckDigit(this ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasigroup)

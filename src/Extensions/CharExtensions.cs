@@ -39,4 +39,20 @@ public static class CharExtensions
 
         throw new InvalidCharacterException($"The character '{c}' is not a valid digit. The character must be between '0' and '9'.", paramName);
     }
+
+    /// <summary>
+    /// Converts a character representing a numeric digit to its unsigned integer value.
+    /// </summary>
+    /// <param name="character">The character to convert. Must represent a numeric digit.</param>
+    /// <returns>The numeric value of the character as an unsigned integer.</returns>
+    internal static uint ToUnsignedIntegerDigit(this char character)
+    {
+#if NET8_0_OR_GREATER
+        character.ThrowIfNotDigit();
+#else
+        character.ThrowIfNotDigit(nameof(character));
+#endif
+        
+        return (uint)character - LuhnDotNetCore.AsciiCodeForZero;
+    }
 }
