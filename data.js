@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1750296811935,
+  "lastUpdate": 1750518005352,
   "repoUrl": "https://github.com/shinji-san/LuhnDotNet",
   "entries": {
     "Analyze helper benchmark results": [
@@ -168,6 +168,174 @@ window.BENCHMARK_DATA = {
             "value": 553.7477125021128,
             "unit": "ns",
             "range": "± 1.639768846833427"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "52977680+shinji-san@users.noreply.github.com",
+            "name": "Sebastian Walther",
+            "username": "shinji-san"
+          },
+          "committer": {
+            "email": "noreply@github.com",
+            "name": "GitHub",
+            "username": "web-flow"
+          },
+          "distinct": true,
+          "id": "4163d33a3c43b1cb3786a7d70f28b3cffd2a9004",
+          "message": "Merge pull request #104 from shinji-san/hotfix-DocGenBenchmarkResults\n\nHotfix Documentation Generation - Copy benchmark results\n\nResolves: #104",
+          "timestamp": "2025-06-21T16:16:53+02:00",
+          "tree_id": "335d1ae3731b0a78a6116dc3fa4d3a39d773fa29",
+          "url": "https://github.com/shinji-san/LuhnDotNet/commit/4163d33a3c43b1cb3786a7d70f28b3cffd2a9004"
+        },
+        "date": 1750518004951,
+        "tool": "benchmarkdotnet",
+        "benches": [
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnString(number: \"79927398713DE\")",
+            "value": 57.608409179108484,
+            "unit": "ns",
+            "range": "± 0.5002107560633966"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnSpan(number: \"79927398713DE\")",
+            "value": 48.797601866722104,
+            "unit": "ns",
+            "range": "± 0.23807958607576812"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnString(number: \"79927398713DE\")",
+            "value": 52.67961873610815,
+            "unit": "ns",
+            "range": "± 0.3144451465231901"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnSpan(number: \"79927398713DE\")",
+            "value": 53.64890574950438,
+            "unit": "ns",
+            "range": "± 0.21249986541926233"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnString(number: \"ABCDEF\")",
+            "value": 52.7969670845912,
+            "unit": "ns",
+            "range": "± 0.329734099294832"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnSpan(number: \"ABCDEF\")",
+            "value": 38.23980750028904,
+            "unit": "ns",
+            "range": "± 0.24464116480154455"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnString(number: \"ABCDEF\")",
+            "value": 49.054030656814575,
+            "unit": "ns",
+            "range": "± 0.2821588515070822"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnSpan(number: \"ABCDEF\")",
+            "value": 36.66052288015683,
+            "unit": "ns",
+            "range": "± 0.27652009563060254"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnString(number: \"DE79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 253.1198251430805,
+            "unit": "ns",
+            "range": "± 2.1443228423315923"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnSpan(number: \"DE79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 317.54015232721963,
+            "unit": "ns",
+            "range": "± 2.591397390601514"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnString(number: \"DE79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 218.80639476435525,
+            "unit": "ns",
+            "range": "± 1.9693752782614673"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnSpan(number: \"DE79927398718234234134645645645624563445654634343462545462546546245624356245625624565265432\")",
+            "value": 315.4467949526651,
+            "unit": "ns",
+            "range": "± 1.5352624197117908"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnString(number: \"US79927398713\")",
+            "value": 57.63368024275853,
+            "unit": "ns",
+            "range": "± 0.21258485061644367"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnSpan(number: \"US79927398713\")",
+            "value": 49.66645437479019,
+            "unit": "ns",
+            "range": "± 0.16336932575315485"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnString(number: \"US79927398713\")",
+            "value": 52.50193294286728,
+            "unit": "ns",
+            "range": "± 0.2372504262027851"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.AlphaNumericToNumericBasedOnSpan(number: \"US79927398713\")",
+            "value": 55.20987535317739,
+            "unit": "ns",
+            "range": "± 0.49567495657059757"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.RemoveSeparatorBasedOnString(number: \"7992-7398-7134\")",
+            "value": 244.20017890930177,
+            "unit": "ns",
+            "range": "± 1.3629914289987148"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.RemoveSeparatorBasedOnSpan(number: \"7992-7398-7134\")",
+            "value": 227.75354571525867,
+            "unit": "ns",
+            "range": "± 0.946830284222714"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.RemoveSeparatorBasedOnString(number: \"7992-7398-7134\")",
+            "value": 235.73666290442148,
+            "unit": "ns",
+            "range": "± 0.3406928935457096"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.RemoveSeparatorBasedOnSpan(number: \"7992-7398-7134\")",
+            "value": 221.74042963981628,
+            "unit": "ns",
+            "range": "± 0.7333034257124055"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.RemoveSeparatorBasedOnString(number: \"79927398/71823423413464564564562456344565463434346254546254654/6245624356245625624565265432\")",
+            "value": 670.7157907485962,
+            "unit": "ns",
+            "range": "± 1.3150791442139347"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.RemoveSeparatorBasedOnSpan(number: \"79927398/71823423413464564564562456344565463434346254546254654/6245624356245625624565265432\")",
+            "value": 589.2623425263625,
+            "unit": "ns",
+            "range": "± 1.222119566761235"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.RemoveSeparatorBasedOnString(number: \"79927398/71823423413464564564562456344565463434346254546254654/6245624356245625624565265432\")",
+            "value": 627.2613370077951,
+            "unit": "ns",
+            "range": "± 2.5275524918731667"
+          },
+          {
+            "name": "LuhnDotNetBenchmark.HelperBenchmark.RemoveSeparatorBasedOnSpan(number: \"79927398/71823423413464564564562456344565463434346254546254654/6245624356245625624565265432\")",
+            "value": 553.8405133760892,
+            "unit": "ns",
+            "range": "± 2.2701373469446615"
           }
         ]
       }
