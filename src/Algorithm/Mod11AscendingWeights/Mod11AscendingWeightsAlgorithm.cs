@@ -33,6 +33,7 @@
 
 namespace LuhnDotNet.Algorithm.Mod11AscendingWeights;
 
+using Extensions;
 #if NET8_0_OR_GREATER
 using System;
 #endif

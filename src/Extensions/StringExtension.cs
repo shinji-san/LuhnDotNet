@@ -6,6 +6,31 @@
 // <date>11/13/2022 08:48:55 PM</date>
 // ----------------------------------------------------------------------------
 
+#region License
+
+// ----------------------------------------------------------------------------
+// Copyright 2025 Sebastian Walther
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
 namespace LuhnDotNet.Extensions;
 
 using System;
@@ -14,6 +39,8 @@ using System.Text;
 
 #if !NET8_0_OR_GREATER
 using System.Linq;
+#else
+using System.Buffers;
 #endif
 
 /// <summary>
@@ -41,31 +68,46 @@ public static class StringExtension
             throw new ArgumentNullException(nameof(alphaNumeric), "The number cannot be empty.");
         }
 
-        Span<char> result = stackalloc char[alphaNumeric.Length * 2];
-        int index = 0;
-
-        foreach (char c in alphaNumeric.ToUpper())
+        char[]? rentedFromPool = null;
+        var length = alphaNumeric.Length * 2;
+        try
         {
-            if (char.IsLetter(c))
+            var buffer = length > LuhnDotNetCore.MaxStackLimit
+                ? (rentedFromPool = ArrayPool<char>.Shared.Rent(length))
+                : stackalloc char[length];
+            var result = buffer[..length];
+            int index = 0;
+
+            foreach (char c in alphaNumeric.ToUpper())
             {
-                string numericValue = (c - 55).ToString();
-                foreach (char numChar in numericValue)
+                if (char.IsLetter(c))
                 {
-                    result[index++] = numChar;
+                    string numericValue = (c - 55).ToString();
+                    foreach (char numChar in numericValue)
+                    {
+                        result[index++] = numChar;
+                    }
+                }
+                else if (char.IsDigit(c))
+                {
+                    result[index++] = c;
+                }
+                else
+                {
+                    throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!",
+                        nameof(alphaNumeric));
                 }
             }
-            else if (char.IsDigit(c))
+
+            return result[..index].ToString();
+        }
+        finally
+        {
+            if (rentedFromPool is not null)
             {
-                result[index++] = c;
-            }
-            else
-            {
-                throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!",
-                    nameof(alphaNumeric));
+                ArrayPool<char>.Shared.Return(rentedFromPool, clearArray: false);
             }
         }
-
-        return result[..index].ToString();
     }
 #else
     {
@@ -132,10 +174,10 @@ public static class StringExtension
     /// <param name="number">An identification number</param>
     /// <returns>The trimmed identification number if valid</returns>
     /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not a valid number</exception>
-    internal static string ValidateAndTrimNumber(this string number)
+    internal static string ValidateAndTrimNumber(this string? number)
     {
-        string trimmedNumber = number?.Trim();
-        if (string.IsNullOrWhiteSpace(trimmedNumber) || !trimmedNumber.All(char.IsDigit))
+        var trimmedNumber = number?.Trim();
+        if (string.IsNullOrWhiteSpace(trimmedNumber) || trimmedNumber.Any(c => !char.IsDigit(c)))
         {
             throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
         }

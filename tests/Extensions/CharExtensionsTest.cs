@@ -21,7 +21,7 @@ namespace LuhnDotNetTest.Extensions
         public void ThrowIfNotDigit_ValidDigits_DoesNotThrow(char digit)
         {
             // Act
-            var exception = Record.Exception(() => digit.ThrowIfNotDigit());
+            var exception = Record.Exception(() => digit.ThrowIfNotDigit(nameof(digit)));
 
             // Assert
             Assert.False(exception is InvalidCharacterException);
@@ -53,7 +53,8 @@ namespace LuhnDotNetTest.Extensions
         public void ThrowIfNotDigit_InvalidCharacters_ThrowsInvalidCharacterException(char invalidChar)
         {
             // Act & Assert
-            var exception = Assert.Throws<InvalidCharacterException>(() => invalidChar.ThrowIfNotDigit());
+            var exception = Assert.Throws<InvalidCharacterException>(() =>
+                invalidChar.ThrowIfNotDigit(nameof(invalidChar)));
             Assert.Contains($"The character '{invalidChar}' is not a valid digit", exception.Message);
             Assert.Contains("The character must be between '0' and '9'", exception.Message);
             Assert.Equal(nameof(invalidChar), exception.ParamName);
@@ -107,7 +108,8 @@ namespace LuhnDotNetTest.Extensions
         public void ThrowIfNotDigit_BoundaryCharacters_ThrowsException(char characterBeforeOrAfterDigitRange)
         {
             // Act & Assert
-            var exception = Assert.Throws<InvalidCharacterException>(() => characterBeforeOrAfterDigitRange.ThrowIfNotDigit());
+            var exception = Assert.Throws<InvalidCharacterException>(() =>
+                characterBeforeOrAfterDigitRange.ThrowIfNotDigit(nameof(characterBeforeOrAfterDigitRange)));
             Assert.Contains($"The character '{characterBeforeOrAfterDigitRange}' is not a valid digit", exception.Message);
         }
     }

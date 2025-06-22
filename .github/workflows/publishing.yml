@@ -26,6 +26,11 @@ jobs:
       with:
         dotnet-version: 9.0.100
 
+    - name: Install Mono
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y mono-complete
+
     - name: Decrypt large secret
       run: ./.github/secrets/decrypt_publisher_snk.sh
       env:

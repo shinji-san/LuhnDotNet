@@ -25,13 +25,12 @@ public class InvalidCharacterExceptionTest
         // Arrange
         var paramName = "paramName";
         var exceptionMassage = "Invalid character encountered.";
-        var expectedMessage = $"{exceptionMassage} (Parameter '{paramName}')";
 
         // Act
         var exception = new InvalidCharacterException(exceptionMassage, paramName);
 
         // Assert
-        Assert.Equal(expectedMessage, exception.Message);
+        Assert.StartsWith(exceptionMassage, exception.Message);
         Assert.Equal(paramName, exception.ParamName);
     }
 
@@ -41,14 +40,13 @@ public class InvalidCharacterExceptionTest
         // Arrange
         var paramName = "paramName";
         var exceptionMassage = "Invalid character encountered.";
-        var expectedMessage = $"{exceptionMassage} (Parameter '{paramName}')";
         var innerException = new Exception("Inner exception message.");
 
         // Act
         var exception = new InvalidCharacterException(exceptionMassage, paramName, innerException);
 
         // Assert
-        Assert.Equal(expectedMessage, exception.Message);
+        Assert.StartsWith(exceptionMassage, exception.Message);
         Assert.Equal(paramName, exception.ParamName);
         Assert.Equal(innerException, exception.InnerException);
     }
