@@ -125,11 +125,9 @@ public static class DammValidator
     {
         checkDigit.ThrowIfNotDigit();
         var trimmedNumber = number.ValidateAndTrimNumber();
-        Span<char> dammNumber = stackalloc char[trimmedNumber.Length + 1];
-        trimmedNumber.CopyTo(dammNumber[..^1]);
-        dammNumber[^1] = checkDigit;
-        ReadOnlySpan<char> readOnlyDammNumber = dammNumber;
-        return readOnlyDammNumber.IsValidDammNumber();
+        return trimmedNumber.CreateNumberWithCheckDigitAndValidate(
+            checkDigit,
+            n => n.IsValidDammNumber());
     }
     
     /// <summary>
@@ -149,13 +147,10 @@ public static class DammValidator
     public static bool IsValidDammCheckDigit(this char checkDigit, ReadOnlySpan<char> number, AntisymmetricQuasiGroup antisymmetricQuasiGroup)
     {
         checkDigit.ThrowIfNotDigit();
-
         var trimmedNumber = number.ValidateAndTrimNumber();
-        Span<char> dammNumber = stackalloc char[trimmedNumber.Length + 1];
-        trimmedNumber.CopyTo(dammNumber[..^1]);
-        dammNumber[^1] = checkDigit;
-        ReadOnlySpan<char> readOnlyDammNumber = dammNumber;
-        return readOnlyDammNumber.IsValidDammNumber(antisymmetricQuasiGroup);
+        return trimmedNumber.CreateNumberWithCheckDigitAndValidate(
+            checkDigit,
+            n => n.IsValidDammNumber(antisymmetricQuasiGroup));
     }
 #endif
 
@@ -178,9 +173,7 @@ public static class DammValidator
         return checkDigit.IsValidDammCheckDigit(number.AsSpan());
 #else
         checkDigit.ThrowIfNotDigit(nameof(checkDigit));
-        return string.Concat(number.Trim(), checkDigit)
-            .ValidateAndTrimNumber()
-            .IsValidDammNumber();
+        return string.Concat(number.ValidateAndTrimNumber(), checkDigit).IsValidDammNumber();
 #endif
     }
 
@@ -205,9 +198,7 @@ public static class DammValidator
         return checkDigit.IsValidDammCheckDigit(number.AsSpan(), antisymmetricQuasiGroup);
 #else
         checkDigit.ThrowIfNotDigit(nameof(checkDigit));
-        return string.Concat(number.Trim(), checkDigit)
-            .ValidateAndTrimNumber()
-            .IsValidDammNumber(antisymmetricQuasiGroup);
+        return string.Concat(number.ValidateAndTrimNumber(), checkDigit).IsValidDammNumber(antisymmetricQuasiGroup);
 #endif
     }
 }

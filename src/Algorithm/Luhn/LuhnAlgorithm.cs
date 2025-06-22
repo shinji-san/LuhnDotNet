@@ -33,6 +33,7 @@
 
 namespace LuhnDotNet.Algorithm.Luhn;
 
+using Extensions;
 using System;
 
 /// <summary>

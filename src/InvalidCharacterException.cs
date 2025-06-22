@@ -63,7 +63,7 @@ namespace LuhnDotNet
         /// </summary>
         /// <param name="message">The error message that explains the reason for the exception.</param>
         /// <param name="paramName">The name of the parameter that caused the current exception.</param>
-        public InvalidCharacterException(string message, string paramName) : base(message, paramName)
+        public InvalidCharacterException(string message, string? paramName) : base(message, paramName)
         {
         }
 
@@ -75,7 +75,7 @@ namespace LuhnDotNet
         /// <param name="paramName">The name of the parameter that caused the current exception.</param>
         /// <param name="innerException">The exception that is the cause of the current exception
         /// or a null reference if no inner exception is specified.</param>
-        public InvalidCharacterException(string message, string paramName, Exception innerException) : base(message, paramName, innerException)
+        public InvalidCharacterException(string message, string? paramName, Exception innerException) : base(message, paramName, innerException)
         {
         }
 

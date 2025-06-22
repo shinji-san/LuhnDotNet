@@ -6,10 +6,36 @@
 // <date>11/13/2022 08:48:55 PM</date>
 // ----------------------------------------------------------------------------
 
+#region License
+
+// ----------------------------------------------------------------------------
+// Copyright 2025 Sebastian Walther
+//
+// Permission is hereby granted, free of charge, to any person obtaining a copy
+// of this software and associated documentation files (the "Software"), to deal
+// in the Software without restriction, including without limitation the rights
+// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+// copies of the Software, and to permit persons to whom the Software is
+// furnished to do so, subject to the following conditions:
+//
+// The above copyright notice and this permission notice shall be included in
+// all copies or substantial portions of the Software.
+//
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+// THE SOFTWARE.
+
+#endregion
+
 #if NET8_0_OR_GREATER
 namespace LuhnDotNet.Extensions;
 
 using System;
+using System.Buffers;
 using System.Collections.Generic;
 using System.Globalization;
 
@@ -19,6 +45,8 @@ using System.Globalization;
 /// </summary>
 public static class ReadOnlySpanExtensions
 {
+    private static readonly SearchValues<char> Digits = SearchValues.Create("0123456789");
+
     /// <summary>
     /// Represents a delegate used to calculate a check digit for a numeric span of characters.
     /// </summary>
@@ -27,11 +55,22 @@ public static class ReadOnlySpanExtensions
     internal delegate char CheckDigitCalculator(ReadOnlySpan<char> number);
 
     /// <summary>
+    /// Represents a delegate that defines a method to validate a numeric sequence
+    /// contained within a <see cref="ReadOnlySpan{T}"/> of characters.
+    /// Returns a boolean indicating whether the sequence passes the validation criteria.
+    /// </summary>
+    /// <param name="span">The read-only span of characters representing the numeric sequence to be validated.</param>
+    /// <returns><see langword="true"/> if the span represents a valid numeric sequence,
+    /// otherwise <see langword="false"/>.</returns>
+    internal delegate bool IsValidNumber(ReadOnlySpan<char> span);
+
+    /// <summary>
     /// Converts an alphanumeric string into its numeric representation.
     /// </summary>
     /// <param name="alphaNumeric">The alphanumeric span to be converted.</param>
     /// <returns>A numeric representation of the input span.</returns>
-    /// <exception cref="InvalidCharacterException"><paramref name="alphaNumeric"/> contains characters that aren't letters or digits.</exception>
+    /// <exception cref="InvalidCharacterException"><paramref name="alphaNumeric"/> contains characters that
+    /// aren't letters or digits.</exception>
     public static ReadOnlySpan<char> AlphaNumericToNumeric(this ReadOnlySpan<char> alphaNumeric)
     {
         if (alphaNumeric.IsEmpty)
@@ -125,10 +164,25 @@ public static class ReadOnlySpanExtensions
         CheckDigitCalculator computeCheckDigit)
     {
         var trimmedNumber = number.ValidateAndTrimNumber();
-        Span<char> result = stackalloc char[trimmedNumber.Length + 1];
-        trimmedNumber.CopyTo(result[..^1]);
-        result[^1] = computeCheckDigit(trimmedNumber);
-        return result.ToString();
+        int bufferLength = trimmedNumber.Length + 1;
+        char[]? rentedFromPool = null;
+        try
+        {
+            var buffer = bufferLength > LuhnDotNetCore.MaxStackLimit
+                ? (rentedFromPool = ArrayPool<char>.Shared.Rent(bufferLength))
+                : stackalloc char[bufferLength];
+            var numberWithCheckDigit = buffer[..bufferLength];
+            trimmedNumber.CopyTo(numberWithCheckDigit[..^1]);
+            numberWithCheckDigit[^1] = computeCheckDigit(trimmedNumber);
+            return numberWithCheckDigit.ToString();
+        }
+        finally
+        {
+            if (rentedFromPool is not null)
+            {
+                ArrayPool<char>.Shared.Return(rentedFromPool, clearArray: false);
+            }
+        }
     }
 
     /// <summary>
@@ -139,15 +193,42 @@ public static class ReadOnlySpanExtensions
     /// <see langword="false"/></returns>
     internal static bool IsDigits(this ReadOnlySpan<char> number)
     {
-        foreach (char character in number)
+        return !number.IsEmpty && number.IndexOfAnyExcept(Digits) == -1;
+    }
+
+    /// <summary>
+    /// Creates a number with the specified check digit appended and validates it using the provided validation delegate.
+    /// </summary>
+    /// <param name="number">The base number to which the check digit will be appended.</param>
+    /// <param name="checkDigit">The check digit to append to the base number.</param>
+    /// <param name="isValid">A delegate function to validate the constructed number with the
+    /// appended check digit.</param>
+    /// <returns><see langword="true"/> if the constructed number with the appended check digit is valid,
+    /// otherwise <see langword="false"/>.</returns>
+    internal static bool CreateNumberWithCheckDigitAndValidate(
+        this ReadOnlySpan<char> number,
+        char checkDigit,
+        IsValidNumber isValid)
+    {
+        int bufferLength = number.Length + 1;
+        char[]? rentedFromPool = null;
+        try
         {
-            if (!char.IsDigit(character))
+            var buffer = bufferLength > LuhnDotNetCore.MaxStackLimit
+                ? (rentedFromPool = ArrayPool<char>.Shared.Rent(bufferLength))
+                : stackalloc char[bufferLength];
+            var numberWithCheckDigit = buffer[..bufferLength];
+            number.CopyTo(numberWithCheckDigit[..^1]);
+            numberWithCheckDigit[^1] = checkDigit;
+            return isValid(numberWithCheckDigit);
+        }
+        finally
+        {
+            if (rentedFromPool is not null)
             {
-                return false;
+                ArrayPool<char>.Shared.Return(rentedFromPool, clearArray: false);
             }
         }
-
-        return true;
     }
 }
 

@@ -28,6 +28,11 @@ jobs:
       with:
         dotnet-version: 9.0.100
 
+    - name: Install Mono
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y mono-complete
+
     - name: Restore
       run: dotnet restore LuhnDotNet.sln
 

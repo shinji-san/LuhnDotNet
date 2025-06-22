@@ -118,7 +118,7 @@ public static class DammCalculator
 #if NET8_0_OR_GREATER
         return number.AsSpan().ValidateAndTrimNumber().ComputeCheckDigit();
 #else
-        return number.ValidateAndTrimNumber().ComputeCheckDigit().ToCharDigit();
+        return number.ValidateAndTrimNumber().ComputeCheckDigit();
 #endif
     }    
 
@@ -148,7 +148,7 @@ public static class DammCalculator
 #if NET8_0_OR_GREATER
         return number.AsSpan().ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup);
 #else
-        return number.ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup).ToCharDigit();
+        return number.ValidateAndTrimNumber().ComputeCheckDigit(antisymmetricQuasiGroup);
 #endif
     }
 

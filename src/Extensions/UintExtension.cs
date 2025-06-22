@@ -1,5 +1,5 @@
 // ----------------------------------------------------------------------------
-// <copyright file="LuhnDotNetCore.cs" company="Private">
+// <copyright file="UintExtension.cs" company="Private">
 // Copyright (c) 2025 All Rights Reserved
 // </copyright>
 // <author>Sebastian Walther</author>
@@ -31,20 +31,30 @@
 
 #endregion
 
-namespace LuhnDotNet;
+namespace LuhnDotNet.Extensions;
+
+using System;
 
 /// <summary>
-/// A static utility class supporting functionality related to the Luhn, Modulo 11, Damm, and other algorithms.
+/// Provides extension methods for unsigned integer types.
 /// </summary>
-internal static class LuhnDotNetCore
+public static class UintExtension
 {
     /// <summary>
-    /// Specifies the maximum limit for a stack size, used to constrain operations or prevent excessive resource usage.
+    /// Converts an unsigned integer representing a single digit into its corresponding character.
     /// </summary>
-    internal const int MaxStackLimit = 512;
+    /// <param name="digit">The unsigned integer to convert. Must be between 0 and 9 inclusive.</param>
+    /// <returns>The character representation of the specified numeric digit.</returns>
+    /// <exception cref="ArgumentOutOfRangeException">Thrown if the input digit is greater than 9.</exception>
+    internal static char ToCharDigit(this uint digit)
+    {
+        if (digit > 9)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(digit),
+                $"The digit '{digit}' is not a valid single digit. Digit must be between 0 and 9.");
+        }
 
-    /// <summary>
-    /// Represents the ASCII code for the character '0'.
-    /// </summary>
-    internal const uint AsciiCodeForZero = 48;
+        return (char)(digit + LuhnDotNetCore.AsciiCodeForZero);
+    }       
 }
