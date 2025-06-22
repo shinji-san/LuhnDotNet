@@ -149,10 +149,10 @@ public static class StringExtension
     /// <param name="number">An identification number</param>
     /// <returns>The trimmed identification number if valid</returns>
     /// <exception cref="InvalidCharacterException"><paramref name="number"/> is not a valid number</exception>
-    internal static string ValidateAndTrimNumber(this string number)
+    internal static string ValidateAndTrimNumber(this string? number)
     {
-        string trimmedNumber = number?.Trim();
-        if (string.IsNullOrWhiteSpace(trimmedNumber) || !trimmedNumber.All(char.IsDigit))
+        var trimmedNumber = number?.Trim();
+        if (string.IsNullOrWhiteSpace(trimmedNumber) || trimmedNumber.All(c => !char.IsDigit(c)))
         {
             throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
         }
