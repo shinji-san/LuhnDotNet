@@ -86,7 +86,7 @@ internal static class DammAlgorithm
     /// </summary>
     /// <param name="number">The input number as a string for which the check digit is to be calculated.</param>
     /// <returns>The computed check digit as an unsigned integer.</returns>
-    internal static uint ComputeCheckDigit(this string number)
+    internal static char ComputeCheckDigit(this string number)
 #endif
     {
         return number.ComputeCheckDigit(DefaultAntisymmetricQuasigroup);
@@ -108,7 +108,7 @@ internal static class DammAlgorithm
     /// <param name="number">The input number as a string to process to compute the check digit.</param>
     /// <param name="antisymmetricQuasigroup">An instance of <see cref="AntisymmetricQuasiGroup"/> used in the Damm algorithm.</param>
     /// <returns>The computed check digit as an unsigned integer.</returns>
-    internal static uint ComputeCheckDigit(this string number, AntisymmetricQuasiGroup antisymmetricQuasigroup)
+    internal static char ComputeCheckDigit(this string number, AntisymmetricQuasiGroup antisymmetricQuasigroup)
 #endif
     {
         var interimDigit = 0u;

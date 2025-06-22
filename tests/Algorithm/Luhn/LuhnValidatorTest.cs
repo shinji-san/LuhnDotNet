@@ -94,6 +94,7 @@ public class LuhnValidatorTest
             new object[] { "_-:,", '2' },
             new object[] { "ABC", '3' },
             new object[] { "?11243345", '4' },
+            new object[] { "11243345!", '4' },
         };
 
     /// <summary>

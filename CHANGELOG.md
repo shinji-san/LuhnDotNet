@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fixed StackOverflowException in validation methods when the input is too long.
+- Fixed .NET Standard 2.0 issues with Damm algorithm and Mod11 Ascending Weights algorithm implementations.
 
 ## [2.0.0] - 2025-06-29
 ### Added

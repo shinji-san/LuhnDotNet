@@ -173,9 +173,7 @@ public static class DammValidator
         return checkDigit.IsValidDammCheckDigit(number.AsSpan());
 #else
         checkDigit.ThrowIfNotDigit(nameof(checkDigit));
-        return string.Concat(number.Trim(), checkDigit)
-            .ValidateAndTrimNumber()
-            .IsValidDammNumber();
+        return string.Concat(number.ValidateAndTrimNumber(), checkDigit).IsValidDammNumber();
 #endif
     }
 
@@ -200,9 +198,7 @@ public static class DammValidator
         return checkDigit.IsValidDammCheckDigit(number.AsSpan(), antisymmetricQuasiGroup);
 #else
         checkDigit.ThrowIfNotDigit(nameof(checkDigit));
-        return string.Concat(number.Trim(), checkDigit)
-            .ValidateAndTrimNumber()
-            .IsValidDammNumber(antisymmetricQuasiGroup);
+        return string.Concat(number.ValidateAndTrimNumber(), checkDigit).IsValidDammNumber(antisymmetricQuasiGroup);
 #endif
     }
 }

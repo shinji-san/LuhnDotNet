@@ -91,7 +91,7 @@ public static class Mod11AscendingWeightsValidator
         }
 
         var computeCheckDigit = validateAndTrimNumber.Substring(0, validateAndTrimNumber.Length - 1).ComputeCheckDigit();
-        return computeCheckDigit == validateAndTrimNumber[validateAndTrimNumber.Length - 1].ToUnsignedIntegerDigit();
+        return computeCheckDigit == validateAndTrimNumber[validateAndTrimNumber.Length - 1].ToUnsignedDigitOrSpecialValue();
 #endif
     }
 
