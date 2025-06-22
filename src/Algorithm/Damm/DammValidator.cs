@@ -125,7 +125,9 @@ public static class DammValidator
     {
         checkDigit.ThrowIfNotDigit();
         var trimmedNumber = number.ValidateAndTrimNumber();
-        return trimmedNumber.CreateNumberWithCheckDigit(checkDigit, n => n.IsValidDammNumber());
+        return trimmedNumber.CreateNumberWithCheckDigitAndValidate(
+            checkDigit,
+            n => n.IsValidDammNumber());
     }
     
     /// <summary>
@@ -146,7 +148,9 @@ public static class DammValidator
     {
         checkDigit.ThrowIfNotDigit();
         var trimmedNumber = number.ValidateAndTrimNumber();
-        return trimmedNumber.CreateNumberWithCheckDigit(checkDigit, n => n.IsValidDammNumber(antisymmetricQuasiGroup));
+        return trimmedNumber.CreateNumberWithCheckDigitAndValidate(
+            checkDigit,
+            n => n.IsValidDammNumber(antisymmetricQuasiGroup));
     }
 #endif
 

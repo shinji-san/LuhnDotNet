@@ -95,9 +95,10 @@ public static class LuhnValidator
     public static bool IsValidLuhnCheckDigit(this char checkDigit, ReadOnlySpan<char> number)
     {
         checkDigit.ThrowIfNotDigit();
-
         var trimmedNumber = number.ValidateAndTrimNumber();
-        return trimmedNumber.CreateNumberWithCheckDigit(checkDigit, n => n.DoubleEverySecondDigit(true) == 0);
+        return trimmedNumber.CreateNumberWithCheckDigitAndValidate(
+            checkDigit,
+            n => n.DoubleEverySecondDigit(true) == 0);
     }
 #endif
 

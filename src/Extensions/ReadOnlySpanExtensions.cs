@@ -20,6 +20,8 @@ using System.Globalization;
 /// </summary>
 public static class ReadOnlySpanExtensions
 {
+    private static readonly SearchValues<char> Digits = SearchValues.Create("0123456789");
+
     /// <summary>
     /// Represents a delegate used to calculate a check digit for a numeric span of characters.
     /// </summary>
@@ -137,10 +139,25 @@ public static class ReadOnlySpanExtensions
         CheckDigitCalculator computeCheckDigit)
     {
         var trimmedNumber = number.ValidateAndTrimNumber();
-        Span<char> result = new char[trimmedNumber.Length + 1];
-        trimmedNumber.CopyTo(result[..^1]);
-        result[^1] = computeCheckDigit(trimmedNumber);
-        return result.ToString();
+        int bufferLength = trimmedNumber.Length + 1;
+        char[]? rentedFromPool = null;
+        try
+        {
+            var buffer = bufferLength > LuhnDotNetCore.MaxStackLimit
+                ? (rentedFromPool = ArrayPool<char>.Shared.Rent(bufferLength))
+                : stackalloc char[bufferLength];
+            var numberWithCheckDigit = buffer[..bufferLength];
+            trimmedNumber.CopyTo(numberWithCheckDigit[..^1]);
+            numberWithCheckDigit[^1] = computeCheckDigit(trimmedNumber);
+            return numberWithCheckDigit.ToString();
+        }
+        finally
+        {
+            if (rentedFromPool is not null)
+            {
+                ArrayPool<char>.Shared.Return(rentedFromPool, clearArray: false);
+            }
+        }
     }
 
     /// <summary>
@@ -151,15 +168,7 @@ public static class ReadOnlySpanExtensions
     /// <see langword="false"/></returns>
     internal static bool IsDigits(this ReadOnlySpan<char> number)
     {
-        foreach (char character in number)
-        {
-            if (!char.IsDigit(character))
-            {
-                return false;
-            }
-        }
-
-        return true;
+        return !number.IsEmpty && number.IndexOfAnyExcept(Digits) == -1;
     }
 
     /// <summary>
@@ -171,7 +180,7 @@ public static class ReadOnlySpanExtensions
     /// appended check digit.</param>
     /// <returns><see langword="true"/> if the constructed number with the appended check digit is valid,
     /// otherwise <see langword="false"/>.</returns>
-    internal static bool CreateNumberWithCheckDigit(
+    internal static bool CreateNumberWithCheckDigitAndValidate(
         this ReadOnlySpan<char> number,
         char checkDigit,
         IsValidNumber isValid)

@@ -8,6 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Moved `ToUnsignedIntegerDigit` method from `LuhnDotNetCore` to `CharExtensions` class.
+- Optimized `IsDigits` method in `ReadOnlySpanExtensions` class.
+- Optimized `ComputeNumberWithCheckDigit` method in `ReadOnlySpanExtensions` class.
+- Renamed `CreateNumberWithCheckDigit` method to `CreateNumberWithCheckDigitAndValidate` in `ReadOnlySpanExtensions` class.
 
 ### Fixed
 - Fixed StackOverflowException in validation methods when the input is too long.
