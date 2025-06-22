@@ -152,7 +152,7 @@ public static class StringExtension
     internal static string ValidateAndTrimNumber(this string? number)
     {
         var trimmedNumber = number?.Trim();
-        if (string.IsNullOrWhiteSpace(trimmedNumber) || trimmedNumber.All(c => !char.IsDigit(c)))
+        if (string.IsNullOrWhiteSpace(trimmedNumber) || trimmedNumber.Any(c => !char.IsDigit(c)))
         {
             throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
         }
