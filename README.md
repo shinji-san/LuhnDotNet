@@ -65,8 +65,8 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
   <tbody>
       <tr>
           <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/actions/workflows/publishing.yml" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/actions/workflows/publishing.yml/badge.svg" alt="LuhnDotNet - NuGet Publishing"/></a></td>
-          <td rowspan=9><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 2.0.0"/></a></td>
-          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/tree/v2.0.0" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-2.0.0-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
+          <td rowspan=9><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 2.0.1"/></a></td>
+          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/tree/v2.0.1" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-2.0.1-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
           <td>.NET 8</td>
       </tr>
       <tr>
@@ -100,10 +100,10 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
 
 1. Open a console and switch to the directory, containing your project file.
 
-2. Use the following command to install version 2.0.0 of the LuhnDotNet package:
+2. Use the following command to install version 2.0.1 of the LuhnDotNet package:
 
     ```dotnetcli
-    dotnet add package LuhnDotNet -v 2.0.0 -f <FRAMEWORK>
+    dotnet add package LuhnDotNet -v 2.0.1 -f <FRAMEWORK>
     ```
 
 3. After the completion of the command, look at the project file to make sure that the package is successfully installed.
@@ -112,7 +112,7 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
 
     ```xml
     <ItemGroup>
-      <PackageReference Include="LuhnDotNet" Version="2.0.0" />
+      <PackageReference Include="LuhnDotNet" Version="2.0.1" />
     </ItemGroup>
     ```
 ## Remove LuhnDotNet package
