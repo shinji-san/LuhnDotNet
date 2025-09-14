@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup .NET 9
         uses: actions/setup-dotnet@v5.0.0
@@ -49,25 +49,25 @@ jobs:
         run: docfx docfx.json
 
       - name: Checkout Helper Benchmark Results in subdirectory
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: helper-benchmark-results
           path: helper-benchmark-results
 
       - name: Checkout Luhn Benchmark Results in subdirectory
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: luhn-benchmark-results
           path: luhn-benchmark-results
 
       - name: Checkout Damm Benchmark Results in subdirectory
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: damm-benchmark-results
           path: damm-benchmark-results
 
       - name: Checkout Mod11 Asc Benchmark Results in subdirectory
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: mod11asc-benchmark-results
           path: mod11asc-benchmark-results
