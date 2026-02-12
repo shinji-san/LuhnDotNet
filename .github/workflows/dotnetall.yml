@@ -34,13 +34,13 @@ jobs:
         sudo apt-get install -y mono-complete
 
     - name: Restore
-      run: dotnet restore LuhnDotNet.sln
+      run: dotnet restore LuhnDotNet.slnx
 
     - name: Build
-      run: dotnet build --configuration Release --no-restore LuhnDotNet.sln
+      run: dotnet build --configuration Release --no-restore LuhnDotNet.slnx
 
     - name: Test
-      run: dotnet test --no-restore --no-build --configuration Release LuhnDotNet.sln
+      run: dotnet test --no-restore --no-build --configuration Release LuhnDotNet.slnx
 
     - name: Prepare README.md for NuGet package
       run: |
@@ -48,4 +48,4 @@ jobs:
         grep -n "# CLI building instructions" README.md | cut -d: -f 1| xargs -i head -n {} README.md | head -n -1 > TMP.md && mv -f TMP.md README.md
 
     - name: Create Package
-      run: dotnet pack --no-restore --no-build --configuration Release LuhnDotNet.sln
+      run: dotnet pack --no-restore --no-build --configuration Release LuhnDotNet.slnx

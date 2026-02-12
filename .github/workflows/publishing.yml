@@ -38,13 +38,13 @@ jobs:
         PUBLISHER_PUB_KEY: ${{ secrets.PUBLISHER_PUB_KEY }}
 
     - name: Restore
-      run: dotnet restore LuhnDotNet.sln
+      run: dotnet restore LuhnDotNet.slnx
 
     - name: Build
-      run: dotnet build --no-restore --configuration Release LuhnDotNet.sln
+      run: dotnet build --no-restore --configuration Release LuhnDotNet.slnx
 
     - name: Test
-      run: dotnet test --no-restore --no-build --configuration Release LuhnDotNet.sln
+      run: dotnet test --no-restore --no-build --configuration Release LuhnDotNet.slnx
 
     - name: Remove obsolete NuGet packages
       run: rm -f src/bin/Release/LuhnDotNet*.nupk
@@ -55,7 +55,7 @@ jobs:
         grep -n "# CLI building instructions" README.md | cut -d: -f 1| xargs -i head -n {} README.md | head -n -1 > TMP.md && mv -f TMP.md README.md
 
     - name: Create package
-      run: dotnet pack --no-restore --no-build --configuration Release LuhnDotNet.sln
+      run: dotnet pack --no-restore --no-build --configuration Release LuhnDotNet.slnx
 
     - name: Publish package
       run: dotnet nuget push $(find src/bin/Release -type f  -name 'LuhnDotNet*.nupkg' -print 2> /dev/null) -k  ${{ secrets.NUGET_API_KEY }}  -s https://api.nuget.org/v3/index.json --skip-duplicate

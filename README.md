@@ -20,7 +20,7 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
   <tbody>
       <tr>
           <td rowspan=9><a href ="https://github.com/shinji-san/LuhnDotNet/actions/workflows/dotnetall.yml" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/actions/workflows/dotnetall.yml/badge.svg?branch=main" alt="Build status"/></a></td>
-          <td rowspan=9><code>LuhnDotNet.sln</code></td>
+          <td rowspan=9><code>LuhnDotNet.slnx</code></td>
           <td rowspan=9>SDK</td>
           <td>Standard 2.0</td>
       </tr>
@@ -571,41 +571,41 @@ namespace Example19
 For the following instructions, please make sure that you are connected to the internet. If necessary, NuGet will try to restore the [xUnit](https://xunit.net/) packages.
 ## Using dotnet to build for .NET 8, .NET 9 and .NET FX 4.x
 Use one of the following solutions with `dotnet` to build [LuhnDotNet](#luhndotnet):
-* `LuhnDotNet.sln` (all, [see table](#build--test-status-of-default-branch))
+* `LuhnDotNet.slnx` (all, [see table](#build--test-status-of-default-branch))
 
 
 The syntax is:
 ```dotnetcli
-dotnet {restore|build|test} -c {Debug|Release} LuhnDotNet.sln
+dotnet {restore|build|test} -c {Debug|Release} LuhnDotNet.slnx
 ```
 
 ### Restore NuGet packages
 
 ```dotnetcli
-dotnet restore LuhnDotNet.sln
+dotnet restore LuhnDotNet.slnx
 ```
 
-The instructions below are examples, which operate on the `LuhnDotNet.sln`.
+The instructions below are examples, which operate on the `LuhnDotNet.slnx`.
 ### Build Debug configuration
 
 ```dotnetcli
-dotnet build -c Debug --no-restore LuhnDotNet.sln
+dotnet build -c Debug --no-restore LuhnDotNet.slnx
 ```
 
 ### Build Release configuration
 
 ```dotnetcli
-dotnet build -c Release --no-restore LuhnDotNet.sln
+dotnet build -c Release --no-restore LuhnDotNet.slnx
 ```
 
 ### Test Debug configuration
 
 ```dotnetcli
-dotnet test -c Debug --no-restore --no-build LuhnDotNet.sln
+dotnet test -c Debug --no-restore --no-build LuhnDotNet.slnx
 ```
 
 ### Test Release configuration
 
 ```dotnetcli
-dotnet test -c Release --no-restore --no-build LuhnDotNet.sln
+dotnet test -c Release --no-restore --no-build LuhnDotNet.slnx
 ```
