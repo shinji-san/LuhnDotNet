@@ -71,10 +71,10 @@ jobs:
     #  uses: github/codeql-action/autobuild@v1
   
     - name: Restore
-      run: dotnet restore LuhnDotNet.sln
+      run: dotnet restore LuhnDotNet.slnx
 
     - name: Build
-      run: dotnet build --configuration Debug LuhnDotNet.sln
+      run: dotnet build --configuration Debug LuhnDotNet.slnx
 
     # ℹ️ Command-line programs to run using the OS shell.
     # 📚 https://git.io/JvXDl
