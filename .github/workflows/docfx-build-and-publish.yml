@@ -80,7 +80,7 @@ jobs:
           rsync -av --exclude '.git' mod11asc-benchmark-results/ _site/mod11asc-benchmark-results/
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: '_site'
 
