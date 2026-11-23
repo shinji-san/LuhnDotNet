@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+- Target frameworks `net10.0` and `net11.0`.
+- Target framework `net481`.
+
+### Removed
+- **Breaking:** Target frameworks `net8.0` and `net9.0`, which reached end of support on 2026-11-10. Projects on
+  .NET 8 or .NET 9 now resolve the `netstandard2.1` asset, which has no `ReadOnlySpan<char>` overloads. Move to
+  .NET 10 or later, or use the `string` overloads.
+- Target frameworks `net462`, `net47` and `net471`. Projects on .NET Framework 4.6.2 to 4.7.1 now resolve the
+  `netstandard2.0` asset, which behaves as before.
+
 ## [2.0.1] - 2025-06-22
 
 ### Changed
