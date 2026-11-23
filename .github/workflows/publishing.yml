@@ -8,28 +8,58 @@ on:
     - '**.md'
 
 jobs:
-  build:
+  # Since the .NET 11 SDK, 'dotnet test' refuses to run .NET Framework test
+  # assemblies on Linux, so the net472/net48/net481 suites cannot run in the
+  # publishing job below. They gate it from here instead: 'needs' keeps a
+  # release from publishing unless they pass on the real .NET Framework,
+  # mirroring the job split in dotnetall.yml.
+  test-windows:
 
-    runs-on: ubuntu-latest
+    runs-on: windows-2025
+    timeout-minutes: 30
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
     - uses: actions/checkout@v6
 
-    - name: Setup .NET 8
+    - name: Setup .NET SDKs
       uses: actions/setup-dotnet@v5.1.0
       with:
-        dotnet-version: 8.0.404
+        dotnet-version: |
+          8.0.428
+          9.0.321
 
-    - name: Setup .NET 9
+    - name: Restore
+      run: dotnet restore LuhnDotNet.slnx
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore LuhnDotNet.slnx
+
+    - name: Test (net472)
+      run: dotnet test --no-restore --no-build --configuration Release --framework net472 tests/LuhnDotNetTest.csproj
+
+    - name: Test (net48)
+      run: dotnet test --no-restore --no-build --configuration Release --framework net48 tests/LuhnDotNetTest.csproj
+
+    - name: Test (net481)
+      run: dotnet test --no-restore --no-build --configuration Release --framework net481 tests/LuhnDotNetTest.csproj
+
+  build:
+
+    needs: test-windows
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: true
+    steps:
+    - uses: actions/checkout@v6
+
+    - name: Setup .NET SDKs
       uses: actions/setup-dotnet@v5.1.0
       with:
-        dotnet-version: 9.0.100
-
-    - name: Install Mono
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y mono-complete
+        dotnet-version: |
+          8.0.428
+          9.0.321
 
     - name: Decrypt large secret
       run: ./.github/secrets/decrypt_publisher_snk.sh
@@ -43,8 +73,14 @@ jobs:
     - name: Build
       run: dotnet build --no-restore --configuration Release LuhnDotNet.slnx
 
-    - name: Test
-      run: dotnet test --no-restore --no-build --configuration Release LuhnDotNet.slnx
+    # Only the modern target frameworks run here. The .NET Framework suites
+    # already ran in the test-windows job, which gates this job through
+    # 'needs'.
+    - name: Test (net8.0)
+      run: dotnet test --no-restore --no-build --configuration Release --framework net8.0 tests/LuhnDotNetTest.csproj
+
+    - name: Test (net9.0)
+      run: dotnet test --no-restore --no-build --configuration Release --framework net9.0 tests/LuhnDotNetTest.csproj
 
     - name: Remove obsolete NuGet packages
       run: rm -f src/bin/Release/LuhnDotNet*.nupk
