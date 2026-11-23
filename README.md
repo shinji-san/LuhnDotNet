@@ -19,22 +19,13 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
   </thead>
   <tbody>
       <tr>
-          <td rowspan=9><a href ="https://github.com/shinji-san/LuhnDotNet/actions/workflows/dotnetall.yml" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/actions/workflows/dotnetall.yml/badge.svg?branch=main" alt="Build status"/></a></td>
-          <td rowspan=9><code>LuhnDotNet.slnx</code></td>
-          <td rowspan=9>SDK</td>
+          <td rowspan=7><a href ="https://github.com/shinji-san/LuhnDotNet/actions/workflows/dotnetall.yml" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/actions/workflows/dotnetall.yml/badge.svg?branch=main" alt="Build status"/></a></td>
+          <td rowspan=7><code>LuhnDotNet.slnx</code></td>
+          <td rowspan=7>SDK</td>
           <td>Standard 2.0</td>
       </tr>
       <tr>
           <td>Standard 2.1</td>
-      </tr>
-      <tr>
-          <td>FX 4.6.2</td>
-      </tr>
-      <tr>
-          <td>FX 4.7</td>
-      </tr>
-      <tr>
-          <td>FX 4.7.1</td>
       </tr>
       <tr>
           <td>FX 4.7.2</td>
@@ -43,10 +34,13 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
           <td>FX 4.8</td>
       </tr>
       <tr>
-          <td>.NET 8</td>
+          <td>FX 4.8.1</td>
       </tr>
       <tr>
-          <td>.NET 9</td>
+          <td>.NET 10</td>
+      </tr>
+      <tr>
+          <td>.NET 11</td>
       </tr>
   </tbody>
 </table>
@@ -64,13 +58,13 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
   </thead>
   <tbody>
       <tr>
-          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/actions/workflows/publishing.yml" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/actions/workflows/publishing.yml/badge.svg" alt="LuhnDotNet - NuGet Publishing"/></a></td>
-          <td rowspan=9><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 2.0.1"/></a></td>
-          <td rowspan=9><a href="https://github.com/shinji-san/LuhnDotNet/tree/v2.0.1" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-2.0.1-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
-          <td>.NET 8</td>
+          <td rowspan=7><a href="https://github.com/shinji-san/LuhnDotNet/actions/workflows/publishing.yml" target="_blank"><img src="https://github.com/shinji-san/LuhnDotNet/actions/workflows/publishing.yml/badge.svg" alt="LuhnDotNet - NuGet Publishing"/></a></td>
+          <td rowspan=7><a href="https://badge.fury.io/nu/LuhnDotNet" target="_blank"><img src="https://badge.fury.io/nu/LuhnDotNet.svg" alt="NuGet Version 2.0.1"/></a></td>
+          <td rowspan=7><a href="https://github.com/shinji-san/LuhnDotNet/tree/v2.0.1" target="_blank"><img src="https://img.shields.io/badge/LuhnDotNet-2.0.1-green.svg?logo=github&logoColor=959da5&color=2ebb4e&labelColor=2b3137" alt="Tag"/></a></td>
+          <td>.NET 10</td>
       </tr>
       <tr>
-          <td>.NET 9</td>
+          <td>.NET 11</td>
       </tr>
       <tr>
           <td>Standard 2.0</td>
@@ -79,19 +73,13 @@ The Modulo 11 algorithm with ascending weights is another checksum formula used 
           <td>Standard 2.1</td>
       </tr>
       <tr>
-          <td>FX 4.6.2</td>
-      </tr>
-      <tr>
-          <td>FX 4.7</td>
-      </tr>
-      <tr>
-          <td>FX 4.7.1</td>
-      </tr>
-      <tr>
           <td>FX 4.7.2</td>
       </tr>
       <tr>
           <td>FX 4.8</td>
+      </tr>
+      <tr>
+          <td>FX 4.8.1</td>
       </tr>
   </tbody>
 </table>
@@ -569,7 +557,7 @@ namespace Example19
 
 # CLI building instructions
 For the following instructions, please make sure that you are connected to the internet. If necessary, NuGet will try to restore the [xUnit](https://xunit.net/) packages.
-## Using dotnet to build for .NET 8, .NET 9 and .NET FX 4.x
+## Using dotnet to build for .NET 10, .NET 11 and .NET FX 4.x
 Use one of the following solutions with `dotnet` to build [LuhnDotNet](#luhndotnet):
 * `LuhnDotNet.slnx` (all, [see table](#build--test-status-of-default-branch))
 
