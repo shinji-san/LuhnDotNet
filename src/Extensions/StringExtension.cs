@@ -59,6 +59,8 @@ public static class StringExtension
     /// <remarks>
     /// This method iterates over each character in the input string. If the character is a letter, it is replaced
     /// by its decimal ASCII value minus 55. If the character is a digit, it is left unchanged.
+    /// Only the ASCII letters 'A' to 'Z' and 'a' to 'z' and the ASCII digits '0' to '9' are accepted. Lower case
+    /// letters are treated like upper case letters. The conversion doesn't depend on the current culture.
     /// </remarks>
     public static string AlphaNumericToNumeric(this string alphaNumeric)
 #if NET8_0_OR_GREATER
@@ -78,25 +80,20 @@ public static class StringExtension
             var result = buffer[..length];
             int index = 0;
 
-            foreach (char c in alphaNumeric.ToUpper())
+            foreach (char c in alphaNumeric)
             {
-                if (char.IsLetter(c))
-                {
-                    string numericValue = (c - 55).ToString();
-                    foreach (char numChar in numericValue)
-                    {
-                        result[index++] = numChar;
-                    }
-                }
-                else if (char.IsDigit(c))
-                {
-                    result[index++] = c;
-                }
-                else
+                if (!c.TryGetAlphaNumericValue(out int value))
                 {
                     throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!",
                         nameof(alphaNumeric));
                 }
+
+                if (value >= 10)
+                {
+                    result[index++] = (char)('0' + value / 10);
+                }
+
+                result[index++] = (char)('0' + value % 10);
             }
 
             return result[..index].ToString();
@@ -118,21 +115,20 @@ public static class StringExtension
 
         var result = new StringBuilder();
 
-        foreach (char c in alphaNumeric.ToUpper())
+        foreach (char c in alphaNumeric)
         {
-            if (char.IsLetter(c))
-            {
-                result.Append(c - 55);
-            }
-            else if (char.IsDigit(c))
-            {
-                result.Append(c);
-            }
-            else
+            if (!c.TryGetAlphaNumericValue(out int value))
             {
                 throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!",
                     nameof(alphaNumeric));
             }
+
+            if (value >= 10)
+            {
+                result.Append((char)('0' + value / 10));
+            }
+
+            result.Append((char)('0' + value % 10));
         }
 
         return result.ToString();

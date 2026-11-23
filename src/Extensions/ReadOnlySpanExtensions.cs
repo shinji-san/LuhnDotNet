@@ -37,7 +37,6 @@ namespace LuhnDotNet.Extensions;
 using System;
 using System.Buffers;
 using System.Collections.Generic;
-using System.Globalization;
 
 /// <summary>
 /// Provides extension methods for working with <see cref="ReadOnlySpan{T}"/> objects,
@@ -83,24 +82,18 @@ public static class ReadOnlySpanExtensions
         int index = 0;
         foreach (char c in alphaNumeric)
         {
-            char character = char.ToUpper(c, CultureInfo.InvariantCulture);
-            if (char.IsLetter(character))
-            {
-                string numericValue = (character - 55).ToString();
-                foreach (char numChar in numericValue)
-                {
-                    result[index++] = numChar;
-                }
-            }
-            else if (char.IsDigit(character))
-            {
-                result[index++] = character;
-            }
-            else
+            if (!c.TryGetAlphaNumericValue(out int value))
             {
                 throw new InvalidCharacterException($"The character '{c}' is not a letter or a digit!",
                     nameof(alphaNumeric));
             }
+
+            if (value >= 10)
+            {
+                result[index++] = (char)('0' + value / 10);
+            }
+
+            result[index++] = (char)('0' + value % 10);
         }
 
         return result[..index];

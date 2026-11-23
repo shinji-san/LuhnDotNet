@@ -51,6 +51,69 @@ public class StringExtensionTest
     }
 
     /// <summary>
+    /// Tests that lower case letters are converted like their upper case counterparts.
+    /// </summary>
+    /// <param name="input">Input string</param>
+    /// <param name="expected">Expected output</param>
+    [Theory(DisplayName = "Converts lower case letters like upper case letters")]
+    [InlineData("a1b2c3", "101112123")]
+    [InlineData("z9y8x7", "359348337")]
+    [InlineData("ie00b4bnmy34", "1814001141123223434")]
+    [InlineData("IE00B4BNMY34", "1814001141123223434")]
+    public void AlphaNumericToNumeric_LowerCaseInput_ShouldReturnExpectedResult(string input, string expected)
+    {
+        Assert.Equal(expected, input.AlphaNumericToNumeric());
+    }
+
+    /// <summary>
+    /// Tests that the result of the AlphaNumericToNumeric method doesn't depend on the current culture.
+    /// </summary>
+    /// <param name="cultureName">Name of the culture to run the conversion with</param>
+    /// <remarks>
+    /// The Turkish and the Azerbaijani cultures upper-case the letter 'i' to U+0130 (capital I with dot above)
+    /// instead of 'I'.
+    /// </remarks>
+    [Theory(DisplayName = "Converts an alphanumeric string independently of the current culture")]
+    [InlineData("tr-TR")]
+    [InlineData("az-Latn-AZ")]
+    [InlineData("en-US")]
+    [InlineData("")]
+    public void AlphaNumericToNumeric_AnyCulture_ShouldReturnSameResult(string cultureName)
+    {
+        var previousCulture = System.Globalization.CultureInfo.CurrentCulture;
+        try
+        {
+            System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            Assert.Equal("18", "i".AlphaNumericToNumeric());
+            Assert.Equal("18", "I".AlphaNumericToNumeric());
+            Assert.Equal("1814001141123223434", "ie00b4bnmy34".AlphaNumericToNumeric());
+        }
+        finally
+        {
+            System.Globalization.CultureInfo.CurrentCulture = previousCulture;
+        }
+    }
+
+    /// <summary>
+    /// Tests that letters and digits outside the ASCII range are rejected instead of being converted.
+    /// </summary>
+    /// <param name="input">Input string</param>
+    [Theory(DisplayName = "Converts a string with non-ASCII letters or digits to throw an exception")]
+    [InlineData("Ä")] // Latin capital letter A with diaeresis
+    [InlineData("ß")] // Latin small letter sharp s
+    [InlineData("İ")] // Latin capital letter I with dot above
+    [InlineData("ı")] // Latin small letter dotless i
+    [InlineData("Ж")] // Cyrillic capital letter Zhe
+    [InlineData("٣")] // Arabic-Indic digit three
+    [InlineData("３")] // Fullwidth digit three
+    [InlineData("DEÄ0006069008")]
+    public void AlphaNumericToNumeric_NonAsciiInput_ThrowsInvalidCharacterException(string input)
+    {
+        var exception = Assert.Throws<InvalidCharacterException>(() => input.AlphaNumericToNumeric());
+        Assert.Equal("alphaNumeric", exception.ParamName);
+    }
+
+    /// <summary>
     /// Validates that the AlphaNumericToNumeric method throws an ArgumentNullException
     /// when passed an empty or null string input.
     /// </summary>
