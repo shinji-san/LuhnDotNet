@@ -7,6 +7,12 @@ on:
     paths-ignore:
     - '**.md'
 
+# The repository default for the workflow token is not relied on. Both jobs
+# only read the sources. The package is pushed to nuget.org with its own API
+# key, not with this token.
+permissions:
+  contents: read
+
 jobs:
   # Since the .NET 11 SDK, 'dotnet test' refuses to run .NET Framework test
   # assemblies on Linux, so the net472/net48/net481 suites cannot run in the
@@ -20,7 +26,11 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
+    # No later step needs the git token: restore talks to nuget.org and
+    # nothing pushes to the repository.
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup .NET SDKs
       uses: actions/setup-dotnet@v5.1.0
@@ -52,7 +62,11 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
+    # No later step needs the git token: restore talks to nuget.org and
+    # nothing pushes to the repository.
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup .NET SDKs
       uses: actions/setup-dotnet@v5.1.0
