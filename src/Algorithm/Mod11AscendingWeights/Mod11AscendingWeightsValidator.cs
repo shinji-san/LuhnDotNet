@@ -109,7 +109,7 @@ public static class Mod11AscendingWeightsValidator
     /// </returns>
     public static bool IsValidMod11CheckDigit(this char checkDigit, ReadOnlySpan<char> number)
     {
-        if (!char.IsDigit(checkDigit) && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
+        if (!checkDigit.IsAsciiDigit() && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
         {
             throw new InvalidCharacterException($"The check {checkDigit} digit must be a digit (0-9) or 'X'.", nameof(checkDigit));
         }
@@ -136,7 +136,7 @@ public static class Mod11AscendingWeightsValidator
 #if NET8_0_OR_GREATER
         return checkDigit.IsValidMod11CheckDigit(number.AsSpan());
 #else
-        if (!char.IsDigit(checkDigit) && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
+        if (!checkDigit.IsAsciiDigit() && checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter)
         {
             throw new InvalidCharacterException($"The check {checkDigit} digit must be a digit (0-9) or 'X'.", nameof(checkDigit));
         }
@@ -184,7 +184,7 @@ public static class Mod11AscendingWeightsValidator
             throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
         }
 
-        if (trimmedNumber[^1] != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter && !char.IsDigit(trimmedNumber[^1]))
+        if (trimmedNumber[^1] != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter && !trimmedNumber[^1].IsAsciiDigit())
         {
             throw new InvalidCharacterException($"The string '{number}' ends not with a valid Mod-11 check digit!", nameof(number));
         }
@@ -196,13 +196,13 @@ public static class Mod11AscendingWeightsValidator
     {
         var trimmedNumber = number.Trim();
         var numberWithoutCheckDigit = trimmedNumber.Substring(0, trimmedNumber.Length - 1);
-        if (string.IsNullOrWhiteSpace(trimmedNumber) || !numberWithoutCheckDigit.All(char.IsDigit))
+        if (string.IsNullOrWhiteSpace(trimmedNumber) || !numberWithoutCheckDigit.All(c => c.IsAsciiDigit()))
         {
             throw new InvalidCharacterException($"The string '{number}' is not a number!", nameof(number));
         }
 
         char checkDigit = trimmedNumber[trimmedNumber.Length - 1];
-        if (checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter && !char.IsDigit(checkDigit))
+        if (checkDigit != Mod11AscendingWeightsAlgorithm.SpecialCheckDigitCharacter && !checkDigit.IsAsciiDigit())
         {
             throw new InvalidCharacterException($"The string '{number}' ends not with a valid Mod-11 check digit!", nameof(number));
         }
