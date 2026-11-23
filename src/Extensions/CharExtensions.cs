@@ -71,13 +71,26 @@ public static class CharExtensions
     public static void ThrowIfNotDigit(this char c, string? paramName)
 #endif
     {
-        if (char.IsDigit(c))
+        if (c.IsAsciiDigit())
         {
             return;
         }
 
         throw new InvalidCharacterException($"The character '{c}' is not a valid digit. The character must be between '0' and '9'.", paramName);
     }
+
+    /// <summary>
+    /// Checks whether the specified character is one of the ASCII digits '0' to '9'.
+    /// </summary>
+    /// <param name="character">The character to check.</param>
+    /// <returns><see langword="true"/> if <paramref name="character"/> is between '0' and '9';
+    /// otherwise <see langword="false"/>.</returns>
+    /// <remarks>
+    /// Unlike <see cref="char.IsDigit(char)"/>, this method rejects the decimal digits of other scripts, for
+    /// example Arabic-Indic or fullwidth digits. Subtracting the code point of '0' from such a character
+    /// doesn't yield its value, so accepting it leads to wrong check digits.
+    /// </remarks>
+    internal static bool IsAsciiDigit(this char character) => character is >= '0' and <= '9';
 
     /// <summary>
     /// Tries to convert an ASCII character of an alphanumeric identifier to its numeric value.
@@ -91,7 +104,7 @@ public static class CharExtensions
     /// digits or letters outside the ASCII range.</remarks>
     internal static bool TryGetAlphaNumericValue(this char character, out int value)
     {
-        if (character is >= '0' and <= '9')
+        if (character.IsAsciiDigit())
         {
             value = character - '0';
             return true;

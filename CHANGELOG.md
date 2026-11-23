@@ -25,6 +25,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   (e.g. `Ä`, `ß`, Cyrillic letters, Arabic-Indic or fullwidth digits). Previously such characters were silently
   converted to meaningless numbers, passed through unchanged, or caused an `IndexOutOfRangeException`,
   depending on the target framework.
+- Decimal digits outside the ASCII range (e.g. Arabic-Indic or fullwidth digits) are no longer accepted as digits.
+  `IsValidLuhnCheckDigit`, `IsValidMod11Number` and `IsValidMod11CheckDigit` returned `true` for such a character
+  whenever its code point was congruent to the correct check digit, e.g. `'\u0669'.IsValidLuhnCheckDigit("7992739871")`.
+  On `netstandard2.0`, `netstandard2.1` and .NET Framework the whole Luhn and Mod 11 API silently computed with these
+  characters, and the Damm API threw an `IndexOutOfRangeException`. All methods now throw an
+  `InvalidCharacterException` on every target framework.
+- `CharExtensions.ThrowIfNotDigit` now throws for digits outside the ASCII range, as its documentation states.
 
 ## [2.0.1] - 2025-06-22
 
