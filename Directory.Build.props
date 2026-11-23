@@ -1,0 +1,25 @@
+<Project>
+
+  <!-- Settings shared by the library, the test project and the benchmark project.
+       Anything that differs between them (target frameworks, Nullable, packaging) stays in
+       the project files. -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <!-- By default NuGet audits direct package references only. The known vulnerability in
+       Microsoft.Build.Tasks.Git (GHSA-23fw-v26w-5fgq) came in transitively through
+       Microsoft.SourceLink.GitHub and went unnoticed by restore for that reason. -->
+  <PropertyGroup>
+    <NuGetAuditMode>all</NuGetAuditMode>
+  </PropertyGroup>
+
+  <!-- Maps source paths to /_/ so that builds are reproducible across machines. Only on the
+       build server: locally it would break navigating from the debugger to the sources. -->
+  <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+  </PropertyGroup>
+
+</Project>
