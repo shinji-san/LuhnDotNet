@@ -49,6 +49,66 @@ public class ReadOnlySpanExtensionsTest
     }
 
     /// <summary>
+    /// Tests that lower case letters are converted like their upper case counterparts.
+    /// </summary>
+    /// <param name="input">Input ReadOnlySpan{char}</param>
+    /// <param name="expected">Expected output</param>
+    [Theory(DisplayName = "Converts lower case letters of a ReadOnlySpan<char> like upper case letters")]
+    [InlineData("a1b2c3", "101112123")]
+    [InlineData("z9y8x7", "359348337")]
+    [InlineData("ie00b4bnmy34", "1814001141123223434")]
+    [InlineData("IE00B4BNMY34", "1814001141123223434")]
+    public void AlphaNumericToNumeric_LowerCaseInput_ShouldReturnExpectedResult(string input, string expected)
+    {
+        Assert.Equal(expected, input.AsSpan().AlphaNumericToNumeric().ToString());
+    }
+
+    /// <summary>
+    /// Tests that the string and the ReadOnlySpan{char} variant of the AlphaNumericToNumeric method agree,
+    /// whatever the current culture is.
+    /// </summary>
+    /// <param name="cultureName">Name of the culture to run the conversion with</param>
+    [Theory(DisplayName = "Converts an alphanumeric ReadOnlySpan<char> independently of the current culture")]
+    [InlineData("tr-TR")]
+    [InlineData("az-Latn-AZ")]
+    [InlineData("en-US")]
+    [InlineData("")]
+    public void AlphaNumericToNumeric_AnyCulture_ShouldReturnSameResultAsStringVariant(string cultureName)
+    {
+        var previousCulture = System.Globalization.CultureInfo.CurrentCulture;
+        try
+        {
+            System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo(cultureName);
+            const string isin = "ie00b4bnmy34";
+            Assert.Equal("1814001141123223434", isin.AsSpan().AlphaNumericToNumeric().ToString());
+            Assert.Equal(isin.AlphaNumericToNumeric(), isin.AsSpan().AlphaNumericToNumeric().ToString());
+        }
+        finally
+        {
+            System.Globalization.CultureInfo.CurrentCulture = previousCulture;
+        }
+    }
+
+    /// <summary>
+    /// Tests that letters and digits outside the ASCII range are rejected instead of being converted.
+    /// </summary>
+    /// <param name="input">Input ReadOnlySpan{char}</param>
+    [Theory(DisplayName = "Converts a ReadOnlySpan<char> with non-ASCII letters or digits to throw an exception")]
+    [InlineData("Ä")] // Latin capital letter A with diaeresis
+    [InlineData("ß")] // Latin small letter sharp s
+    [InlineData("İ")] // Latin capital letter I with dot above
+    [InlineData("ı")] // Latin small letter dotless i
+    [InlineData("Ж")] // Cyrillic capital letter Zhe
+    [InlineData("٣")] // Arabic-Indic digit three
+    [InlineData("３")] // Fullwidth digit three
+    [InlineData("DEÄ0006069008")]
+    public void AlphaNumericToNumeric_NonAsciiInput_ThrowsInvalidCharacterException(string input)
+    {
+        var exception = Assert.Throws<InvalidCharacterException>(() => input.AsSpan().AlphaNumericToNumeric());
+        Assert.Equal("alphaNumeric", exception.ParamName);
+    }
+
+    /// <summary>
     /// Tests that the AlphaNumericToNumeric method throws an ArgumentNullException when the input is empty or null.
     /// </summary>
     [Fact(DisplayName = "Converts an empty alphanumeric ReadOnlySpan<char> to a numeric ReadOnlySpan<char> to throw an exception")]

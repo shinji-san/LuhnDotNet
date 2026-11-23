@@ -44,6 +44,12 @@ using System.Runtime.CompilerServices;
 /// </summary>
 public static class CharExtensions
 {
+    /// <summary>
+    /// The bit in which an ASCII upper case letter differs from its lower case counterpart
+    /// ('A' is 0x41, 'a' is 0x61).
+    /// </summary>
+    private const int AsciiCaseBit = 'a' ^ 'A';
+
 #if NET8_0_OR_GREATER
     /// <summary>
     /// Throws an <see cref="InvalidCharacterException"/> if the specified character is not a digit.
@@ -71,6 +77,37 @@ public static class CharExtensions
         }
 
         throw new InvalidCharacterException($"The character '{c}' is not a valid digit. The character must be between '0' and '9'.", paramName);
+    }
+
+    /// <summary>
+    /// Tries to convert an ASCII character of an alphanumeric identifier to its numeric value.
+    /// </summary>
+    /// <param name="character">The character to convert.</param>
+    /// <param name="value">The numeric value: 0 to 9 for the digits '0' to '9' and 10 to 35 for the letters
+    /// 'A' to 'Z' respectively 'a' to 'z'.</param>
+    /// <returns><see langword="true"/> if <paramref name="character"/> is an ASCII digit or an ASCII letter;
+    /// otherwise <see langword="false"/>.</returns>
+    /// <remarks>The conversion is ordinal. It depends neither on the current culture nor does it accept
+    /// digits or letters outside the ASCII range.</remarks>
+    internal static bool TryGetAlphaNumericValue(this char character, out int value)
+    {
+        if (character is >= '0' and <= '9')
+        {
+            value = character - '0';
+            return true;
+        }
+
+        // Setting the case bit maps 'A'..'Z' to 'a'..'z' and leaves 'a'..'z' untouched.
+        // No character outside the ASCII range can end up in 'a'..'z' this way.
+        int lowerCase = character | AsciiCaseBit;
+        if (lowerCase is >= 'a' and <= 'z')
+        {
+            value = lowerCase - 'a' + 10;
+            return true;
+        }
+
+        value = 0;
+        return false;
     }
 
     /// <summary>

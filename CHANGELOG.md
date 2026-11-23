@@ -17,6 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Target frameworks `net462`, `net47` and `net471`. Projects on .NET Framework 4.6.2 to 4.7.1 now resolve the
   `netstandard2.0` asset, which behaves as before.
 
+### Fixed
+- `AlphaNumericToNumeric` (`string` and `ReadOnlySpan<char>`) no longer depends on the current culture. Under
+  cultures such as `tr-TR` or `az-Latn-AZ` a lower case `i` was upper-cased to `İ` (U+0130), which made a valid
+  identifier such as the ISIN `ie00b4bnmy34` fail validation, or threw an `IndexOutOfRangeException`.
+- `AlphaNumericToNumeric` now throws an `InvalidCharacterException` for letters and digits outside the ASCII range
+  (e.g. `Ä`, `ß`, Cyrillic letters, Arabic-Indic or fullwidth digits). Previously such characters were silently
+  converted to meaningless numbers, passed through unchanged, or caused an `IndexOutOfRangeException`,
+  depending on the target framework.
+
 ## [2.0.1] - 2025-06-22
 
 ### Changed
