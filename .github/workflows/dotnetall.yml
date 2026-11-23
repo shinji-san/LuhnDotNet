@@ -10,12 +10,13 @@ on:
     - '**'
     paths-ignore:
     - '**.md'
+  # Deliberately without a path filter: the jobs of this workflow are meant
+  # to be required status checks. A pull request that touches only Markdown
+  # would otherwise never report them and could not be merged.
   pull_request:
     branches:
     - develop
     - main
-    paths-ignore:
-    - '**.md'
 
 # A push to a branch with an open pull request starts two runs (push and
 # pull_request). Newer commits cancel the runs of older ones.
