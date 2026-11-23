@@ -23,6 +23,11 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+# The repository default for the workflow token is not relied on. Both jobs
+# only read the sources: nothing pushes, comments, or publishes.
+permissions:
+  contents: read
+
 jobs:
   build:
 
@@ -31,7 +36,11 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
+    # No later step needs the git token: restore talks to nuget.org and
+    # nothing pushes to the repository.
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     # The SDKs are installed for their runtimes: the net10.0 and net11.0 test
     # runs need them. Without a global.json the newest SDK on the runner
@@ -76,7 +85,11 @@ jobs:
     env:
       DOTNET_CLI_TELEMETRY_OPTOUT: true
     steps:
+    # No later step needs the git token: restore talks to nuget.org and
+    # nothing pushes to the repository.
     - uses: actions/checkout@v6
+      with:
+        persist-credentials: false
 
     - name: Setup .NET SDKs
       uses: actions/setup-dotnet@v5.1.0
